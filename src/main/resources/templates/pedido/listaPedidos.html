@@ -68,35 +68,26 @@
                     <!-- Area Chart -->
                     <div class="container-fluid ">
                         <div class="card shadow mb-4">
+                            <div class="card-header py-3 d-flex flex-row align-items-center bg-white justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">Pedido #PE12039u10239u10923</h6>
+                                <h6 class="m-0 border-1 font-weight-bold text-danger">Fecha: <span> Hola</span></h6>
+                            </div>
                             <!-- Card body-->
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-4 py-4">
-                                        <div class="container-fluid" style="text-align: center;display: block;">
-                                            <!--imagen: -->
-                                            <img src="https://miro.medium.com/max/4000/1*pJm1NTQ-DCJvsLvo03idZQ.png" height="135" width="135" class="img-rounded" alt="Cinque Terre">
-                                        </div>
-                                    </div>
                                     <div class="col-5">
                                         <ul class="list-view text-dark font-weight-normal">
-                                            <li>Código del producto 0</li>
-                                            <li>Nombre del producto</li>
-                                            <li>Precio</li>
-                                            <li>Stock</li>
+                                            <li>Producto: gaseosa (2)</li>
+                                            <li>Producto: pan (8)</li>
                                         </ul>
+
+
+
                                         <div class="pl-4">
-                                            <a class="d-none d-sm-inline-block btn btn-sm btn-info text-white shadow-sm"><i class="fas fa-plus fa-sm text-white"></i> Ver más</a>
+                                            <h5 class="text-danger"><i class="fas fa-arrow-right"></i> Total <span>36</span> soles</h5>
                                         </div>
                                     </div>
 
-                                    <div class="col-3">
-                                        <div class="container" style="position: absolute; right: 0; bottom: 0;">
-                                            <div class="mr-0 pr-0 pb-1">
-                                                <a class="d-none d-sm-inline-block btn btn-sm btn-success text-white shadow-sm"> Agregar al carrito <i class="fas fa-plus-circle fa-sm text-white"></i></a>
-                                            </div>
-                                        </div>
-
-                                    </div>
 
                                 </div>
                             </div>
@@ -126,9 +117,6 @@
 <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
 </a>
-
-<!-- Logout Modal-->
-<div th:replace="fragments/general.html :: logout-modal"></div>
 
 <!-- Bootstrap core JavaScript-->
 <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
