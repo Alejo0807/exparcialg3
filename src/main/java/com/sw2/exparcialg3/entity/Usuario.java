@@ -1,27 +1,32 @@
 package com.sw2.exparcialg3.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "usuario")
-public class Usuario {
+public class Usuario implements Serializable {
 
     @Id
     @Column(name = "dni")
     private int dni;
     @Column(name = "nombre",nullable = false)
-    private int nombre;
+    private String nombre;
     @Column(name = "apellido",nullable = false)
-    private int apellido;
+    private String apellido;
     @Column(name = "correo",nullable = false)
-    private int correo;
-    @Column(name = "contraseña",nullable = false)
-    private int contraseña;
+    private String correo;
+    @Column(name = "password",nullable = false)
+    private String password;
     @Column(name = "enable",nullable = false)
-    private int enable;
+    private boolean enable;
     @ManyToOne
     @JoinColumn(name = "rol")
     private Rol rol;
+
+    public String getFullname(){
+        return nombre + " " + apellido;
+    }
 
     public int getDni() {
         return dni;
@@ -31,43 +36,43 @@ public class Usuario {
         this.dni = dni;
     }
 
-    public int getNombre() {
+    public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(int nombre) {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public int getApellido() {
+    public String getApellido() {
         return apellido;
     }
 
-    public void setApellido(int apellido) {
+    public void setApellido(String apellido) {
         this.apellido = apellido;
     }
 
-    public int getCorreo() {
+    public String getCorreo() {
         return correo;
     }
 
-    public void setCorreo(int correo) {
+    public void setCorreo(String correo) {
         this.correo = correo;
     }
 
-    public int getContraseña() {
-        return contraseña;
+    public String getPassword() {
+        return password;
     }
 
-    public void setContraseña(int contraseña) {
-        this.contraseña = contraseña;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public int getEnable() {
+    public boolean isEnable() {
         return enable;
     }
 
-    public void setEnable(int enable) {
+    public void setEnable(boolean enable) {
         this.enable = enable;
     }
 

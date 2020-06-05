@@ -27,9 +27,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/processLogin")
                 .defaultSuccessUrl("/redirectByRole", true);
         http.authorizeRequests()
-                //.antMatchers("/admin", "/admin/**").hasAnyAuthority("admin")
-                //.antMatchers("/gestor", "/gestor/**").hasAnyAuthority("gestor")
-                //.antMatchers("/u", "/u/**").hasAnyAuthority("user")
+                .antMatchers("/admin", "/admin/**").hasAnyAuthority("admin")
+                .antMatchers("/gestor", "/gestor/**").hasAnyAuthority("gestor")
+                .antMatchers("/u", "/u/**").hasAnyAuthority("registrado")
                 .anyRequest().permitAll()
                 ;
 
@@ -45,9 +45,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .passwordEncoder(new BCryptPasswordEncoder())
-                .usersByUsernameQuery("SELECT correo, password, cuentaactivada FROM Usuarios WHERE correo = ?")
-                .authoritiesByUsernameQuery("SELECT u.correo, r.nombrerol, u.cuentaactivada FROM Usuarios u INNER JOIN " +
-                        " Roles r ON (u.rol = r.idroles) WHERE u.correo = ? and u.cuentaactivada = 1");
+                .usersByUsernameQuery("SELECT correo, password, enable FROM usuario WHERE correo = ?")
+                .authoritiesByUsernameQuery("SELECT u.correo, r.rol, u.enable FROM usuario u INNER JOIN " +
+                        " rol r ON (u.rol = r.idrol) WHERE u.correo = ? and u.enable = 1");
 
     }
 

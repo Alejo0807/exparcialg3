@@ -3,10 +3,11 @@ package com.sw2.exparcialg3.entity;
 import com.sw2.exparcialg3.constantes.PedProdId;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "pedido_has_producto")
-public class PedidoHasProducto {
+public class PedidoHasProducto implements Serializable {
 
     @EmbeddedId
     private PedProdId id;
