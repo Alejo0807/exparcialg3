@@ -32,7 +32,7 @@
         <!-- Main Content -->
         <div id="content">
 
-            <div th:replace="fragments/general.html :: topbar"></div>
+            <div th:replace="fragments/general.html :: topbar('1')"></div>
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
@@ -68,15 +68,23 @@
                                             <li>Precio unitario</li>
                                             <li>Cantidad pedida</li>
                                         </ul>
-                                        <div class="pl-4">
-                                            <a class="d-none d-sm-inline-block btn btn-sm btn-info text-white shadow-sm"><i class="fas fa-plus fa-sm text-white"></i> Ver más</a>
-                                        </div>
                                     </div>
 
                                     <div class="col-3">
-                                        <div class="container" style="position: absolute; right: 0; bottom: 0;">
-                                            <div class="mr-0 pr-0 pb-1">
-                                                <a class="d-none d-sm-inline-block btn btn-sm btn-success text-white shadow-sm"> Subtotal <span class="glyphicon glyphicon-chevron-right" aria-hidden="true">23 soles</span></a>
+
+                                        <div class="container d-flex flex-row-reverse" style="position: absolute; right: 0; top: 0;">
+                                            <div class="d-inline-flex p-2 bd-highlight">
+                                                <button class="ml-0 pr-0 pb-1 d-none d-sm-inline-block btn btn-sm btn-danger text-white shadow-sm">
+                                                    <i class="fa fa-trash-alt mr-2" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="container d-flex flex-row-reverse" style="position: absolute; right: 0; bottom: 0;">
+                                            <div class="mr-0 pr-0 pb-1 d-none d-sm-inline-block p-2 badge-sm badge-success text-white shadow-sm">
+                                                <span> Subtotal</span>
+                                                <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                                                <span class="mr-2">23 soles</span>
                                             </div>
                                         </div>
 
@@ -105,20 +113,28 @@
                                     </div>
                                     <div class="col-5">
                                         <ul class="list-view text-dark font-weight-normal">
-                                            <li>Código del producto 1</li>
+                                            <li>Código del producto 0</li>
                                             <li>Nombre del producto</li>
-                                            <li>Precio</li>
-                                            <li>Stock</li>
+                                            <li>Precio unitario</li>
+                                            <li>Cantidad pedida</li>
                                         </ul>
-                                        <div class="pl-4">
-                                            <a class="d-none d-sm-inline-block btn btn-sm btn-info text-white shadow-sm"><i class="fas fa-plus fa-sm text-white"></i> Ver más</a>
-                                        </div>
                                     </div>
 
                                     <div class="col-3">
-                                        <div class="container" style="position: absolute; right: 0; bottom: 0;">
-                                            <div class="mr-0 pr-0 pb-1">
-                                                <a class="d-none d-sm-inline-block btn btn-sm btn-success text-white shadow-sm"> Agregar al carrito <i class="fas fa-plus-circle fa-sm text-white"></i></a>
+
+                                        <div class="container d-flex flex-row-reverse" style="position: absolute; right: 0; top: 0;">
+                                            <div class="d-inline-flex p-2 bd-highlight">
+                                                <button class="ml-0 pr-0 pb-1 d-none d-sm-inline-block btn btn-sm btn-danger text-white shadow-sm">
+                                                    <i class="fa fa-trash-alt mr-2" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="container d-flex flex-row-reverse" style="position: absolute; right: 0; bottom: 0;">
+                                            <div class="mr-0 pr-0 pb-1 d-none d-sm-inline-block p-2 badge-sm badge-success text-white shadow-sm">
+                                                <span> Subtotal</span>
+                                                <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                                                <span class="mr-2">23 soles</span>
                                             </div>
                                         </div>
 
@@ -130,47 +146,36 @@
                     </div>
                 </div>
 
-
                 <!-- Listado de productos -->
-                <div class="row px-5 mx-5">
+                <div>
+                <div class="container col-5">
                     <!-- Area Chart -->
-                    <div class="container-fluid ">
+                    <div class="container mr-4">
                         <div class="card shadow mb-4">
                             <!-- Card body-->
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="col-4 py-4">
-                                        <div class="container-fluid" style="text-align: center;display: block;">
-                                            <!--imagen: -->
-                                            <img src="https://miro.medium.com/max/4000/1*pJm1NTQ-DCJvsLvo03idZQ.png" height="135" width="135" class="img-rounded" alt="Cinque Terre">
-                                        </div>
-                                    </div>
-                                    <div class="col-5">
-                                        <ul class="list-view text-dark font-weight-normal">
-                                            <li>Código del producto 2</li>
-                                            <li>Nombre del producto</li>
-                                            <li>Precio</li>
-                                            <li>Stock</li>
-                                        </ul>
-                                        <div class="pl-4">
-                                            <a class="d-none d-sm-inline-block btn btn-sm btn-info text-white shadow-sm"><i class="fas fa-plus fa-sm text-white"></i> Ver más</a>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-3">
-                                        <div class="container" style="position: absolute; right: 0; bottom: 0;">
-                                            <div class="mr-0 pr-0 pb-1">
-                                                <a class="d-none d-sm-inline-block btn btn-sm btn-success text-white shadow-sm"> Agregar al carrito <i class="fas fa-plus-circle fa-sm text-white"></i></a>
+                                    <div class="col-10 ml-5" >
+                                        <div class="col list-view text-dark font-weight-normal">
+                                            <div class="container d-flex flex-row-reverse ">
+                                                <span class="mr-3">Total </span>
+                                            </div>
+                                            <div class="container d-flex flex-row-reverse">
+                                                    <div class="d-inline-flex p-2 bd-highlight">
+                                                        <button class="ml-0 pr-0 pb-1 d-none d-sm-inline-block btn btn-sm btn-danger text-white shadow-sm">
+                                                            <i class="fa fa-trash-alt mr-2" aria-hidden="true"></i>
+                                                            <span class="mr-2">Proceder a comprar</span>
+                                                        </button>
+                                                    </div>
                                             </div>
                                         </div>
-
-                                    </div>
-
                                 </div>
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
+
+
 
 
 

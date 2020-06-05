@@ -1,12 +1,13 @@
 package com.sw2.exparcialg3.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 @Table(name = "pedido")
-public class Pedido {
+public class Pedido implements Serializable {
 
     @Id
     @Column(name = "codigo")
