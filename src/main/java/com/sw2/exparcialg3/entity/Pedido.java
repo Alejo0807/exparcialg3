@@ -2,6 +2,7 @@ package com.sw2.exparcialg3.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "pedido")
@@ -19,6 +20,17 @@ public class Pedido {
     @ManyToOne
     @JoinColumn(name = "usuario")
     private Usuario usuario;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pedido")
+    private List<PedidoHasProducto> listPedidoHasProductos;
+
+    public List<PedidoHasProducto> getListPedidoHasProductos() {
+        return listPedidoHasProductos;
+    }
+
+    public void setListPedidoHasProductos(List<PedidoHasProducto> listPedidoHasProductos) {
+        this.listPedidoHasProductos = listPedidoHasProductos;
+    }
 
     public String getCodigo() {
         return codigo;
