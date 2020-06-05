@@ -18,11 +18,7 @@ public class HomeController {
     }
 
     @GetMapping("/pedido/{page}")
-<<<<<<< HEAD
-    public String dummyGetPed(@PathVariable String page){
-=======
     public String dummyGetPedido(@PathVariable String page){
->>>>>>> b8f541544d5e4b40e35e868225600e9b6f8b42a1
         return "pedido/"+ page;
     }
 
