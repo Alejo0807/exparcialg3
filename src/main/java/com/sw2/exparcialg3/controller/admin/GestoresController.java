@@ -19,7 +19,7 @@ public class GestoresController {
     @GetMapping(value = {""})
     public String lista(Model model){
         model.addAttribute("lista", usuarioRepository.findUsuariosByRol_Idrol(ROL_CRUD));
-
+        return "admin/listaGestores";
     }
 
 

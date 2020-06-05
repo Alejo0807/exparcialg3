@@ -73,14 +73,14 @@
                                 </tr>
                                 </tfoot>
                                 <tbody>
-                                <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                    <td>61</td>
+                                <tr th:each="l : ${lista}">
+                                    <td th:text="${l.dni}">Tiger Nixon</td>
+                                    <td th:text="${l.nombre}">System Architect</td>
+                                    <td th:text="${l.apellido}">Edinburgh</td>
+                                    <td th:text="${l.correo}">61</td>
                                     <td>
-                                        <a type="button" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></a>
-                                        <a type="button" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                        <a type="button" th:href="'/admin/gestores/edit?id='+${l.dni}" class="btn btn-datatable btn-icon btn-primary mr-2"><i class="fa fa-edit" ></i></a>
+                                        <a type="button" th:href="'/admin/gestores/delete?id='+${l.dni}" class="btn btn-datatable btn-icon btn-danger"><i class="fas fa-trash-alt"></i></a>
 
                                     </td>
                                 </tr>
