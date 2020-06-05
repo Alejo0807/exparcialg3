@@ -15,6 +15,14 @@ public class PedidoHasProducto {
     @Column(name = "subtotal")
     private Float subtotal;
 
+    public PedidoHasProducto(){}
+
+    public PedidoHasProducto(PedProdId id, int cant){
+        this.setId(id);
+        this.setCant(cant);
+
+    }
+
     public PedProdId getId() {
         return id;
     }
