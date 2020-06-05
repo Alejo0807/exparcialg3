@@ -64,7 +64,7 @@
 
 
                 <!-- Listado de productos -->
-                <div class="row px-5 mx-5">
+                <div class="row px-5 mx-5" th:each="p : ${productos}">
                     <!-- Area Chart -->
                     <div class="container-fluid ">
                         <div class="card shadow mb-4">
@@ -78,14 +78,14 @@
                                         </div>
                                     </div>
                                     <div class="col-5">
-                                        <ul class="list-view text-dark font-weight-normal">
-                                            <li>Código del producto 0</li>
-                                            <li>Nombre del producto</li>
-                                            <li>Precio</li>
-                                            <li>Stock</li>
+                                        <ul class="list-view text-dark font-weight-normal" >
+                                            <li th:text="${p.codigo}">Código del producto 0</li>
+                                            <li th:text="${p.nombre}">Nombre del producto</li>
+                                            <li th:text="${p.precio}">Precio</li>
+                                            <li th:text="${p.stock}">Stock</li>
                                         </ul>
                                         <div class="pl-4">
-                                            <a class="d-none d-sm-inline-block btn btn-sm btn-info text-white shadow-sm"><i class="fas fa-plus fa-sm text-white"></i> Ver más</a>
+                                            <a th:href="@{'/VerMas' + '?id=' + ${p.codigo}}" class="d-none d-sm-inline-block btn btn-sm btn-info text-white shadow-sm"><i class="fas fa-plus fa-sm text-white"></i> Ver más</a>
                                         </div>
                                     </div>
 
@@ -103,91 +103,6 @@
                         </div>
                     </div>
                 </div>
-
-
-                <!-- Listado de productos -->
-                <div class="row px-5 mx-5">
-                    <!-- Area Chart -->
-                    <div class="container-fluid ">
-                        <div class="card shadow mb-4">
-                            <!-- Card body-->
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-4 py-4">
-                                        <div class="container-fluid" style="text-align: center;display: block;">
-                                            <!--imagen: -->
-                                            <img src="https://miro.medium.com/max/4000/1*pJm1NTQ-DCJvsLvo03idZQ.png" height="135" width="135" class="img-rounded" alt="Cinque Terre">
-                                        </div>
-                                    </div>
-                                    <div class="col-5">
-                                        <ul class="list-view text-dark font-weight-normal">
-                                            <li>Código del producto 1</li>
-                                            <li>Nombre del producto</li>
-                                            <li>Precio</li>
-                                            <li>Stock</li>
-                                        </ul>
-                                        <div class="pl-4">
-                                            <a class="d-none d-sm-inline-block btn btn-sm btn-info text-white shadow-sm"><i class="fas fa-plus fa-sm text-white"></i> Ver más</a>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-3">
-                                        <div class="container" style="position: absolute; right: 0; bottom: 0;">
-                                            <div class="mr-0 pr-0 pb-1">
-                                                <a class="d-none d-sm-inline-block btn btn-sm btn-success text-white shadow-sm"> Agregar al carrito <i class="fas fa-plus-circle fa-sm text-white"></i></a>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- Listado de productos -->
-                <div class="row px-5 mx-5">
-                    <!-- Area Chart -->
-                    <div class="container-fluid ">
-                        <div class="card shadow mb-4">
-                            <!-- Card body-->
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-4 py-4">
-                                        <div class="container-fluid" style="text-align: center;display: block;">
-                                            <!--imagen: -->
-                                            <img src="https://miro.medium.com/max/4000/1*pJm1NTQ-DCJvsLvo03idZQ.png" height="135" width="135" class="img-rounded" alt="Cinque Terre">
-                                        </div>
-                                    </div>
-                                    <div class="col-5">
-                                        <ul class="list-view text-dark font-weight-normal">
-                                            <li>Código del producto 2</li>
-                                            <li>Nombre del producto</li>
-                                            <li>Precio</li>
-                                            <li>Stock</li>
-                                        </ul>
-                                        <div class="pl-4">
-                                            <a class="d-none d-sm-inline-block btn btn-sm btn-info text-white shadow-sm"><i class="fas fa-plus fa-sm text-white"></i> Ver más</a>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-3">
-                                        <div class="container" style="position: absolute; right: 0; bottom: 0;">
-                                            <div class="mr-0 pr-0 pb-1">
-                                                <a class="d-none d-sm-inline-block btn btn-sm btn-success text-white shadow-sm"> Agregar al carrito <i class="fas fa-plus-circle fa-sm text-white"></i></a>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
 
 
             </div>
