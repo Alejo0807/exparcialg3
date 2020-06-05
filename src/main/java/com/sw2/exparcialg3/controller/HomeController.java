@@ -13,8 +13,13 @@ public class HomeController {
     }
 
     @GetMapping("/producto/{page}")
-    public String dummyGetP(@PathVariable String page){
+    public String dummyGetProduct(@PathVariable String page){
         return "producto/"+ page;
+    }
+
+    @GetMapping("/pedido/{page}")
+    public String dummyGetPedido(@PathVariable String page){
+        return "pedido/"+ page;
     }
 
 }

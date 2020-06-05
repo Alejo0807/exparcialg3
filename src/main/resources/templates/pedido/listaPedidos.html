@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>Pedidos</title>
 
     <!-- Custom fonts for this template-->
     <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
@@ -32,19 +32,35 @@
         <!-- Main Content -->
         <div id="content">
 
-            <div th:replace="fragments/general.html :: topbar"></div>
+            <div th:replace="fragments/general.html :: topbar(7)"></div>
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
                 <!-- Page Heading -->
                 <div class="container-fluid">
-                    <div class="d-sm-flex align-items-center justify-content-between mb-5 px-5 mx-5">
-                        <h1 class="h3 mb-0 text-dark font-weight-bold">Producto</h1>
+                    <div class="d-sm-flex align-items-center justify-content-between mb-5 px-5 mx-5" style="align-content: center;">
+                        <h1 class="h3 mb-0 text-dark font-weight-bold">Mis Pedidos</h1>
                     </div>
                 </div>
 
                 <!-- Content Row -->
+
+                <div class="row px-5 mx-5 mb-5">
+                    <!--Buscador-->
+                    <div class="container-fluid">
+                        <form>
+                            <div class="input-group">
+                                <input type="text" class="form-control bg-white border-2 " placeholder="Buscar # de pedido" aria-label="Search" aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-dark" type="button">
+                                        <i class="fas fa-search fa-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
 
 
                 <!-- Listado de productos -->
@@ -52,35 +68,24 @@
                     <!-- Area Chart -->
                     <div class="container-fluid ">
                         <div class="card shadow mb-4">
-                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-primary">Nombre del Producto</h6>
+                            <div class="card-header py-3 d-flex flex-row align-items-center bg-white justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">Pedido #PE12039u10239u10923</h6>
+                                <h6 class="m-0 border-1 font-weight-bold text-danger">Fecha: <span> Hola</span></h6>
                             </div>
                             <!-- Card body-->
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-4 py-4">
-                                        <div class="container-fluid" style="text-align: center;display: block;">
-                                            <!--imagen: -->
-                                            <img src="https://miro.medium.com/max/4000/1*pJm1NTQ-DCJvsLvo03idZQ.png" height="160" width="160" class="img-rounded" alt="image">
-                                        </div>
-                                    </div>
-                                    <div class="col-8">
+                                    <div class="col-5">
                                         <ul class="list-view text-dark font-weight-normal">
-                                            <li th:text="${producto.codigo}">Código del producto 0</li>
-                                            <li th:text="${producto.nombre}">Nombre del producto</li>
-                                            <li th:text="${producto.precio}">Precio</li>
-                                            <li th:text="${producto.stock}">Stock</li>
-                                            <li th:text="${producto.descripcion}">Descripcion</li>
+                                            <li>Producto: gaseosa (2)</li>
+                                            <li>Producto: pan (8)</li>
                                         </ul>
 
-                                        <div class="container" >
-                                            <div class="row mr-0 pr-0 pb-1" style="position: absolute; right: 0; bottom: 0;">
-                                                <a class="mx-3 d-none d-sm-inline-block btn btn-sm btn-dark text-white shadow-sm"> Regresar</a>
-                                                <a class="mx-1 d-none d-sm-inline-block btn btn-sm btn-success text-white shadow-sm"> Agregar al carrito <i class="fas fa-plus-circle fa-sm text-white"></i></a>
-                                            </div>
+
+
+                                        <div class="pl-4">
+                                            <h5 class="text-danger"><i class="fas fa-arrow-right"></i> Total <span>36</span> soles</h5>
                                         </div>
-
-
                                     </div>
 
 
@@ -89,6 +94,8 @@
                         </div>
                     </div>
                 </div>
+
+
 
 
 
