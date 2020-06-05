@@ -10,10 +10,10 @@ import java.io.Serializable;
 public class PedProdId implements Serializable {
 
     @ManyToOne
-    @Column(name = "pedido")
+    @JoinColumn(name = "pedido")
     private Pedido pedido;
     @ManyToOne
-    @Column(name = "producto")
+    @JoinColumn(name = "producto")
     private Producto producto;
 
     public PedProdId(){}
