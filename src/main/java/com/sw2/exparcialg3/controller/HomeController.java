@@ -17,4 +17,9 @@ public class HomeController {
         return "producto/"+ page;
     }
 
+    @GetMapping("/pedido/{page}")
+    public String dummyGetPed(@PathVariable String page){
+        return "pedido/"+ page;
+    }
+
 }

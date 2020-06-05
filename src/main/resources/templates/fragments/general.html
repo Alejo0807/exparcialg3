@@ -9,7 +9,7 @@
 <body>
 
     <!-- Topbar -->
-    <nav th:fragment="topbar" class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+    <nav th:fragment="topbar(carrito)" class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
         <!-- Sidebar Toggle (Topbar) -->
         <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -55,7 +55,7 @@
                 <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i style="color: orange"  class="fas fa-shopping-cart icon-large"></i>
                     <!-- Counter - Messages -->
-                    <span class="badge badge-danger badge-counter">2</span>
+                    <span th:text="${carrito}" class="badge badge-danger badge-counter"></span>
                 </a>
             </li>
 
@@ -127,7 +127,43 @@
         <li class="nav-item " th:classappend="${param1=='Dashboard'}? active : ''">
             <a class="nav-link" href="index.html">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard</span></a>
+                <span>Cantidad de compras realizadas</span></a>
+        </li>
+
+        <li class="nav-item " th:classappend="${param1=='Dashboard'}? active : ''">
+            <a class="nav-link" href="index.html">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Total facturado</span></a>
+        </li>
+
+        <li class="nav-item " th:classappend="${param1=='Dashboard'}? active : ''">
+            <a class="nav-link" href="index.html">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Cantidad de productos vendidos</span></a>
+        </li>
+
+        <li class="nav-item " th:classappend="${param1=='Dashboard'}? active : ''">
+            <a class="nav-link" href="index.html">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Producto más vendido</span></a>
+        </li>
+
+        <li class="nav-item " th:classappend="${param1=='Dashboard'}? active : ''">
+            <a class="nav-link" href="index.html">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Producto menos vendido</span></a>
+        </li>
+
+        <li class="nav-item " th:classappend="${param1=='Dashboard'}? active : ''">
+            <a class="nav-link" href="index.html">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Producto más caro</span></a>
+        </li>
+
+        <li class="nav-item " th:classappend="${param1=='Dashboard'}? active : ''">
+            <a class="nav-link" href="index.html">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Usuario que más ha gastado</span></a>
         </li>
 
 
@@ -142,25 +178,6 @@
     </ul>
     <!-- End of Sidebar -->
 
-
-    <!--Logout Modal -->
-    <div th:fragment="logout-modal" class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
 </body>
