@@ -22,4 +22,14 @@ public class HomeController {
         return "pedido/"+ page;
     }
 
+    @GetMapping("/admin")
+    public String dummyGetPedidoadmin(){
+        return "index";
+    }
+
+    @GetMapping("/gestor")
+    public String dummyGetPedidsrdtfvo(){
+        return "index";
+    }
+
 }

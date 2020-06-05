@@ -35,7 +35,7 @@
     <!-- Main Content -->
     <div id="content">
 
-      <div th:replace="fragments/general.html :: topbar"></div>
+      <div th:replace="fragments/general.html :: topbar(10)"></div>
 
       <!-- Begin Page Content -->
       <div class="container-fluid">
@@ -336,9 +336,6 @@
 <a class="scroll-to-top rounded" href="#page-top">
   <i class="fas fa-angle-up"></i>
 </a>
-
-<!-- Logout Modal-->
-<div th:replace="fragments/general.html :: logout-modal"></div>
 
 <!-- Bootstrap core JavaScript-->
 <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
