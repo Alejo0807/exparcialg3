@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -32,14 +33,11 @@ public class ComprasController {
         return "";
     }
 
-    @PostMapping("/realizarCompra")
-    public String Comprar(@RequestParam("cod_ped") Pedido ped,
-                          @RequestParam("cod_prod") Producto prod){
+    @PostMapping("/checkout")
+    public String Comprar(@RequestParam("cod_ped") Pedido ped, Model model){
 
-        Optional<PedidoHasProducto> php = pedidoHasProductoRepository.findById(new PedProdId(ped,prod));
-        if(php.isPresent()){
 
-        }
+        ped.getListPedidoHasProductos();
 
         return "";
     }
@@ -47,6 +45,7 @@ public class ComprasController {
 
     @GetMapping("/pedidos")
     public String Pedidos(Model model){
+
         model.addAttribute("pedidos", pedidoRepository.findAll());
         return "";
     }
