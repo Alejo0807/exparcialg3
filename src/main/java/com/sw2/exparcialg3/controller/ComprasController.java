@@ -8,6 +8,7 @@ import com.sw2.exparcialg3.entity.Producto;
 import com.sw2.exparcialg3.entity.Usuario;
 import com.sw2.exparcialg3.repository.PedidoHasProductoRepository;
 import com.sw2.exparcialg3.repository.PedidoRepository;
+import com.sw2.exparcialg3.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +30,76 @@ public class ComprasController {
     PedidoRepository pedidoRepository;
     @Autowired
     PedidoHasProductoRepository pedidoHasProductoRepository;
+    @Autowired
+    ProductoRepository productoRepository;
+
+    @GetMapping("/agregarAlCarrito")
+    public String AgregarCarrito(@RequestParam(name = "id") String cod, HttpSession session, RedirectAttributes attr){
+
+        //System.out.println("hola");
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        Optional<Producto> optProd = productoRepository.findById(cod);
+        Optional<Pedido> optPed = pedidoRepository.findById("carrito_"+ Integer.toString(usuario.getDni()));
+
+
+
+        if(optProd.isPresent()){
+            Producto prod = optProd.get();
+            System.out.println("Stock de producto:"+ prod.getStock());
+            PedidoHasProducto phpfinal = null;
+            if(optPed.isPresent()){
+                Pedido ped = optPed.get();
+                //     System.out.println("Codigo de pedido:"+ ped.getCodigo());
+                List<PedidoHasProducto> listaPHP = ped.getListPedidoHasProductos();
+
+                String phpActualizado = "";
+
+                for(PedidoHasProducto php : listaPHP ){
+                    if(prod.getCodigo() == php.getId().getProducto().getCodigo()){
+                        phpActualizado = "orden actualizada";
+                        phpfinal = php;
+                    }
+                }
+                if (phpActualizado != "orden actualizada" ){
+                    PedidoHasProducto php = new PedidoHasProducto(new PedProdId(ped, prod), 1);
+                    php = crearPHP(php);
+                    phpfinal = php;
+                }
+                phpfinal = llenarPHP(phpfinal);
+                attr.addFlashAttribute("msg","Producto agregado al carrito");
+                //guardar de otra manera
+            }else{
+                Pedido ped = new Pedido();
+                ped.setCodigo("carrito_"+ Integer.toString(usuario.getDni()));
+                PedidoHasProducto php = new PedidoHasProducto(new PedProdId(ped, prod), 1);
+                phpfinal = crearPHP(php);
+                attr.addFlashAttribute("msg","Nuevo carrito creado y producto agregado");
+            }
+            pedidoHasProductoRepository.save(phpfinal);
+
+        }
+
+
+
+        return "redirect:/productos";
+    }
+
+    public PedidoHasProducto llenarPHP(PedidoHasProducto php){
+        php.setCant(php.getCant() + 1);
+        php.setSubtotal(php.getSubtotal() + php.getId().getProducto().getPrecio());
+        return php;
+    }
+
+    public PedidoHasProducto crearPHP(PedidoHasProducto php){
+        float a = 0;
+        php.setSubtotal(a);
+        php.setCant(0);
+        return  php;
+    }
+
+
+
+
 
     @GetMapping("/carrito")
     public String Carrito(Model model, HttpSession session){
@@ -38,6 +109,7 @@ public class ComprasController {
         model.addAttribute("carrito", ped.getListPedidoHasProductos());
         return "pedido/carrito";
     }
+
 
     @GetMapping("/checkout")
     public String Comprar(@ModelAttribute("pedido") Pedido pedido,Model model){
