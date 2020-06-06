@@ -20,4 +20,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     @Procedure(name = "update_usuario")
     void update_usuario(int dni, String nombre, String apellido, String correo);
 
+    @Procedure(name = "save_usuario")
+    void save_usuario(int dni, String nombre, String apellido, String correo, String password);
+
 }
