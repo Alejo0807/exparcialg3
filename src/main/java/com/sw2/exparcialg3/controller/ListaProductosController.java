@@ -60,10 +60,8 @@ public class ListaProductosController {
 
 
         if(optProd.isPresent()){
-            System.out.println("carrito_"+ Integer.toString(usuario.getDni()));
             Producto prod = optProd.get();
             if(optPed.isPresent()){
-                System.out.println("hola2");
                 Pedido ped = optPed.get();
                 PedidoHasProducto php = new PedidoHasProducto(new PedProdId(ped, prod), 1);
                 //guardar de otra manera

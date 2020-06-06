@@ -16,6 +16,12 @@ public class Rol implements Serializable {
     @Column(name = "rol",nullable = false)
     private String rol;
 
+    public Rol(){}
+
+    public Rol(String rol){
+        this.setRol(rol);
+    }
+
     public int getIdrol() {
         return idrol;
     }
