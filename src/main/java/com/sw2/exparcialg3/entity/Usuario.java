@@ -10,19 +10,23 @@ import java.io.Serializable;
 public class Usuario implements Serializable {
 
     @Id
+    @NotBlank(message = "Este campo no puede estar vacío")
+    @Size(max = 8, min = 8, message = "El dni debe tener 8 dígitos")
     @Column(name = "dni")
     private int dni;
-    @NotBlank
+    @NotBlank(message = "Este campo no puede estar vacío")
     @Size(min = 2, max = 40)
     @Column(name = "nombre",nullable = false)
     private String nombre;
-    @NotBlank
+    @NotBlank(message = "Este campo no puede estar vacío")
     @Size(min = 2, max = 40)
     @Column(name = "apellido",nullable = false)
     private String apellido;
-    @NotBlank
+    @NotBlank(message = "Este campo no puede estar vacío")
     @Column(name = "correo",nullable = false)
     private String correo;
+    @NotBlank(message = "Este campo no puede estar vacío")
+    @Size(max = 10, min = 8, message = "El código debe contener entre 8 y 10 letras")
     @Column(name = "password",nullable = false)
     private String password;
     @Column(name = "enable",nullable = false)

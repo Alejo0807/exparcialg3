@@ -126,8 +126,8 @@
         </li>
 
         <!-- Nav Item - Dashboard -->
-        <li sec:authorize="hasAnyAuthority('gestor')"  class="nav-item " th:classappend="${param1=='Productos'}? active : ''">
-            <a class="nav-link" href="index.html">
+        <li sec:authorize="hasAnyAuthority('gestor')"  class="nav-item " th:classappend="${param1=='producto'}? active : ''">
+            <a class="nav-link" th:href="@{/gestor/productos}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Productos</span></a>
         </li>
@@ -143,45 +143,45 @@
         </div>
 
         <!-- Nav Item - Dashboard -->
-        <li sec:authorize="hasAnyAuthority('gestor')" class="nav-item " th:classappend="${param1=='Dashboard'}? active : ''">
-            <a class="nav-link" href="index.html">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
+        <li sec:authorize="hasAnyAuthority('gestor')" class="nav-item " th:classappend="${param1=='est1'}? active : ''">
+            <a class="nav-link" th:href="@{/gestor/e/est1}">
+                <i class="fas fa-fw fa-database"></i>
                 <span>Cant. compras realizadas</span></a>
         </li>
 
-        <li sec:authorize="hasAnyAuthority('gestor')" class="nav-item " th:classappend="${param1=='Dashboard'}? active : ''">
-            <a class="nav-link" href="index.html">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
+        <li sec:authorize="hasAnyAuthority('gestor')" class="nav-item " th:classappend="${param1=='est2'}? active : ''">
+            <a class="nav-link" th:href="@{/gestor/e/est2}">
+                <i class="fas fa-fw fa-database"></i>
                 <span>Total facturado</span></a>
         </li>
 
-        <li sec:authorize="hasAnyAuthority('gestor')" class="nav-item " th:classappend="${param1=='Dashboard'}? active : ''">
-            <a class="nav-link" href="index.html">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
+        <li sec:authorize="hasAnyAuthority('gestor')" class="nav-item " th:classappend="${param1=='est3'}? active : ''">
+            <a class="nav-link" th:href="@{/gestor/e/est3}">
+                <i class="fas fa-fw fa-database"></i>
                 <span>Cant. productos vendidos</span></a>
         </li>
 
-        <li sec:authorize="hasAnyAuthority('gestor')" class="nav-item " th:classappend="${param1=='Dashboard'}? active : ''">
-            <a class="nav-link" href="index.html">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
+        <li sec:authorize="hasAnyAuthority('gestor')" class="nav-item " th:classappend="${param1=='est4'}? active : ''">
+            <a class="nav-link" th:href="@{/gestor/e/est4}">
+                <i class="fas fa-fw fa-database"></i>
                 <span>Producto más vendido</span></a>
         </li>
 
-        <li sec:authorize="hasAnyAuthority('gestor')" class="nav-item " th:classappend="${param1=='Dashboard'}? active : ''">
-            <a class="nav-link" href="index.html">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
+        <li sec:authorize="hasAnyAuthority('gestor')" class="nav-item " th:classappend="${param1=='est5'}? active : ''">
+            <a class="nav-link" th:href="@{/gestor/e/est5}">
+                <i class="fas fa-fw fa-database"></i>
                 <span>Producto menos vendido</span></a>
         </li>
 
-        <li sec:authorize="hasAnyAuthority('gestor')" class="nav-item " th:classappend="${param1=='Dashboard'}? active : ''">
-            <a class="nav-link" href="index.html">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
+        <li sec:authorize="hasAnyAuthority('gestor')" class="nav-item " th:classappend="${param1=='est6'}? active : ''">
+            <a class="nav-link" th:href="@{/gestor/e/est6}">
+                <i class="fas fa-fw fa-database"></i>
                 <span>Producto más caro</span></a>
         </li>
 
-        <li sec:authorize="hasAnyAuthority('gestor')" class="nav-item " th:classappend="${param1=='Dashboard'}? active : ''">
-            <a class="nav-link" href="index.html">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
+        <li sec:authorize="hasAnyAuthority('gestor')" class="nav-item " th:classappend="${param1=='est7'}? active : ''">
+            <a class="nav-link" th:href="@{/gestor/e/est7}">
+                <i class="fas fa-fw fa-database"></i>
                 <span>Usuario que más compra</span></a>
         </li>
 
