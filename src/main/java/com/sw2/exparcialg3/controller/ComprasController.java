@@ -105,9 +105,10 @@ public class ComprasController {
 
 
     @GetMapping("/pedidos")
-    public String Pedidos(Model model){
+    public String Pedidos(Model model,HttpSession session){
 
-        model.addAttribute("pedidos", pedidoRepository.findAll());
+        Usuario u = (Usuario) session.getAttribute("usuario");
+        model.addAttribute("pedidos", pedidoRepository.findByUsuario(u.getDni()));
         return "";
     }
 }
