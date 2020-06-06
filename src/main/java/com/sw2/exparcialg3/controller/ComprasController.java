@@ -49,7 +49,7 @@ public class ComprasController {
             PedidoHasProducto phpfinal = null;
             if(optPed.isPresent()){
                 Pedido ped = optPed.get();
-                //     System.out.println("Codigo de pedido:"+ ped.getCodigo());
+                     System.out.println("Codigo de pedido:"+ ped.getCodigo());
                 List<PedidoHasProducto> listaPHP = ped.getListPedidoHasProductos();
 
                 String phpActualizado = "";
@@ -71,15 +71,16 @@ public class ComprasController {
             }else{
                 Pedido ped = new Pedido();
                 ped.setCodigo("carrito_"+ Integer.toString(usuario.getDni()));
-                PedidoHasProducto php = new PedidoHasProducto(new PedProdId(ped, prod), 1);
+                PedidoHasProducto php = new PedidoHasProducto();
+                php.setId(new PedProdId(ped, prod));
                 phpfinal = crearPHP(php);
                 attr.addFlashAttribute("msg","Nuevo carrito creado y producto agregado");
             }
             pedidoHasProductoRepository.save(phpfinal);
-            return "redirect:/productos";
+            return "/productos/listaProducto";
         }else{
             attr.addFlashAttribute("msg","Stock agotado");
-            return "redirect:/productos";
+            return "/productos/listaProducto";
         }
 
     }
