@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,23 +34,39 @@ public class ListaProductosController {
     @Autowired
     PedidoHasProductoRepository pedidoHasProductoRepository;
 
+    private final int PAGES = 7;
 
     @GetMapping(value = {"", "/"})
-    public String Lista(Model model, HttpSession session){
+    public String Lista(Model model, HttpSession session, @RequestParam(value = "search", required = false) String param,
+                        @RequestParam(value = "page", required = false) Integer page){
 
-        model.addAttribute("productos", productoRepository.findByStockIsGreaterThan(0));
+        if (page!=null){
+            param=(String)session.getAttribute("lastSearch");
+        }else {
+            page=1;
+        }
+        model.addAttribute("search",param);
+        if (param==null) {
+            param="";
+        }
+
+        List<Producto> list = productoRepository.buscarProductos(param, (page-1)*PAGES, PAGES );
+        ArrayList<Integer> pages = new ArrayList<>();
+        int productsSize = productoRepository.contar(param).getCantidad();
+        for (int jj = 0 ; jj < (productsSize)/7+1; jj++){
+            pages.add(jj+1);
+        }
+        model.addAttribute("pages",pages);
+        model.addAttribute("productos", list);
+        session.setAttribute("lastSearch", param);
+
 
         int cantidad = 0;
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         if(usuario != null){
             Optional<Pedido> optPed = pedidoRepository.findById("carrito_"+ Integer.toString(usuario.getDni()));
-            if (optPed.isPresent()){
-                cantidad = productosTotalesEnCarrito(optPed.get());
-            }else{
-                cantidad = 0;
-            }
+            cantidad = optPed.map(this::productosTotalesEnCarrito).orElse(0);
         }
-
         model.addAttribute("carrito", cantidad);
 
         return "producto/listaProducto";
@@ -75,13 +92,6 @@ public class ListaProductosController {
         return "producto/verProducto";
     }
 
-    @PostMapping("/buscar")
-    public String buscarProd(@RequestParam("search") String param, Model model){
-
-        model.addAttribute("productos", productoRepository.buscarProductos(param));
-        model.addAttribute("search",param);
-        return "producto/listaProducto";
-    }
 
 
 }

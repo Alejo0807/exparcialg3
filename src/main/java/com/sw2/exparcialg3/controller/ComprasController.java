@@ -55,12 +55,14 @@ public class ComprasController {
                 List<PedidoHasProducto> listaPHP = ped.getListPedidoHasProductos();
 
                 String phpActualizado = "";
-
+                float a = 0;
+                ped.setTotal(a);
                 for(PedidoHasProducto php : listaPHP ){
                     if(prod.getCodigo() == php.getId().getProducto().getCodigo()){
                         phpActualizado = "orden actualizada";
                         phpfinal = php;
                     }
+                    ped.setTotal(ped.getTotal() + php.getSubtotal());
                 }
                 if (phpActualizado != "orden actualizada" ){
                     PedidoHasProducto php = new PedidoHasProducto(new PedProdId(ped, prod), 1);
@@ -118,6 +120,8 @@ public class ComprasController {
         Optional<Pedido> optPed = pedidoRepository.findById("carrito_"+ Integer.toString(usuario.getDni()));
         Pedido pedido = optPed.get();
         model.addAttribute("listaPedido", pedido.getListPedidoHasProductos());
+        model.addAttribute("total",pedido.getTotal());
+
 
         for (PedidoHasProducto php : pedido.getListPedidoHasProductos()){
             System.out.println(php.getId().getProducto().getNombre());
@@ -224,16 +228,28 @@ public class ComprasController {
         return "pedido/listaPedidos";
     }
 
-/*    @PostMapping("/borrarUnidad")
+    @GetMapping("/borrarUnidad")
     public String borrarUnidad(@RequestParam("cod") String cod, HttpSession session){
 
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         Optional<Producto> optProd = productoRepository.findById(cod);
         System.out.println(usuario.getDni());
         Optional<Pedido> optPed = pedidoRepository.findById("carrito_"+ Integer.toString(usuario.getDni()));
-        optPed.get();
+        Pedido ped = optPed.get();
+        for(PedidoHasProducto php : ped.getListPedidoHasProductos()){
+            if(php.getId().getProducto().getCodigo().equals(cod)){
+                php.setCant(php.getCant()-1);
+                php.setSubtotal(php.getCant()*php.getId().getProducto().getPrecio());
+                if(php.getCant()==0){
+                    pedidoHasProductoRepository.delete(php);
+                }else{
+                    pedidoHasProductoRepository.save(php);
+                }
+            }
+        }
 
-    }*/
+        return "redirect:/u/carrito";
+    }
 
 
     public int productosTotalesEnCarrito(Pedido pedido){
