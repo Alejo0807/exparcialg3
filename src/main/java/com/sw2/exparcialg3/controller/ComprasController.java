@@ -109,6 +109,6 @@ public class ComprasController {
 
         Usuario u = (Usuario) session.getAttribute("usuario");
         model.addAttribute("pedidos", pedidoRepository.findByUsuario(u.getDni()));
-        return "";
+        return "pedido/listaPedidos";
     }
 }

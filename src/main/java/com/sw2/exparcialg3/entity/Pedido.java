@@ -23,21 +23,19 @@ public class Pedido implements Serializable {
     @JoinColumn(name = "usuario")
     private Usuario usuario;
     private String creditCard;
-
-    public String getCreditCard() {
-        return creditCard;
-    }
-
-    public void setCreditCard(String creditCard) {
-        this.creditCard = creditCard;
-    }
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.pedido")
     private List<PedidoHasProducto> listPedidoHasProductos;
 
     public Pedido(){}
     public Pedido(String cod){
         this.setCodigo(cod);
+    }
+    public String getCreditCard() {
+        return creditCard;
+    }
+
+    public void setCreditCard(String creditCard) {
+        this.creditCard = creditCard;
     }
 
     public List<PedidoHasProducto> getListPedidoHasProductos() {
