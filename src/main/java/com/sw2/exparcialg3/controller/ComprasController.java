@@ -90,8 +90,10 @@ public class ComprasController {
                 Producto prdct = id.getProducto();
                 prdct.setStock(prdct.getStock()-pedidoHasProducto.getCant());
             }
+
             return "redirect:/productos/";
         }else{
+            attr.addFlashAttribute("msg","Tarjeta incorrecta");
             return "redirect:/compras/checkout";
         }
     }
