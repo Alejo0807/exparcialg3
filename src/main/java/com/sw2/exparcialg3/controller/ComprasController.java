@@ -10,10 +10,7 @@ import com.sw2.exparcialg3.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,14 +30,25 @@ public class ComprasController {
         return "";
     }
 
-    @PostMapping("/checkout")
-    public String Comprar(@RequestParam("cod_ped") Pedido ped, Model model){
+    @GetMapping("/checkout")
+    public String Comprar(@ModelAttribute("pedido") Pedido pedido/*, @RequestParam("cod_ped") Pedido ped*/,Model model){
+
+
+     //   ped.getListPedidoHasProductos();
+
+        return "pedido/checkout";
+    }
+
+    @PostMapping("/guardarCompraEnHistorial")
+    public String GuardarCompra(@RequestParam("cod_ped") Pedido ped, Model model){
 
 
         ped.getListPedidoHasProductos();
 
-        return "";
+        return "redirect:/ListaProductos/";
     }
+
+
 
 
     @GetMapping("/pedidos")
