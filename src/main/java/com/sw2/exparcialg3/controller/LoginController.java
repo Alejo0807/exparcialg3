@@ -128,10 +128,8 @@ public class LoginController {
             model.addAttribute("msgError", "ERROR");
             return "/register";
         }else{
-            u.setEnable(true);
-            u.setRol(rolRepository.findById(3));
             attr.addFlashAttribute("msg", "Usuario creado exitosamente");
-            usuarioRepository.save(u);
+            usuarioRepository.save_usuario(u.getDni(), u.getNombre(), u.getApellido(), u.getCorreo(), u.getPassword());
             Pedido p = new Pedido("carrito_"+Integer.toString(u.getDni()));
             p.setComprado(0);
             p.setUsuario(u);

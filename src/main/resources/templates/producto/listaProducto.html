@@ -53,11 +53,11 @@
                     <!--Buscador-->
                     <div class="col-lg-9 col-sm-11 mx-auto">
                     <div class="container-fluid">
-                        <form>
+                        <form th:action="@{/productos/buscar}" method="post">
                             <div class="input-group">
-                                <input type="text" class="form-control bg-white border-2 " placeholder="Buscar productos" aria-label="Search" aria-describedby="basic-addon2">
+                                <input type="text" class="form-control bg-white border-2 " name="search" th:value="${search!=null}? ${search}" placeholder="Buscar productos" aria-label="Search" aria-describedby="basic-addon2">
                                 <div class="input-group-append">
-                                    <button class="btn btn-dark" type="button">
+                                    <button class="btn btn-dark" type="submit">
                                         <i class="fas fa-search fa-sm"></i>
                                     </button>
                                 </div>
