@@ -34,15 +34,6 @@ public class HomeController {
         return "pedido/"+ page;
     }
 
-    @GetMapping("/admin")
-    public String dummyGetPedidoadmin(){
-        return "index";
-    }
-
-    @GetMapping("/gestor")
-    public String dummyGetPedidsrdtfvo(){
-        return "index";
-    }
 
     @GetMapping("/image/{id}")
     public ResponseEntity<byte[]> showImage(@PathVariable("id") String id){

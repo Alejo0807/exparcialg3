@@ -25,7 +25,7 @@ public class EstadisticasController {
 
     @GetMapping(value = {"","/"})
     public String easfte(Model model, HttpSession session){
-        Optional<Producto> opt = productoRepository.findById("20120537");
+        Optional<Producto> opt = productoRepository.findById("COM001");
 
         if (opt.isPresent()){
             model.addAttribute("productomasvendido", opt.get());
