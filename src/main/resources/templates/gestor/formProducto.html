@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Administrador</title>
+
+    <!-- Custom fonts for this template-->
+    <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <div th:replace="fragments/general.html ::admin-sidebar(param1='producto')"></div>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <div th:replace="fragments/general.html :: topbar(10)"></div>
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 th:text="${formtype!=null && formtype.equals('1')}? 'Nuevo Producto':'Editar Producto'" class="h3 mb-0 text-gray-900"></h1>
+                </div>
+
+                <div class="row">
+                    <div class="col-5">
+                        <div class="card shadow mb-4">
+                            <div class="card-body">
+                                <form th:action="@{/gestor/productos/save}" method="post" th:object="${producto}" enctype="multipart/form-data">
+                                    <!-- Indica si es editar o nuevo -->
+                                    <input type="text" hidden id="type" name="type" th:value="${formtype!=null}? ${formtype}">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Codigo</label>
+                                        <input th:readonly="${producto.codigo!=null && producto.codigo!='' && !#fields.hasErrors('codigo')}" type="text" class="form-control" th:field="*{codigo}" >
+                                        <div class="text-danger" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}">Error</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label  class="col-form-label">Nombre:</label>
+                                        <input type="text" class="form-control" th:field="*{nombre}" >
+                                        <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label  class="col-form-label">Descripcion:</label>
+                                        <input type="text" class="form-control" th:field="*{descripcion}" >
+                                        <div class="text-danger" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}">Error</div>
+                                    </div>
+
+                                    <div th:if="${formtype.equals('1')}" class="form-group">
+                                        <label  class="col-form-label">Precio:</label>
+                                        <input type="text" class="form-control"  th:field="*{precio}" >
+                                        <div class="text-danger" th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}">Error</div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label  class="col-form-label">Stock:</label>
+                                        <input type="text" class="form-control" th:field="*{stock}" >
+                                        <div class="text-danger" th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}">Error</div>
+                                    </div>
+
+                                    <div th:if="${formtype.equals('1')}" class="form-group">
+                                        <label  class="col-form-label">Foto:</label>
+                                        <input type="file" name="photo">
+                                        <div class="text-danger" th:if="${#fields.hasErrors('foto')}" th:errors="*{foto}">Error</div>
+                                    </div>
+
+                                    <div class="card-footer">
+                                        <a type="button" th:href="@{/gestor/productos}"  class="btn btn-secondary" >Cancelar</a>
+                                        <button type="submit" class="btn btn-primary"><a th:text="${formtype!=null && formtype.equals('1')}? 'Registrar':'Actualizar'" style="color:white;text-decoration:none"></a></button>
+                                    </div>
+
+                                </form>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <div th:replace="fragments/general.html :: footer"></div>
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Bootstrap core JavaScript-->
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+<!-- Core plugin JavaScript-->
+<script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+<!-- Custom scripts for all pages-->
+<script th:src="@{/js/sb-admin-2.min.js}"></script>
+
+<!-- Page level plugins -->
+<script th:src="@{/vendor/chart.js/Chart.min.js}"></script>
+
+<!-- Page level custom scripts -->
+<script th:src="@{/js/demo/chart-area-demo.js}"></script>
+<script th:src="@{/js/demo/chart-pie-demo.js}"></script>
+
+</body>
+
+</html>

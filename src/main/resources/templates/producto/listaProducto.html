@@ -85,10 +85,10 @@
                                     </div>
                                     <div class="col-5">
                                         <ul class="list-view text-dark font-weight-normal" >
-                                            <li th:text="${p.codigo}">Código del producto 0</li>
-                                            <li th:text="${p.nombre}">Nombre del producto</li>
-                                            <li th:text="${p.precio}">Precio</li>
-                                            <li th:text="${p.stock}">Stock</li>
+                                            <li><strong>Código del producto:</strong> <span th:text="${p.codigo}"></span></li>
+                                            <li><strong>Nombre del producto:</strong> <span th:text="${p.nombre}"></span></li>
+                                            <li><strong>Precio:</strong> <span th:text="${p.precio}"></span></li>
+                                            <li><strong>Stock:</strong> <span th:text="${p.stock}"></span></li>
                                         </ul>
                                         <div class="pl-4">
                                             <a th:href="@{'/productos/ver?id=' + ${p.codigo}}" class="d-none d-sm-inline-block btn btn-sm btn-info text-white shadow-sm"><i class="fas fa-plus fa-sm text-white"></i> Ver más</a>
