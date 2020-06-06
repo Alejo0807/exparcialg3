@@ -62,7 +62,7 @@ public class LoginController {
 
         switch (rol) {
             case "registrado":
-                return "redirect:/pedido/listaPedidos";
+                return "redirect:/productos";
             case "gestor":
                 return "redirect:/gestor";
             case "admin":

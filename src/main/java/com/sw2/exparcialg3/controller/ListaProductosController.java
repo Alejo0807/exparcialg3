@@ -35,11 +35,34 @@ public class ListaProductosController {
 
 
     @GetMapping(value = {"", "/"})
-    public String Lista(Model model){
+    public String Lista(Model model, HttpSession session){
 
         model.addAttribute("productos", productoRepository.findByStockIsGreaterThan(0));
+
+        int cantidad = 0;
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        if(usuario != null){
+            Optional<Pedido> optPed = pedidoRepository.findById("carrito_"+ Integer.toString(usuario.getDni()));
+            if (optPed.isPresent()){
+                cantidad = productosTotalesEnCarrito(optPed.get());
+            }else{
+                cantidad = 0;
+            }
+        }
+
+        model.addAttribute("carrito", cantidad);
+
         return "producto/listaProducto";
     }
+
+    public int productosTotalesEnCarrito(Pedido pedido){
+        int sum = 0;
+        for(PedidoHasProducto php : pedido.getListPedidoHasProductos()){
+            sum = sum + php.getCant();
+        }
+        return sum;
+    }
+
 
     @GetMapping("/ver")
     public String VerMas(@RequestParam("id") String cod, Model model){

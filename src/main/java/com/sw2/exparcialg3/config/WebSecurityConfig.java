@@ -31,6 +31,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/gestor", "/gestor/**").hasAnyAuthority("gestor")
                 .antMatchers("/u", "/u/**").hasAnyAuthority("registrado")
                 .anyRequest().permitAll()
+                .and()
+                .rememberMe().key("uniqueAndSecret")
+                .tokenValiditySeconds(172800);
                 ;
 
         http.logout()
