@@ -37,11 +37,11 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4"><u>Check Out</u></h1>
                                     </div>
-                                    <form th:action="@{/compras/pagarYguardarCompra}" method="post" class="user" >
+                                    <form th:action="@{/compras/pagarYguardarCompra}" method="post" class="user" th:object="${pedido}">
                                         <div class="ml-2 mb-1 container">
                                             <div class="col align-self-center text-center">
                                                 <span>Total a pagar: </span>
-                                           <!--     <span th:text="*{total}"> </span> -->
+                                                <span th:text="*{total}"> </span>
                                                 <span>soles</span>
                                             </div>
                                         </div>
