@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-    
+
+    @GetMapping(value = {"","/"})
+    public String asdasda(){
+        return "redirect:/admin/gestores";
+    }
 
 }
