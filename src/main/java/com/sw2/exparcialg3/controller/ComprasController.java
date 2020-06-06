@@ -88,9 +88,13 @@ public class ComprasController {
             String codigo = "PE" + lt.getDayOfMonth() + lt.getMonthValue() + lt.getYear() + (autoincremental+1);
             pedido.setCodigo(codigo);
             pedidoRepository.save(pedido);
-            Producto producto;
-            List pedido.getListPedidoHasProductos();
-            producto.setStock(producto.getStock() - pedido.getListPedidoHasProductos());
+
+            List<PedidoHasProducto> listaPedProd = pedido.getListPedidoHasProductos();
+            for (PedidoHasProducto pedidoHasProducto: listaPedProd){
+                PedProdId id = pedidoHasProducto.getId();
+                Producto prdct = id.getProducto();
+                prdct.setStock(prdct.getStock()-pedidoHasProducto.getCant());
+            }
             return "redirect:/productos/";
         }else{
             return "redirect:/compras/checkout";
