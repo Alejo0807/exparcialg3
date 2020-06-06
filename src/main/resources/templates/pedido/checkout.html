@@ -38,6 +38,7 @@
                                         <h1 class="h4 text-gray-900 mb-4"><u>Check Out</u></h1>
                                     </div>
                                     <form th:action="@{/compras/pagarYguardarCompra}" method="post" class="user" th:object="${pedido}">
+                                        <input type="hidden" th:field="*{codigo}">
                                         <div class="ml-2 mb-1 container">
                                             <div class="col align-self-center text-center">
                                                 <span>Total a pagar: </span>
@@ -58,6 +59,7 @@
                                         </div>
                                         <div class="container">
                                             <div><div class="text-center my-auto">Tarjeta de Crédito: </div></div>
+                                            <div class="alert alert-danger" role="alert" th:if="${msg != null}" th:text="${msg}"></div>
                                             <div class="form-group">
                                                 <input type="text" class="form-control form-control-user" name="creditCard" id="creditCard" placeholder="4xxx-xxxx-xxxx-xxxx">
                                             </div>

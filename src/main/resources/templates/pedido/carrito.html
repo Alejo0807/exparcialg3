@@ -46,11 +46,8 @@
                     </div>
                 </div>
 
-
-
-
                 <!-- Listado de productos -->
-                <div class="row">
+                <div class="row" th:each="p : ${carrito}">
                     <!-- Area Chart -->
                     <div class="col-lg-10 col-sm-12 mx-auto">
                         <div class="container-fluid ">
@@ -66,10 +63,10 @@
                                         </div>
                                         <div class="col-5">
                                             <ul class="list-view text-dark font-weight-normal">
-                                                <li>Código del producto 0</li>
-                                                <li>Nombre del producto</li>
-                                                <li>Precio unitario</li>
-                                                <li>Cantidad pedida</li>
+                                                <li th:text="${p.id.producto.codigo}">Código del producto 0</li>
+                                                <li th:text="${p.id.producto.nombre}">Nombre del producto</li>
+                                                <li th:text="${p.id.producto.precio}">Precio unitario</li>
+                                                <li th:text="${p.cant}">Cantidad pedida</li>
                                             </ul>
                                         </div>
 
@@ -87,7 +84,7 @@
                                                 <div class="mr-0 pr-0 pb-1 d-none d-sm-inline-block p-2 badge-sm badge-success text-white shadow-sm">
                                                     <span> Subtotal</span>
                                                     <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
-                                                    <span class="mr-2">23 soles</span>
+                                                    <span class="mr-2" th:text="${p.cant*p.id.producto.precio} + ' soles'">subtotal soles</span>
                                                 </div>
                                             </div>
 

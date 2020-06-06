@@ -1,6 +1,7 @@
 package com.sw2.exparcialg3.entity;
 
 import javax.persistence.*;
+import java.io.PipedOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
@@ -21,8 +22,15 @@ public class Pedido implements Serializable {
     @ManyToOne
     @JoinColumn(name = "usuario")
     private Usuario usuario;
-    private String creditCard;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.pedido")
+    private List<PedidoHasProducto> listPedidoHasProductos;
 
+    public Pedido(){}
+    public Pedido(String cod){
+        this.setCodigo(cod);
+    }
+    @Transient
+    private String creditCard;
     public String getCreditCard() {
         return creditCard;
     }
@@ -30,9 +38,6 @@ public class Pedido implements Serializable {
     public void setCreditCard(String creditCard) {
         this.creditCard = creditCard;
     }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.pedido")
-    private List<PedidoHasProducto> listPedidoHasProductos;
 
     public List<PedidoHasProducto> getListPedidoHasProductos() {
         return listPedidoHasProductos;
