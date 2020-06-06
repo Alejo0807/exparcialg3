@@ -80,14 +80,13 @@ public class LoginController {
                                         RedirectAttributes attr) throws IOException, MessagingException {
         System.out.println(email);
         Usuario u = usuarioRepository.findByCorreo(email);
-        model.addAttribute("msg", email);
         customMailService.sendEmail(email,
                 "Recuperación de contraseña", "Nueva contraseña",
                 "Su nueva contraseña es: \n"
                         +u.generateNewPassword());
         usuarioRepository.save(u);
-        attr.addFlashAttribute("Se le ha enviado a su correo electrónico su nueva contraseña");
-        return "redirect:/forgotpassword";
+        attr.addFlashAttribute("msg","Se le ha enviado a su correo electrónico su nueva contraseña");
+        return "redirect:/loginForm";
     }
 
     @GetMapping("/signup")
