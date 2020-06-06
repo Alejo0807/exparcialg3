@@ -58,9 +58,8 @@
 
             <!-- Nav Item - Messages -->
             <li sec:authorize="!hasAnyAuthority('admin','gestor')" class="nav-item dropdown no-arrow mx-1">
-                <a class="nav-link dropdown-toggle" th:href="@{/u/carrito}" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link " th:href="@{/u/carrito}" id="messagesDropdown" role="button" >
                     <i style="color: orange"  class="fas fa-shopping-cart icon-large"></i>
-
                     <!-- Counter - Messages -->
                     <span th:text="${carrito}" class="badge badge-danger badge-counter"></span>
                 </a>
