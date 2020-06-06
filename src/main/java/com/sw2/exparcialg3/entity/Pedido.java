@@ -1,6 +1,7 @@
 package com.sw2.exparcialg3.entity;
 
 import javax.persistence.*;
+import java.io.PipedOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
@@ -33,6 +34,11 @@ public class Pedido implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.pedido")
     private List<PedidoHasProducto> listPedidoHasProductos;
+
+    public Pedido(){}
+    public Pedido(String cod){
+        this.setCodigo(cod);
+    }
 
     public List<PedidoHasProducto> getListPedidoHasProductos() {
         return listPedidoHasProductos;
