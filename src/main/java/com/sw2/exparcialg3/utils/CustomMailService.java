@@ -62,10 +62,8 @@ public class CustomMailService {
 		MimeMessageHelper helper = new MimeMessageHelper(msg, true);
 		helper.setTo(to);
 		helper.setSubject(subject);
-		helper.setText(message);
 		helper.setText("<h1>"+title+"</h1>", true);
-		javaMailSender.send(msg);
-		helper.setText("<h1>Check attachment for image!</h1>", true);
+		helper.setText(message);
 		javaMailSender.send(msg);
 
 	}

@@ -1,8 +1,14 @@
 package com.sw2.exparcialg3.entity;
 
+import net.bytebuddy.utility.RandomString;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Entity
 @Table(name = "usuario")
@@ -32,6 +38,35 @@ public class Usuario implements Serializable {
     @ManyToOne
     @JoinColumn(name = "rol")
     private Rol rol;
+
+
+    public boolean validatePassword(){
+        if(password!=null){
+            int len = password.length();
+            if (len>7 && len<11){
+                String numbers = "0123456789";
+                int count=0;
+                for(String i : password.split("")){
+                    if (numbers.contains(i)) count++;
+                }
+                if (count>=2){
+                    this.password = new BCryptPasswordEncoder().encode(password);
+                    return true;
+                }
+
+            }
+        }
+        return false;
+    }
+
+    public String generateNewPassword(){
+        RandomString rs = new RandomString(8);
+        int[] randomNum = {ThreadLocalRandom.current().nextInt(0, 9),ThreadLocalRandom.current().nextInt(0, 9)};
+        String newpassword = rs.nextString()+ String.valueOf(randomNum[0])+ String.valueOf(randomNum[1]) ;
+        password = new BCryptPasswordEncoder().
+                encode(newpassword);
+        return newpassword;
+    }
 
     public String getFullname(){
         return nombre + " " + apellido;
