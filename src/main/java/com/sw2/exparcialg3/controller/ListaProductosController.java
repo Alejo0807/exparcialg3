@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/ListaProductos")
+@RequestMapping("/productos")
 public class ListaProductosController {
 
     @Autowired
@@ -38,8 +38,8 @@ public class ListaProductosController {
         return "producto/listaProducto";
     }
 
-    @GetMapping("/VerMas")
-    public String VerMas(@RequestParam("cod") String cod, Model model){
+    @GetMapping("/ver")
+    public String VerMas(@RequestParam("id") String cod, Model model){
 
         Optional<Producto> optProd = productoRepository.findById(cod);
         if(optProd.isPresent()){
@@ -49,7 +49,7 @@ public class ListaProductosController {
         return "producto/verProducto";
     }
 
-    @PostMapping("/u/AgregarAlCarrito")
+    @PostMapping("/u/agregarAlCarrito")
     public String AgregarCarrito(@RequestParam("cod") String cod){
 
         Usuario usuario = new Usuario();
@@ -68,7 +68,7 @@ public class ListaProductosController {
 
         }
 
-        return "redirect:/ListaProductos";
+        return "redirect:/productos";
     }
 
 }
