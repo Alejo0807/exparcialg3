@@ -81,6 +81,11 @@ public class ComprasController {
             int autoincremental = opt.get();
             LocalDate lt = LocalDate.now();
             String codigo = "PE" + lt.getDayOfMonth() + lt.getMonthValue() + lt.getYear() + (autoincremental+1);
+            pedido.setCodigo(codigo);
+            pedidoRepository.save(pedido);
+            Producto producto;
+            List pedido.getListPedidoHasProductos();
+            producto.setStock(producto.getStock() - pedido.getListPedidoHasProductos());
             return "redirect:/productos/";
         }else{
             return "redirect:/compras/checkout";

@@ -23,14 +23,6 @@ public class Pedido implements Serializable {
     private Usuario usuario;
     private String creditCard;
 
-    public String getCreditCard() {
-        return creditCard;
-    }
-
-    public void setCreditCard(String creditCard) {
-        this.creditCard = creditCard;
-    }
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.pedido")
     private List<PedidoHasProducto> listPedidoHasProductos;
 
