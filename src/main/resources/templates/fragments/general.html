@@ -51,15 +51,15 @@
 
             <!-- Nav Item - Messages -->
             <li sec:authorize="!hasAnyAuthority('admin','gestor')" class="nav-item dropdown no-arrow mx-1">
-                <a class="nav-link dropdown-toggle text-dark mt-1" href="#" id="misPedidos" >
+                <a class="nav-link dropdown-toggle text-dark mt-1" th:href="@{/u/pedidos}" id="misPedidos" >
                     <h6 class="text-primary">Mis Pedidos</h6>
                 </a>
             </li>
 
             <!-- Nav Item - Messages -->
             <li sec:authorize="!hasAnyAuthority('admin','gestor')" class="nav-item dropdown no-arrow mx-1">
-                <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i style="color: orange" th:href="@{/u/carrito}" class="fas fa-shopping-cart icon-large"></i>
+                <a class="nav-link dropdown-toggle" th:href="@{/u/carrito}" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i style="color: orange"  class="fas fa-shopping-cart icon-large"></i>
                     <!-- Counter - Messages -->
                     <span th:text="${carrito}" class="badge badge-danger badge-counter"></span>
                 </a>
@@ -80,7 +80,7 @@
             </li>
 
             <li sec:authorize="isAnonymous()" class="nav-item dropdown no-arrow">
-                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle"  id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="mr-2 ml-2 d-none d-lg-inline">
                         <form th:action="@{/loginForm}" method="get">
                             <button class="btn btn-success" type="submit">Iniciar Sesión</button>
