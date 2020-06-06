@@ -46,6 +46,11 @@
                     <a th:href="@{/admin/gestores/new}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Nuevo Gestor</a>
                 </div>
 
+                <div th:if="${msgSuccess != null}" th:text="${msgSuccess}" class="alert alert-success py-1" role="alert"></div>
+
+                <div th:if="${msgError != null}" th:text="${msgError}" class="alert alert-danger py-1" role="alert"></div>
+
+
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">Lista</h6>

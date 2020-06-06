@@ -90,7 +90,6 @@ public class GestoresController {
             Usuario usuario = optionalUsuario.get();
             usuarioRepository.delete(usuario);
             attr.addFlashAttribute("msgSuccess","Gestor borrado exitosamente");
-            return "redirect:/admin/gestores";
         }
         return "redirect:/admin/gestores";
     }
