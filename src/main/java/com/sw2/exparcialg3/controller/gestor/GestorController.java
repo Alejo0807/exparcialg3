@@ -9,9 +9,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/gestor")
 public class GestorController {
 
-    @GetMapping("")
-    public String adasdafinficm(){
-        return "index";
-    }
 
 }

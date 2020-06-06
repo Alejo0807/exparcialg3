@@ -22,7 +22,7 @@ public class Pedido implements Serializable {
     @JoinColumn(name = "usuario")
     private Usuario usuario;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pedido")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.pedido")
     private List<PedidoHasProducto> listPedidoHasProductos;
 
     public List<PedidoHasProducto> getListPedidoHasProductos() {
