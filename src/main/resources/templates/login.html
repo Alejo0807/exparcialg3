@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Login</title>
+  <title>Login</title>
 
   <!-- Custom fonts for this template-->
   <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
@@ -26,19 +26,19 @@
     <!-- Outer Row -->
     <div class="row justify-content-center">
 
-      <div class="col-xl-10 col-lg-12 col-md-9">
+      <div class="col-7">
 
         <div class="card o-hidden border-0 shadow-lg my-5">
           <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
             <div class="row">
-              <div class="col-lg-6 container-fluid my-auto mx-auto">
-                <img class="mx-auto  img-fluid d-block" th:src="@{/img/bandi.png}" alt="Responsive image">
-              </div>
-              <div class="col-lg-6 mx-auto">
+              <div class="col-lg-9 mx-auto">
                 <div class="p-5">
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Bienvenido!</h1>
+                  </div>
+                  <div th:if="${param.error}" class="alert alert-danger" role="alert">
+                    Usuario o contraseña incorrectos
                   </div>
                   <form th:action="@{/processLogin}" method="post" class="user">
                     <div class="form-group">
@@ -47,13 +47,18 @@
                     <div class="form-group">
                       <input type="password" class="form-control form-control-user" name="password" id="password" placeholder="Contraseña">
                     </div>
+                    <div class="pl-4 pb-3 custom-control custom-control-solid custom-checkbox">
+                      <input class="custom-control-input small" id="customCheck1" type="checkbox" />
+                      <label class="custom-control-label" for="customCheck1">Recordarme</label></div>
                     <button type="submit" class="btn btn-primary btn-user btn-block">
                       Iniciar Sesión
                     </button>
                   </form>
                   <br>
                   <div class="text-center">
-                    <a class="small" href="forgot-password.html">¿Olvidaste tu contraseña?</a>
+                    <a class="small" th:href="@{/forgotpassword}">Recuperar contraseña</a>
+                    <br>
+                    <a class="small" th:href="@{/signup}">Registrarse</a>
                   </div>
 
                   <div th:replace="fragments/general :: footer"></div>
