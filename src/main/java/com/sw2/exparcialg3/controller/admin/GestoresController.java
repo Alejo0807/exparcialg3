@@ -1,5 +1,6 @@
 package com.sw2.exparcialg3.controller.admin;
 
+import com.sw2.exparcialg3.entity.Rol;
 import com.sw2.exparcialg3.entity.Usuario;
 import com.sw2.exparcialg3.repository.UsuarioRepository;
 import com.sw2.exparcialg3.utils.CustomMailService;
@@ -80,12 +81,13 @@ public class GestoresController {
                         usuario.getNombre(), usuario.getApellido(), usuario.getCorreo());
                 attr.addFlashAttribute("msgSuccess", "Gestor actualizado exitosamente");
             }
-            else if (type==0){ // if new user
-
+            else if (type==1){ // if new user
                 customMailService.sendEmail(usuario.getCorreo(),
                         "Registro de gestor de bodega", "Bienvenido Gestor",
-                        "Este es un mensaje de validación de su cuenta, para ingresar al sistema use su correo y la siguiente contraseña\n" +
-                                ""+usuario.generateNewPassword());
+                        "Este es un mensaje de validación de su cuenta, para ingresar al sistema use su correo y la siguiente contraseña\n"
+                                +usuario.generateNewPassword());
+                usuario.setRol(new Rol(ROL_CRUD));
+                usuario.setEnable(true);
                 usuarioRepository.save(usuario);
                 attr.addFlashAttribute("msgSuccess", "Gestor creado exitosamente");
             }
@@ -100,8 +102,13 @@ public class GestoresController {
         Optional<Usuario> optionalUsuario = usuarioRepository.findUsuarioByDniAndRol_Idrol(dni, ROL_CRUD);
         if(optionalUsuario.isPresent()){
             Usuario usuario = optionalUsuario.get();
-            usuarioRepository.delete(usuario);
-            attr.addFlashAttribute("msgSuccess","Gestor borrado exitosamente");
+            try {
+                usuarioRepository.delete(usuario);
+                attr.addFlashAttribute("msgSuccess","Gestor borrado exitosamente");
+            }
+            catch (Exception e){
+                attr.addFlashAttribute("msgError", "Este gestor no se puede borrar");
+            }
         }
         return "redirect:/admin/gestores";
     }
