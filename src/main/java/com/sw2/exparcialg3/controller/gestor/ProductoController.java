@@ -64,12 +64,23 @@ public class ProductoController {
         String filename;
         if(type==1) {
             //validaciones manuales del precio y foto
-            String[] ff = producto.getPrecio().toString().split("\\.");
-            System.out.println(ff.length);
-
-            if(ff[0].length()>2 || ff[1].length()>2){
-                bindingResult.rejectValue("precio", "error.user", "El precio debe tener 2 decimales y 2 cifras enteras");
+            if (producto.getPrecio()!=null) {
+                String[] ff = producto.getPrecio().toString().split("\\.");
+                if (ff.length>1){
+                    if(ff[0].length()>2 || ff[1].length()>2){
+                        bindingResult.rejectValue("precio", "error.user", "El precio debe tener 2 decimales y 2 cifras enteras");
+                    }
+                }
+                else {
+                    bindingResult.rejectValue("precio", "error.user", "El precio no debe estar vacío");
+                }
             }
+            else {
+                bindingResult.rejectValue("precio", "error.user", "El precio no debe estar vacío");
+            }
+
+
+
             if (multipartFile.isEmpty()) {
                 bindingResult.rejectValue("foto", "error.user", "La foto no debe estar vacía");
             }
@@ -82,7 +93,7 @@ public class ProductoController {
                 }
             }
             if (productoRepository.findById(producto.getCodigo()).isPresent()) { //if new
-                bindingResult.rejectValue("codigo", "error.user", "Este dni ya existe");
+                bindingResult.rejectValue("codigo", "error.user", "Este código ya existe");
             }
         }
 

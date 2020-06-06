@@ -75,5 +75,13 @@ public class ListaProductosController {
         return "producto/verProducto";
     }
 
+    @PostMapping("/buscar")
+    public String buscarProd(@RequestParam("search") String param, Model model){
+
+        model.addAttribute("productos", productoRepository.buscarProductos(param));
+        model.addAttribute("search",param);
+        return "producto/listaProducto";
+    }
+
 
 }
