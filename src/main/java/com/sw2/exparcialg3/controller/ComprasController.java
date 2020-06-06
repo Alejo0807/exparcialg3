@@ -55,8 +55,6 @@ public class ComprasController {
                 List<PedidoHasProducto> listaPHP = ped.getListPedidoHasProductos();
 
                 String phpActualizado = "";
-                float a = 0;
-                ped.setTotal(a);
                 for(PedidoHasProducto php : listaPHP ){
                     if(prod.getCodigo() == php.getId().getProducto().getCodigo()){
                         phpActualizado = "orden actualizada";
@@ -120,6 +118,13 @@ public class ComprasController {
         Optional<Pedido> optPed = pedidoRepository.findById("carrito_"+ Integer.toString(usuario.getDni()));
         Pedido pedido = optPed.get();
         model.addAttribute("listaPedido", pedido.getListPedidoHasProductos());
+
+        float a = 0;
+        pedido.setTotal(a);
+        for(PedidoHasProducto php : pedido.getListPedidoHasProductos() ){
+            a = a + php.getSubtotal();
+        }
+        pedido.setTotal(a);
         model.addAttribute("total",pedido.getTotal());
 
 
@@ -188,6 +193,8 @@ public class ComprasController {
             LocalDate lt = LocalDate.now();
             String codigo = "PE" + lt.getDayOfMonth() + lt.getMonthValue() + lt.getYear() + (autoincremental+1);
             pedido.setCodigo(codigo);
+            pedido.setFecha_compra(lt);
+            pedido.setComprado(1);
             pedidoRepository.save(pedido);
 
             List<PedidoHasProducto> listaPedProd = pedido.getListPedidoHasProductos();
@@ -197,10 +204,10 @@ public class ComprasController {
                 prdct.setStock(prdct.getStock()-pedidoHasProducto.getCant());
             }
 
-            return "redirect:/productos/";
+            return "redirect:/productos";
         }else{
             attr.addFlashAttribute("msg","Tarjeta incorrecta");
-            return "redirect:/compras/checkout";
+            return "redirect:/u/checkout";
         }
     }
 
