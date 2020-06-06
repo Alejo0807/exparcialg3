@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.constraints.Null;
 import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -76,6 +77,10 @@ public class ComprasController {
         System.out.println(sum);
         if (verifier == intArray[15]){
             attr.addFlashAttribute("msg","Compra exitosa");
+            Optional<Integer> opt = pedidoRepository.hallarAutoincrementalPedido();
+            int autoincremental = opt.get();
+            LocalDate lt = LocalDate.now();
+            String codigo = "PE" + lt.getDayOfMonth() + lt.getMonthValue() + lt.getYear() + (autoincremental+1);
             return "redirect:/productos/";
         }else{
             return "redirect:/compras/checkout";
