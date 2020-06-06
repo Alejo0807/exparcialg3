@@ -31,7 +31,7 @@ public class ComprasController {
     @GetMapping("/carrito")
     public String Carrito(Model model){
         model.addAttribute("carrito", pedidoHasProductoRepository.findAll());
-        return "";
+        return "pedido/carrito";
     }
 
     @GetMapping("/checkout")
