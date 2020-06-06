@@ -30,7 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin", "/admin/**").hasAnyAuthority("admin")
                 .antMatchers("/gestor", "/gestor/**").hasAnyAuthority("gestor")
                 .antMatchers("/u", "/u/**").hasAnyAuthority("registrado")
-                .antMatchers("/loginForm").anonymous()
+                .antMatchers("/loginForm", "/loginForm/**","/signup").anonymous()
                 .anyRequest().permitAll()
                 .and()
                 .rememberMe().key("uniqueAndSecret")
