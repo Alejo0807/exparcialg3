@@ -87,7 +87,7 @@
                                         <ul class="list-view text-dark font-weight-normal" >
                                             <li><strong>Código del producto:</strong> <span th:text="${p.codigo}"></span></li>
                                             <li><strong>Nombre del producto:</strong> <span th:text="${p.nombre}"></span></li>
-                                            <li><strong>Precio:</strong> <span th:text="${p.precio}"></span></li>
+                                            <li><strong>Precio:</strong> <span th:text="'S/.' + ${p.precio}"></span></li>
                                             <li><strong>Stock:</strong> <span th:text="${p.stock}"></span></li>
                                         </ul>
                                         <div class="pl-4">
