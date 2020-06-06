@@ -9,5 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/gestor")
 public class GestorController {
 
+    @GetMapping(value = {"","/"})
+    public String asdasasd(){
+        return "redirect:/gestor/e";
+    }
 
 }

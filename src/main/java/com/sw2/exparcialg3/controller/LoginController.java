@@ -86,9 +86,10 @@ public class LoginController {
 
     @PostMapping("/guardar")
     public String guardarUsuario(@ModelAttribute("usuario") @Valid Usuario u,
-                                 BindingResult bindingResult,
+                                 BindingResult bindingResult, @RequestParam("pass") String pass,
                                  RedirectAttributes attr, Model model) {
-        System.out.println(u.getDni());
+        System.out.println(pass);
+        System.out.println(u.getPassword());
         String pattern = "^(?=(?:\\D*\\d){2})[a-zA-Z0-9]*$";
         String s = u.getCorreo().replace(" ","");
 
@@ -99,13 +100,14 @@ public class LoginController {
         if(usuarioRepository.findByCorreo(u.getCorreo()) != null){
             bindingResult.rejectValue("correo","error.user","Este correo ya está en uso");
         }
-        if(!((u.getPassword().length() >= 8 && u.getPassword().length() <= 10)))    {
-            bindingResult.rejectValue("password","error.user","La contraseña debe tener entre 8 y 10 caracteres");
-        }
-        if(!u.getPassword().matches(pattern)){
-            bindingResult.rejectValue("password","error.user","La contraseña debe contener como mínimo 2 números");
+
+        if(!(u.getPassword().equals(pass))){
+            bindingResult.rejectValue("password","error.user","Las contraseñas deben de ser idénticas");
         }
 
+        if(!u.validatePassword()){
+            bindingResult.rejectValue("password","error.user","La contraseña debe tener entre 8 y 10 caracteres y como mínimo 2 números");
+        }
 
         if(!(s.endsWith("@pucp.edu.pe") || s.endsWith("@pucp.pe"))){
             bindingResult.rejectValue("correo","error.user","El correo debe ser pucp.edu.pe o pucp.pe");
