@@ -23,6 +23,7 @@ public class GestoresController {
 
     @GetMapping(value = {""})
     public String lista(Model model){
+
         model.addAttribute("lista", usuarioRepository.findUsuariosByRol_Idrol(ROL_CRUD));
         return "admin/listaGestores";
     }
@@ -33,6 +34,7 @@ public class GestoresController {
         Optional<Usuario> optionalUsuario = usuarioRepository.findUsuarioByDniAndRol_Idrol(dni, ROL_CRUD);
         if(optionalUsuario.isPresent()){
             usuario = optionalUsuario.get();
+            model.addAttribute("formtype", "0");
             model.addAttribute("usuario", usuario);
 
             return "admin/formGestores";
@@ -42,21 +44,41 @@ public class GestoresController {
 
     @GetMapping("/new")
     public  String asdnadsin(@ModelAttribute("usuario") Usuario usuario, Model model){
-            return "admin/formGestores";
+        model.addAttribute("formtype", "1");
+        return "admin/formGestores";
     }
 
 
     @PostMapping("/save")
     public  String asdnaasdasddsin(@ModelAttribute("usuario") @Valid Usuario usuario,
-                                   BindingResult bindingResult, Model model){
+                                   BindingResult bindingResult, @RequestParam("type") int type,
+                                   Model model, RedirectAttributes attr){
 
-        Optional<Usuario> optionalUsuario = usuarioRepository.findUsuarioByDniAndRol_Idrol(1, ROL_CRUD);
-        if(optionalUsuario.isPresent()){
+        if(type==1 && usuarioRepository.findById(usuario.getDni()).isPresent()){ //if new
+            bindingResult.rejectValue("codigo","error.user","Este dni ya existe");
+        }
 
+        String s = usuario.getCorreo().replace(" ","");
+        if(!(s.endsWith("@pucp.edu.pe") || s.endsWith("@pucp.pe"))){
+            bindingResult.rejectValue("correo","error.user","El correo debe ser pucp.edu.pe o pucp.pe");
+        }
 
+        if(bindingResult.hasErrors()){
+            model.addAttribute("formtype",Integer.toString(type));
             return "admin/formGestores";
         }
-        return "redirect:/admin/gestores";
+        else {
+
+            Optional<Usuario> optionalUsuario = usuarioRepository.findById(usuario.getDni());
+            if (optionalUsuario.isPresent()) {
+                attr.addFlashAttribute("msgSuccess", "Gestor actualizado exitosamente");
+            }
+            else {
+                attr.addFlashAttribute("msgSuccess", "Gestor creado exitosamente");
+            }
+            usuarioRepository.save(usuario);
+            return "redirect:/admin/gestores";
+        }
     }
 
 
