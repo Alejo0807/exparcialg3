@@ -32,7 +32,7 @@
         <!-- Main Content -->
         <div id="content">
 
-            <div th:replace="fragments/general.html :: topbar('1')"></div>
+            <div th:replace="fragments/general.html :: topbar(${carrito==null}? 0:${carrito})"></div>
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
@@ -47,7 +47,7 @@
                 </div>
 
                 <!-- Listado de productos -->
-                <div class="row" th:each="p : ${carrito}">
+                <div class="row" th:each="p : ${listaPedido}">
                     <!-- Area Chart -->
                     <div class="col-lg-10 col-sm-12 mx-auto">
                         <div class="container-fluid ">

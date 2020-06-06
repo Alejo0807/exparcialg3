@@ -39,9 +39,11 @@ public class ComprasController {
         //System.out.println("hola");
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         Optional<Producto> optProd = productoRepository.findById(cod);
+        System.out.println(usuario.getDni());
         Optional<Pedido> optPed = pedidoRepository.findById("carrito_"+ Integer.toString(usuario.getDni()));
 
-
+        Pedido pedido = optPed.get();
+        System.out.println(pedido.getUsuario().getDni());
 
         if(optProd.isPresent()){
             Producto prod = optProd.get();
@@ -66,6 +68,9 @@ public class ComprasController {
                     phpfinal = php;
                 }
                 phpfinal = llenarPHP(phpfinal);
+                pedidoRepository.save(ped);
+
+                pedidoHasProductoRepository.save(phpfinal);
                 attr.addFlashAttribute("msg","Producto agregado al carrito");
                 //guardar de otra manera
             }else{
@@ -75,12 +80,15 @@ public class ComprasController {
                 php.setId(new PedProdId(ped, prod));
                 phpfinal = crearPHP(php);
                 attr.addFlashAttribute("msg","Nuevo carrito creado y producto agregado");
+                pedidoRepository.save(ped);
+
+                pedidoHasProductoRepository.save(phpfinal);
             }
-            pedidoHasProductoRepository.save(phpfinal);
-            return "/productos/listaProducto";
+
+            return "redirect:/productos";
         }else{
             attr.addFlashAttribute("msg","Stock agotado");
-            return "/productos/listaProducto";
+            return "redirect:/productos";
         }
 
     }
@@ -105,9 +113,20 @@ public class ComprasController {
     @GetMapping("/carrito")
     public String Carrito(Model model, HttpSession session){
 
-        Usuario u = (Usuario) session.getAttribute("usuario");
-        Pedido ped = new Pedido("carrito_" + Integer.toString(u.getDni()));
-        model.addAttribute("carrito", ped.getListPedidoHasProductos());
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        Pedido ped = new Pedido("carrito_" + Integer.toString(usuario.getDni()));
+        model.addAttribute("listaPedido", ped.getListPedidoHasProductos());
+
+        int cantidad = 0;
+        Optional<Pedido> optPed = pedidoRepository.findById("carrito_"+ Integer.toString(usuario.getDni()));
+        if (optPed.isPresent()){
+            cantidad = productosTotalesEnCarrito(optPed.get());
+        }else{
+            cantidad = 0;
+        }
+
+
+        model.addAttribute("carrito", cantidad);
         return "pedido/carrito";
     }
 
@@ -182,8 +201,28 @@ public class ComprasController {
     @GetMapping("/pedidos")
     public String Pedidos(Model model,HttpSession session){
 
-        Usuario u = (Usuario) session.getAttribute("usuario");
-        model.addAttribute("pedidos", pedidoRepository.findByUsuario(u.getDni()));
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        model.addAttribute("pedidos", pedidoRepository.findByUsuario(usuario.getDni()));
+
+        int cantidad = 0;
+        Optional<Pedido> optPed = pedidoRepository.findById("carrito_"+ Integer.toString(usuario.getDni()));
+        if (optPed.isPresent()){
+            cantidad = productosTotalesEnCarrito(optPed.get());
+        }else{
+            cantidad = 0;
+        }
+
+        model.addAttribute("carrito", cantidad);
+
         return "pedido/listaPedidos";
+    }
+
+
+    public int productosTotalesEnCarrito(Pedido pedido){
+        int sum = 0;
+        for(PedidoHasProducto php : pedido.getListPedidoHasProductos()){
+            sum = sum + php.getCant();
+        }
+        return sum;
     }
 }
