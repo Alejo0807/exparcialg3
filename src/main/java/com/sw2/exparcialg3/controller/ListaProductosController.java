@@ -50,24 +50,26 @@ public class ListaProductosController {
         return "producto/verProducto";
     }
 
-    @PostMapping("/u/agregarAlCarrito")
-    public String AgregarCarrito(@RequestParam(name = "id", required = false) String cod, HttpSession session){
+    @GetMapping("/u/agregarAlCarrito")
+    public String AgregarCarrito(@RequestParam(name = "id") String cod, HttpSession session){
 
         //System.out.println("hola");
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         Optional<Producto> optProd = productoRepository.findById(cod);
         Optional<Pedido> optPed = pedidoRepository.findById("carrito_"+ Integer.toString(usuario.getDni()));
 
-        /*
+
         if(optProd.isPresent()){
+            System.out.println("carrito_"+ Integer.toString(usuario.getDni()));
             Producto prod = optProd.get();
             if(optPed.isPresent()){
+                System.out.println("hola2");
                 Pedido ped = optPed.get();
                 PedidoHasProducto php = new PedidoHasProducto(new PedProdId(ped, prod), 1);
                 //guardar de otra manera
                 pedidoHasProductoRepository.save(php);
             }
-        }*/
+        }
 
         return "redirect:/productos";
     }
