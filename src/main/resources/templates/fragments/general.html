@@ -50,14 +50,14 @@
 
 
             <!-- Nav Item - Messages -->
-            <li class="nav-item dropdown no-arrow mx-1">
+            <li sec:authorize="!hasAnyAuthority('admin','gestor')" class="nav-item dropdown no-arrow mx-1">
                 <a class="nav-link dropdown-toggle text-dark mt-1" href="#" id="misPedidos" >
                     <h6 class="text-primary">Mis Pedidos</h6>
                 </a>
             </li>
 
             <!-- Nav Item - Messages -->
-            <li class="nav-item dropdown no-arrow mx-1">
+            <li sec:authorize="!hasAnyAuthority('admin','gestor')" class="nav-item dropdown no-arrow mx-1">
                 <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i style="color: orange"  class="fas fa-shopping-cart icon-large"></i>
                     <!-- Counter - Messages -->
@@ -120,8 +120,8 @@
 
         <!-- Nav Item - Dashboard -->
         <li sec:authorize="hasAnyAuthority('admin')" class="nav-item " th:classappend="${param1=='Gestores'}? active : ''">
-            <a class="nav-link" href="index.html">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
+            <a class="nav-link" th:href="@{/admin/gestores}">
+                <i class="fas fa-fw fa-person-booth"></i>
                 <span>Gestores</span></a>
         </li>
 

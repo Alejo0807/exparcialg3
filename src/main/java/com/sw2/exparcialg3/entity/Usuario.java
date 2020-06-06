@@ -1,6 +1,8 @@
 package com.sw2.exparcialg3.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Entity
@@ -10,10 +12,15 @@ public class Usuario implements Serializable {
     @Id
     @Column(name = "dni")
     private int dni;
+    @NotBlank
+    @Size(min = 2, max = 40)
     @Column(name = "nombre",nullable = false)
     private String nombre;
+    @NotBlank
+    @Size(min = 2, max = 40)
     @Column(name = "apellido",nullable = false)
     private String apellido;
+    @NotBlank
     @Column(name = "correo",nullable = false)
     private String correo;
     @Column(name = "password",nullable = false)
