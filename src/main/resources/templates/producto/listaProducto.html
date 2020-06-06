@@ -38,17 +38,20 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <div class="container-fluid">
-                    <div class="d-sm-flex align-items-center justify-content-between mb-5 px-5 mx-5">
-                        <h1 class="h3 mb-0 text-dark font-weight-bold">Productos</h1>
+                <div class="row">
+                    <div class="col-lg-10 col-sm-12 mx-auto  my-4 align-content-center text-center">
+                        <div class="container-fluid">
+                            <h1 class="h2 text-dark font-weight-bold">Productos</h1>
+                        </div>
                     </div>
                 </div>
 
                 <div class="alert alert-success" role="alert" th:if="${msg != null}" th:text="${msg}"></div>
                 <!-- Content Row -->
 
-                <div class="row px-5 mx-5 mb-5">
+                <div class="row  mb-5">
                     <!--Buscador-->
+                    <div class="col-lg-9 col-sm-11 mx-auto">
                     <div class="container-fluid">
                         <form>
                             <div class="input-group">
@@ -61,12 +64,14 @@
                             </div>
                         </form>
                     </div>
+                    </div>
                 </div>
 
 
                 <!-- Listado de productos -->
-                <div class="row px-5 mx-5" th:each="p : ${productos}">
+                <div class="row" th:each="p : ${productos}">
                     <!-- Area Chart -->
+                    <div class="col-lg-10 col-sm-12 mx-auto">
                     <div class="container-fluid ">
                         <div class="card shadow mb-4">
                             <!-- Card body-->
@@ -102,6 +107,7 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 
