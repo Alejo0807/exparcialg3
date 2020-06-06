@@ -76,12 +76,12 @@ public class ComprasController {
                 attr.addFlashAttribute("msg","Nuevo carrito creado y producto agregado");
             }
             pedidoHasProductoRepository.save(phpfinal);
-
+            return "redirect:/productos";
+        }else{
+            attr.addFlashAttribute("msg","Stock agotado");
+            return "redirect:/productos";
         }
 
-
-
-        return "redirect:/productos";
     }
 
     public PedidoHasProducto llenarPHP(PedidoHasProducto php){
