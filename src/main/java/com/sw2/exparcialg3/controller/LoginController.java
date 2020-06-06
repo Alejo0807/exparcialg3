@@ -7,6 +7,7 @@ import com.sw2.exparcialg3.entity.Usuario;
 import com.sw2.exparcialg3.repository.PedidoRepository;
 import com.sw2.exparcialg3.repository.RolRepository;
 import com.sw2.exparcialg3.repository.UsuarioRepository;
+import com.sw2.exparcialg3.utils.CustomMailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,8 +20,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Controller
 public class LoginController {
@@ -31,6 +34,8 @@ public class LoginController {
     PedidoRepository pedidoRepository;
     @Autowired
     RolRepository rolRepository;
+    @Autowired
+    CustomMailService customMailService;
 
     @GetMapping(value = {"/loginForm"})
     public String login(){
@@ -72,9 +77,15 @@ public class LoginController {
 
     @PostMapping("/processForgotPassword")
     public String processForgotPassword(Model model, @RequestParam(value = "username", required = true) String email,
-                                        RedirectAttributes attr){
+                                        RedirectAttributes attr) throws IOException, MessagingException {
         System.out.println(email);
+        Usuario u = usuarioRepository.findByCorreo(email);
         model.addAttribute("msg", email);
+        customMailService.sendEmail(email,
+                "Recuperación de contraseña", "Nueva contraseña",
+                "Su nueva contraseña es: \n"
+                        +u.generateNewPassword());
+        usuarioRepository.save(u);
         attr.addFlashAttribute("Se le ha enviado a su correo electrónico su nueva contraseña");
         return "redirect:/forgotpassword";
     }
