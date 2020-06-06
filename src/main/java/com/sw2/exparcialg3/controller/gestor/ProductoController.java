@@ -50,6 +50,7 @@ public class ProductoController {
         } else {
             return "redirect:/gestor/productos";
         }
+
     }
 
     @GetMapping("/delete")
