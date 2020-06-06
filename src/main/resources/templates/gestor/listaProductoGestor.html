@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Administrador</title>
+
+    <!-- Custom fonts for this template-->
+    <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <div th:replace="fragments/general.html ::admin-sidebar(param1='producto')"></div>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <div th:replace="fragments/general.html :: topbar(10)"></div>
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-5 pb-2 pr-4">
+                    <h1 class="h3 mb-0 text-gray-900">Lista de productos</h1>
+                    <a th:href="@{/gestor/productos/new}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Nuevo Producto</a>
+                </div>
+
+                <div th:if="${msgSuccess != null}" th:text="${msgSuccess}" class="alert alert-success py-1" role="alert"></div>
+                <div th:if="${msgError != null}" th:text="${msgError}" class="alert alert-danger py-1" role="alert"></div>
+
+                <!-- Listado de productos -->
+                <div class="row" th:each="p : ${productos}">
+                    <!-- Area Chart -->
+                    <div class="col-lg-11 col-sm-12 mx-auto">
+                        <div class="container-fluid ">
+                            <div class="card shadow mb-4">
+                                <!-- Card body-->
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-4 py-4">
+                                            <div class="container-fluid" style="text-align: center;display: block;">
+                                                <!--imagen: -->
+                                                <img src="https://miro.medium.com/max/4000/1*pJm1NTQ-DCJvsLvo03idZQ.png" height="135" width="135" class="img-rounded" alt="Cinque Terre">
+                                            </div>
+                                        </div>
+                                        <div class="col-8">
+                                            <ul class="list-view text-dark font-weight-normal" >
+                                                <li><strong>Código del producto:</strong> <span th:text="${p.codigo}"></span></li>
+                                                <li><strong>Nombre del producto:</strong> <span th:text="${p.nombre}"></span></li>
+                                                <li><strong>Precio:</strong> <span th:text="${p.precio}"></span></li>
+                                                <li><strong>Stock:</strong> <span th:text="${p.stock}"></span></li>
+                                                <li><strong>Descripcion:</strong> <span th:text="${p.descripcion}"></span></li>
+                                            </ul>
+
+                                            <div class="container" >
+                                                <div class="row mr-0 pr-0 pb-1" style="position: absolute; right: 0; bottom: 0;">
+                                                    <a type="button" th:href="'/gestor/productos/delete?id='+${p.codigo}" class="mx-3 d-none d-sm-inline-block btn btn-sm btn-danger text-white shadow-sm"> Borrar</a>
+                                                    <a type="button" th:href="'/gestor/productos/edit?id='+${p.codigo}" class="mx-1 d-none d-sm-inline-block btn btn-sm btn-primary text-white shadow-sm"> Editar </a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <div th:replace="fragments/general.html :: footer"></div>
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Bootstrap core JavaScript-->
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+<!-- Core plugin JavaScript-->
+<script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+<!-- Custom scripts for all pages-->
+<script th:src="@{/js/sb-admin-2.min.js}"></script>
+
+<!-- Page level plugins -->
+<script th:src="@{/vendor/chart.js/Chart.min.js}"></script>
+
+<!-- Page level custom scripts -->
+<script th:src="@{/js/demo/chart-area-demo.js}"></script>
+<script th:src="@{/js/demo/chart-pie-demo.js}"></script>
+
+</body>
+
+</html>

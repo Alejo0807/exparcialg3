@@ -55,7 +55,7 @@ public class GestoresController {
                                    Model model, RedirectAttributes attr){
 
         if(type==1 && usuarioRepository.findById(usuario.getDni()).isPresent()){ //if new
-            bindingResult.rejectValue("codigo","error.user","Este dni ya existe");
+            bindingResult.rejectValue("dni","error.user","Este dni ya existe");
         }
 
         String s = usuario.getCorreo().replace(" ","");
