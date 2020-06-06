@@ -80,7 +80,7 @@
                                     <div class="col-4 py-4">
                                         <div class="container-fluid" style="text-align: center;display: block;">
                                             <!--imagen: -->
-                                            <img src="https://miro.medium.com/max/4000/1*pJm1NTQ-DCJvsLvo03idZQ.png" height="135" width="135" class="img-rounded" alt="Cinque Terre">
+                                            <img th:src="@{'/image/'+${p.codigo}}" height="135" width="135" class="img-rounded" alt="Cinque Terre">
                                         </div>
                                     </div>
                                     <div class="col-5">
@@ -98,7 +98,7 @@
                                     <div class="col-3">
                                         <div class="container" style="position: absolute; right: 0; bottom: 0;">
                                             <div class="mr-0 pr-0 pb-1">
-                                                <a th:href="@{'/productos/u/agregarAlCarrito?id=' + ${p.codigo}}" class="d-none d-sm-inline-block btn btn-sm btn-success text-white shadow-sm"> Agregar al carrito <i class="fas fa-plus-circle fa-sm text-white"></i></a>
+                                                <a th:href="@{'/u/agregarAlCarrito?id=' + ${p.codigo}}" class="mx-1 d-none d-sm-inline-block btn btn-sm btn-success text-white shadow-sm"> Agregar al carrito <i class="fas fa-plus-circle fa-sm text-white"></i></a>
                                             </div>
                                         </div>
 

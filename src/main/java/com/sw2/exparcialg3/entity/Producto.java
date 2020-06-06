@@ -30,11 +30,28 @@ public class Producto implements Serializable {
     private String descripcion;
     @Column(name = "precio",nullable = false)
     private Float precio;
-    @Column(name = "foto",nullable = false)
-    private String foto;
+    @Column(name = "foto")
+    private byte[] foto;
     @Positive
     @Column(name = "stock",nullable = false)
     private int stock;
+    private String fotocontenttype;
+
+    public String getFotocontenttype() {
+        return fotocontenttype;
+    }
+
+    public void setFotocontenttype(String fotocontenttype) {
+        this.fotocontenttype = fotocontenttype;
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
 
     public String getCodigo() {
         return codigo;
@@ -68,13 +85,6 @@ public class Producto implements Serializable {
         this.precio = precio;
     }
 
-    public String getFoto() {
-        return foto;
-    }
-
-    public void setFoto(String foto) {
-        this.foto = foto;
-    }
 
     public int getStock() {
         return stock;

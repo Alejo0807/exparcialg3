@@ -68,7 +68,7 @@ public class LoginController {
     }
 
     @GetMapping("/forgotpassword")
-    public String RecuperarContraseña(){return "forgot-password";}
+    public String RecuperarContrasena(){return "forgot-password";}
 
     @PostMapping("/processForgotPassword")
     public String processForgotPassword(Model model, @RequestParam(value = "username", required = true) String email,
