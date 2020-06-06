@@ -1,6 +1,7 @@
 package com.sw2.exparcialg3.repository;
 
 import com.sw2.exparcialg3.entity.Pedido;
+import com.sw2.exparcialg3.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -18,6 +19,6 @@ public interface PedidoRepository extends JpaRepository<Pedido, String> {
             "select @numero;", nativeQuery = true)
     Optional<Integer> hallarAutoincrementalPedido();
 
-    List<Pedido> findByUsuario(int dni);
+    List<Pedido> findByUsuario(Usuario usuario);
 
 }

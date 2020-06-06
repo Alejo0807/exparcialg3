@@ -114,11 +114,16 @@ public class ComprasController {
     public String Carrito(Model model, HttpSession session){
 
         Usuario usuario = (Usuario) session.getAttribute("usuario");
-        Pedido ped = new Pedido("carrito_" + Integer.toString(usuario.getDni()));
-        model.addAttribute("listaPedido", ped.getListPedidoHasProductos());
+        System.out.println(usuario.getDni());
+        Optional<Pedido> optPed = pedidoRepository.findById("carrito_"+ Integer.toString(usuario.getDni()));
+        Pedido pedido = optPed.get();
+        model.addAttribute("listaPedido", pedido.getListPedidoHasProductos());
+
+        for (PedidoHasProducto php : pedido.getListPedidoHasProductos()){
+            System.out.println(php.getId().getProducto().getNombre());
+        }
 
         int cantidad = 0;
-        Optional<Pedido> optPed = pedidoRepository.findById("carrito_"+ Integer.toString(usuario.getDni()));
         if (optPed.isPresent()){
             cantidad = productosTotalesEnCarrito(optPed.get());
         }else{
@@ -202,7 +207,9 @@ public class ComprasController {
     public String Pedidos(Model model,HttpSession session){
 
         Usuario usuario = (Usuario) session.getAttribute("usuario");
-        model.addAttribute("pedidos", pedidoRepository.findByUsuario(usuario.getDni()));
+        model.addAttribute("pedidos", pedidoRepository.findByUsuario(usuario));
+
+
 
         int cantidad = 0;
         Optional<Pedido> optPed = pedidoRepository.findById("carrito_"+ Integer.toString(usuario.getDni()));
@@ -216,6 +223,16 @@ public class ComprasController {
 
         return "pedido/listaPedidos";
     }
+
+/*    @PostMapping("/borrarUnidad")
+    public String borrarUnidad(@RequestParam("cod") String cod, HttpSession session){
+
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        Optional<Producto> optProd = productoRepository.findById(cod);
+        System.out.println(usuario.getDni());
+        Optional<Pedido> optPed = pedidoRepository.findById("carrito_"+ Integer.toString(usuario.getDni()));
+
+    }*/
 
 
     public int productosTotalesEnCarrito(Pedido pedido){

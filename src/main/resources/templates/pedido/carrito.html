@@ -58,7 +58,7 @@
                                         <div class="col-4 py-4">
                                             <div class="container-fluid" style="text-align: center;display: block;">
                                                 <!--imagen: -->
-                                                <img src="https://miro.medium.com/max/4000/1*pJm1NTQ-DCJvsLvo03idZQ.png" height="135" width="135" class="img-rounded" alt="Cinque Terre">
+                                                <img th:src="${p.id.producto.foto}" height="135" width="135" class="img-rounded" alt="Cinque Terre">
                                             </div>
                                         </div>
                                         <div class="col-5">
@@ -74,7 +74,7 @@
 
                                             <div class="container d-flex flex-row-reverse" style="position: absolute; right: 0; top: 0;">
                                                 <div class="d-inline-flex p-2 bd-highlight">
-                                                    <button class="ml-0 pr-0 pb-1 d-none d-sm-inline-block btn btn-sm btn-danger text-white shadow-sm">
+                                                    <button th:href="@{}" class="ml-0 pr-0 pb-1 d-none d-sm-inline-block btn btn-sm btn-danger text-white shadow-sm">
                                                         <i class="fa fa-trash-alt mr-2" aria-hidden="true"></i>
                                                     </button>
                                                 </div>
