@@ -32,7 +32,7 @@
         <!-- Main Content -->
         <div id="content">
 
-            <div th:replace="fragments/general.html :: topbar"></div>
+            <div th:replace="fragments/general.html :: topbar(${carrito==null}? 0:${carrito})"></div>
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
