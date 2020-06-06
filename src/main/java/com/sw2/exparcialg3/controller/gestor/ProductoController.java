@@ -124,8 +124,14 @@ public class ProductoController {
         Optional<Producto> optProduct = productoRepository.findById(id);
 
         if (optProduct.isPresent()) {
-            productoRepository.deleteById(id);
-            attr.addFlashAttribute("msgSuccess", "Producto borrado exitosamente");
+            try {
+                productoRepository.deleteById(id);
+                attr.addFlashAttribute("msgSuccess", "Producto borrado exitosamente");
+            }
+            catch (Exception e){
+                attr.addFlashAttribute("msgError", "Este producto no se puede borrar porque se está usando");
+            }
+
         }
         return "redirect:/gestor/productos";
     }

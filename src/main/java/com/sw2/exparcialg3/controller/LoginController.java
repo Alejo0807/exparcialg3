@@ -89,7 +89,7 @@ public class LoginController {
                                  BindingResult bindingResult,
                                  RedirectAttributes attr, Model model) {
         System.out.println(u.getDni());
-        String pattern = "^(?=.*?\\d.*\\d)[a-zA-Z0-9]{8,}$";
+        String pattern = "^(?=(?:\\D*\\d){2})[a-zA-Z0-9]*$";
         String s = u.getCorreo().replace(" ","");
 
         if(usuarioRepository.findById(u.getDni()).isPresent()){ //if new
@@ -99,9 +99,14 @@ public class LoginController {
         if(usuarioRepository.findByCorreo(u.getCorreo()) != null){
             bindingResult.rejectValue("correo","error.user","Este correo ya está en uso");
         }
+        if(!((u.getPassword().length() >= 8 && u.getPassword().length() <= 10)))    {
+            bindingResult.rejectValue("password","error.user","La contraseña debe tener entre 8 y 10 caracteres");
+        }
         if(!u.getPassword().matches(pattern)){
             bindingResult.rejectValue("password","error.user","La contraseña debe contener como mínimo 2 números");
         }
+
+
         if(!(s.endsWith("@pucp.edu.pe") || s.endsWith("@pucp.pe"))){
             bindingResult.rejectValue("correo","error.user","El correo debe ser pucp.edu.pe o pucp.pe");
         }

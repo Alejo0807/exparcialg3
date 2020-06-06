@@ -1,11 +1,14 @@
 package com.sw2.exparcialg3.entity;
 
+import net.bytebuddy.utility.RandomString;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import javax.persistence.*;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Entity
 @Table(name = "usuario")
@@ -14,7 +17,8 @@ public class Usuario implements Serializable {
     @Id
     @Column(name = "dni")
     //@NotBlank(message = "Este campo no puede estar vacío")
-    @Digits(integer = 8, fraction = 0, message = "El DNI tiene que tener 8 dígitos")
+    @Digits(integer = 8, fraction = 0)
+    @Min(value = 10000000, message = "El DNI tiene que tener 8 dígitos")
     private int dni;
     @NotBlank(message = "Este campo no puede estar vacío")
     @Size(min = 2, max = 40)
@@ -27,8 +31,6 @@ public class Usuario implements Serializable {
     @NotBlank(message = "Este campo no puede estar vacío")
     @Column(name = "correo",nullable = false)
     private String correo;
-    @NotBlank(message = "Este campo no puede estar vacío")
-    @Size(max = 10, min = 8, message = "El código debe contener entre 8 y 10 letras")
     @Column(name = "password",nullable = false)
     private String password;
     @Column(name = "enable",nullable = false)
@@ -36,6 +38,35 @@ public class Usuario implements Serializable {
     @ManyToOne
     @JoinColumn(name = "rol")
     private Rol rol;
+
+
+    public boolean validatePassword(){
+        if(password!=null){
+            int len = password.length();
+            if (len>7 && len<11){
+                String numbers = "0123456789";
+                int count=0;
+                for(String i : password.split("")){
+                    if (numbers.contains(i)) count++;
+                }
+                if (count>=2){
+                    this.password = new BCryptPasswordEncoder().encode(password);
+                    return true;
+                }
+
+            }
+        }
+        return false;
+    }
+
+    public String generateNewPassword(){
+        RandomString rs = new RandomString(8);
+        int[] randomNum = {ThreadLocalRandom.current().nextInt(0, 9),ThreadLocalRandom.current().nextInt(0, 9)};
+        String newpassword = rs.nextString()+ String.valueOf(randomNum[0])+ String.valueOf(randomNum[1]) ;
+        password = new BCryptPasswordEncoder().
+                encode(newpassword);
+        return newpassword;
+    }
 
     public String getFullname(){
         return nombre + " " + apellido;
