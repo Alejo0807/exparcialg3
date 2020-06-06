@@ -41,10 +41,15 @@ public class ListaProductosController {
 
         int cantidad = 0;
         Usuario usuario = (Usuario) session.getAttribute("usuario");
-        Optional<Pedido> optPed = pedidoRepository.findById("carrito_"+ Integer.toString(usuario.getDni()));
-        if (optPed.isPresent()){
-            cantidad = productosTotalesEnCarrito(optPed.get());
+        if(usuario != null){
+            Optional<Pedido> optPed = pedidoRepository.findById("carrito_"+ Integer.toString(usuario.getDni()));
+            if (optPed.isPresent()){
+                cantidad = productosTotalesEnCarrito(optPed.get());
+            }else{
+                cantidad = 0;
+            }
         }
+
         model.addAttribute("carrito", cantidad);
 
         return "producto/listaProducto";
