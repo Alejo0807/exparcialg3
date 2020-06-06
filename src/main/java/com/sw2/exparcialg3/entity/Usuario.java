@@ -1,6 +1,8 @@
 package com.sw2.exparcialg3.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -10,9 +12,9 @@ import java.io.Serializable;
 public class Usuario implements Serializable {
 
     @Id
-    @NotBlank(message = "Este campo no puede estar vacío")
-    @Size(max = 8, min = 8, message = "El dni debe tener 8 dígitos")
     @Column(name = "dni")
+    //@NotBlank(message = "Este campo no puede estar vacío")
+    @Digits(integer = 8, fraction = 0)
     private int dni;
     @NotBlank(message = "Este campo no puede estar vacío")
     @Size(min = 2, max = 40)

@@ -35,29 +35,37 @@
               <div class="text-center">
                 <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
               </div>
-              <form class="user" method="post" th:action="@{/register}" th:object="${usuario}">
+              <form class="user" method="post" th:action="@{/guardar}" th:object="${usuario}">
                 <div class="form-group row">
                   <div class="col-sm-6 mb-3 mb-sm-0">
                     <input th:field="*{nombre}" type="text" class="form-control form-control-user" placeholder="First Name">
+                    <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error</div>
                   </div>
                   <div class="col-sm-6">
                     <input th:field="*{apellido}" type="text" class="form-control form-control-user" placeholder="Last Name">
+                    <div class="text-danger" th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}">Error</div>
                   </div>
                 </div>
                 <div class="form-group">
+                  <input th:field="*{dni}" type="text" class="form-control form-control-user" placeholder="DNI">
+                  <div class="text-danger" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}">Error</div>
+                </div>
+                <div class="form-group">
                   <input th:field="*{correo}" type="email" class="form-control form-control-user" placeholder="Email Address">
+                  <div class="text-danger" th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}">Error</div>
                 </div>
                 <div class="form-group row">
                   <div class="col-sm-6 mb-3 mb-sm-0">
                     <input th:field="*{password}" type="password" class="form-control form-control-user"  placeholder="Password">
+                    <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error</div>
                   </div>
                   <div class="col-sm-6">
                     <input type="password" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Repeat Password">
                   </div>
                 </div>
-                <a href="login.html" class="btn btn-primary btn-user btn-block">
+                <button type="submit" class="btn btn-primary btn-user btn-block">
                   Register Account
-                </a>
+                </button>
               </form>
               <hr>
               <div class="text-center">
