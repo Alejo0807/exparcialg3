@@ -49,7 +49,7 @@ public class ListaProductosController {
         return "producto/verProducto";
     }
 
-    @PostMapping("/AgregarAlCarrito")
+    @PostMapping("/u/AgregarAlCarrito")
     public String AgregarCarrito(@RequestParam("cod") String cod){
 
         Usuario usuario = new Usuario();
