@@ -89,14 +89,19 @@ public class LoginController {
                                  BindingResult bindingResult,
                                  RedirectAttributes attr, Model model) {
         System.out.println(u.getDni());
+        String pattern = "^(?=.*?\\d.*\\d)[a-zA-Z0-9]{8,}$";
+        String s = u.getCorreo().replace(" ","");
 
         if(usuarioRepository.findById(u.getDni()).isPresent()){ //if new
             bindingResult.rejectValue("dni","error.user","Este dni ya existe");
-        }else if(usuarioRepository.findByCorreo(u.getCorreo()).isEnable()){
-            bindingResult.rejectValue("correo","error.user","Este correo ya está en uso");
         }
 
-        String s = u.getCorreo().replace(" ","");
+        if(usuarioRepository.findByCorreo(u.getCorreo()) != null){
+            bindingResult.rejectValue("correo","error.user","Este correo ya está en uso");
+        }
+        if(!u.getPassword().matches(pattern)){
+            bindingResult.rejectValue("password","error.user","La contraseña debe contener como mínimo 2 números");
+        }
         if(!(s.endsWith("@pucp.edu.pe") || s.endsWith("@pucp.pe"))){
             bindingResult.rejectValue("correo","error.user","El correo debe ser pucp.edu.pe o pucp.pe");
         }
