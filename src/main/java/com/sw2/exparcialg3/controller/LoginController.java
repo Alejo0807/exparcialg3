@@ -87,7 +87,7 @@ public class LoginController {
                         +u.generateNewPassword());
         usuarioRepository.save(u);
         attr.addFlashAttribute("Se le ha enviado a su correo electrónico su nueva contraseña");
-        return "redirect:/forgotpassword";
+        return "redirect:/loginForm";
     }
 
     @GetMapping("/signup")
