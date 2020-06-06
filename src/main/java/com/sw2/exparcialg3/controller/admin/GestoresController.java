@@ -2,6 +2,7 @@ package com.sw2.exparcialg3.controller.admin;
 
 import com.sw2.exparcialg3.entity.Usuario;
 import com.sw2.exparcialg3.repository.UsuarioRepository;
+import com.sw2.exparcialg3.utils.CustomMailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,7 +10,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Optional;
 
 @Controller
@@ -18,6 +21,8 @@ public class GestoresController {
 
     @Autowired
     UsuarioRepository usuarioRepository;
+    @Autowired
+    CustomMailService customMailService;
 
     private final int ROL_CRUD = 2; // rol al que se le hace crud;
 
@@ -52,7 +57,7 @@ public class GestoresController {
     @PostMapping("/save")
     public  String asdnaasdasddsin(@ModelAttribute("usuario") @Valid Usuario usuario,
                                    BindingResult bindingResult, @RequestParam("type") int type,
-                                   Model model, RedirectAttributes attr){
+                                   Model model, RedirectAttributes attr) throws IOException, MessagingException {
 
         if(type==1 && usuarioRepository.findById(usuario.getDni()).isPresent()){ //if new
             bindingResult.rejectValue("dni","error.user","Este dni ya existe");
@@ -71,12 +76,19 @@ public class GestoresController {
 
             Optional<Usuario> optionalUsuario = usuarioRepository.findById(usuario.getDni());
             if (optionalUsuario.isPresent()) {
+                usuarioRepository.update_usuario(usuario.getDni(),
+                        usuario.getNombre(), usuario.getApellido(), usuario.getCorreo());
                 attr.addFlashAttribute("msgSuccess", "Gestor actualizado exitosamente");
             }
-            else {
+            else if (type==0){ // if new user
+
+                customMailService.sendEmail(usuario.getCorreo(),
+                        "Registro de gestor de bodega", "Bienvenido Gestor",
+                        "Este es un mensaje de validación de su cuenta, para ingresar al sistema use su correo y la siguiente contraseña\n" +
+                                ""+usuario.generateNewPassword());
+                usuarioRepository.save(usuario);
                 attr.addFlashAttribute("msgSuccess", "Gestor creado exitosamente");
             }
-            usuarioRepository.save(usuario);
             return "redirect:/admin/gestores";
         }
     }

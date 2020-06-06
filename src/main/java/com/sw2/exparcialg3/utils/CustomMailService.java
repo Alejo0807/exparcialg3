@@ -65,8 +65,6 @@ public class CustomMailService {
 		helper.setText(message);
 		helper.setText("<h1>"+title+"</h1>", true);
 		javaMailSender.send(msg);
-		helper.setText("<h1>Check attachment for image!</h1>", true);
-		javaMailSender.send(msg);
 
 	}
 
