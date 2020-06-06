@@ -231,6 +231,7 @@ public class ComprasController {
         Optional<Producto> optProd = productoRepository.findById(cod);
         System.out.println(usuario.getDni());
         Optional<Pedido> optPed = pedidoRepository.findById("carrito_"+ Integer.toString(usuario.getDni()));
+        optPed.get();
 
     }*/
 
