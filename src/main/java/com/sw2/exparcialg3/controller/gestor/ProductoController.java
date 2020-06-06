@@ -10,9 +10,11 @@ import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -57,14 +59,28 @@ public class ProductoController {
 
     @PostMapping("/save")
     public String guardarProducto(@ModelAttribute("producto") @Valid  Producto producto, BindingResult bindingResult,
-                                  @RequestParam("type") int type,
-                                  RedirectAttributes attr, Model model) {
+                                  @RequestParam("type") int type, RedirectAttributes attr, Model model,
+                                  @RequestParam(value = "photo", required = false) MultipartFile multipartFile) {
+        String filename;
         if(type==1) {
-            Float f = producto.getPrecio();
-            if(Float.toString(f.intValue()).length() >4 || Float.toString(f.floatValue()).length() > 2  || f<0 || f==null){
-                bindingResult.rejectValue("precio", "error.user", "El precio debe tener 2 decimales y 4 cifras enteras");
+            //validaciones manuales del precio y foto
+            String[] ff = producto.getPrecio().toString().split("\\.");
+            System.out.println(ff.length);
+
+            if(ff[0].length()>2 || ff[1].length()>2){
+                bindingResult.rejectValue("precio", "error.user", "El precio debe tener 2 decimales y 2 cifras enteras");
             }
-            bindingResult.rejectValue("foto", "error.user", "La foto no debe estar vacía");
+            if (multipartFile.isEmpty()) {
+                bindingResult.rejectValue("foto", "error.user", "La foto no debe estar vacía");
+            }
+            else
+            {
+                filename= multipartFile.getOriginalFilename();
+                System.out.println(filename);
+                if ((filename==null) || filename.contains("..") || !(filename.contains(".jpg") || filename.contains(".png") || filename.contains(".jpeg"))){
+                    bindingResult.rejectValue("foto", "error.user", "Solo se permite formatos png, jpg y jpeg");
+                }
+            }
             if (productoRepository.findById(producto.getCodigo()).isPresent()) { //if new
                 bindingResult.rejectValue("codigo", "error.user", "Este dni ya existe");
             }
@@ -77,14 +93,23 @@ public class ProductoController {
         else {
 
             Optional<Producto> optionalUsuario = productoRepository.findById(producto.getCodigo());
-            if (optionalUsuario.isPresent()) {
+            if (optionalUsuario.isPresent()&&type==0) {
                 productoRepository.update_producto(producto.getCodigo(),
                         producto.getNombre(), producto.getDescripcion(), producto.getStock());
                 attr.addFlashAttribute("msgSuccess", "Gestor actualizado exitosamente");
             }
-            else {
-                attr.addFlashAttribute("msgSuccess", "Gestor creado exitosamente");
-                productoRepository.save(producto);
+            else if (type==1){
+
+                try{
+                    producto.setFoto(multipartFile.getBytes());
+                    producto.setFotocontenttype(multipartFile.getContentType());
+                    productoRepository.save(producto);
+                    attr.addFlashAttribute("msgSuccess", "Gestor creado exitosamente");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    attr.addFlashAttribute("msgSuccess", "Ocurrió un error en la subida del archivo");
+                }
+
             }
 
         }
@@ -100,7 +125,7 @@ public class ProductoController {
 
         if (optProduct.isPresent()) {
             productoRepository.deleteById(id);
-            attr.addFlashAttribute("msg", "Producto borrado exitosamente");
+            attr.addFlashAttribute("msgSuccess", "Producto borrado exitosamente");
         }
         return "redirect:/gestor/productos";
     }
