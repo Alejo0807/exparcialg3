@@ -17,7 +17,7 @@ public class Usuario implements Serializable {
     @Id
     @Column(name = "dni")
     //@NotBlank(message = "Este campo no puede estar vacío")
-    @Digits(integer = 8, fraction = 0)
+    @Digits(integer = 8, fraction = 0, message = "El DNI tiene que tener 8 dígitos")
     @Min(value = 10000000, message = "El DNI tiene que tener 8 dígitos")
     private int dni;
     @NotBlank(message = "Este campo no puede estar vacío")
