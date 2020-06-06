@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Null;
+import java.lang.reflect.Array;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +33,7 @@ public class ComprasController {
     }
 
     @GetMapping("/checkout")
-    public String Comprar(@ModelAttribute("pedido") Pedido pedido/*, @RequestParam("cod_ped") Pedido ped*/,Model model){
+    public String Comprar(@ModelAttribute("pedido") Pedido pedido,Model model){
 
 
      //   ped.getListPedidoHasProductos();
@@ -39,13 +41,42 @@ public class ComprasController {
         return "pedido/checkout";
     }
 
-    @PostMapping("/guardarCompraEnHistorial")
-    public String GuardarCompra(@RequestParam("cod_ped") Pedido ped, Model model){
+    @PostMapping("/pagarYguardarCompra")
+    public String GuardarCompra(@RequestParam("creditCard") String creditCard, Model model){
+
+        String[] arrOfStr = creditCard.split("(?<=[0-9])");
+        System.out.println(arrOfStr[1]);
+        int[] intArray = new int[16];
+//4556628646488641
+        for (int i = 0; i < 16; i++) {
+            intArray[i] = Integer.parseInt(arrOfStr[i]);
+        }
+
+        for (int i = 0; i < 15; i=i+2){
+            intArray[i] = intArray[i] * 2;
+        }
 
 
-        ped.getListPedidoHasProductos();
+        for (int i = 0; i < 15; i++){
+            if (intArray[i] > 9) {
+                intArray[i] = intArray[i] - 9;
+            }
+         }
 
-        return "redirect:/ListaProductos/";
+        int sum = 0;
+
+        for (int i = 0; i < 15; i++) {
+            sum = sum + intArray[i];
+        }
+
+        int verifier = (10 - (sum % 10)) % 10;
+        System.out.println(verifier);
+        System.out.println(sum);
+        if (verifier == intArray[15]){
+            return "redirect:/productos/";
+        }else{
+            return "redirect:/compras/checkout";
+        }
     }
 
 
