@@ -107,7 +107,7 @@ public class ProductoController {
             if (optionalUsuario.isPresent()&&type==0) {
                 productoRepository.update_producto(producto.getCodigo(),
                         producto.getNombre(), producto.getDescripcion(), producto.getStock());
-                attr.addFlashAttribute("msgSuccess", "Gestor actualizado exitosamente");
+                attr.addFlashAttribute("msgSuccess", "Producto actualizado exitosamente");
             }
             else if (type==1){
 
@@ -115,7 +115,7 @@ public class ProductoController {
                     producto.setFoto(multipartFile.getBytes());
                     producto.setFotocontenttype(multipartFile.getContentType());
                     productoRepository.save(producto);
-                    attr.addFlashAttribute("msgSuccess", "Gestor creado exitosamente");
+                    attr.addFlashAttribute("msgSuccess", "Producto creado exitosamente");
                 } catch (IOException e) {
                     e.printStackTrace();
                     attr.addFlashAttribute("msgSuccess", "Ocurrió un error en la subida del archivo");
