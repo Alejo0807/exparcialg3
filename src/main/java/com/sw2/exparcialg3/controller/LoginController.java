@@ -17,10 +17,16 @@ public class LoginController {
     @Autowired
     UsuarioRepository usuarioRepository;
 
-    @GetMapping(value = {"/","/loginForm"})
+    @GetMapping(value = {"/loginForm"})
     public String login(){
 
         return "login";
+    }
+
+    @GetMapping(value = {"/"})
+    public String loginasfa(){
+
+        return "redirect:/productos";
     }
 
     @GetMapping("/redirectByRole")
