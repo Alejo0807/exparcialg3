@@ -22,7 +22,6 @@ public class Pedido implements Serializable {
     @ManyToOne
     @JoinColumn(name = "usuario")
     private Usuario usuario;
-    private String creditCard;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.pedido")
     private List<PedidoHasProducto> listPedidoHasProductos;
 
@@ -30,6 +29,8 @@ public class Pedido implements Serializable {
     public Pedido(String cod){
         this.setCodigo(cod);
     }
+    @Transient
+    private String creditCard;
     public String getCreditCard() {
         return creditCard;
     }

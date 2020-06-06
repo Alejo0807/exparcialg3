@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @Controller
@@ -50,13 +51,14 @@ public class ListaProductosController {
     }
 
     @PostMapping("/u/agregarAlCarrito")
-    public String AgregarCarrito(@RequestParam("cod") String cod){
+    public String AgregarCarrito(@RequestParam(name = "id", required = false) String cod, HttpSession session){
 
-        Usuario usuario = new Usuario();
+        //System.out.println("hola");
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
         Optional<Producto> optProd = productoRepository.findById(cod);
+        Optional<Pedido> optPed = pedidoRepository.findById("carrito_"+ Integer.toString(usuario.getDni()));
 
-        Optional<Pedido> optPed = pedidoRepository.findById("carrito_"+ usuario.getDni());
-
+        /*
         if(optProd.isPresent()){
             Producto prod = optProd.get();
             if(optPed.isPresent()){
@@ -65,8 +67,7 @@ public class ListaProductosController {
                 //guardar de otra manera
                 pedidoHasProductoRepository.save(php);
             }
-
-        }
+        }*/
 
         return "redirect:/productos";
     }
