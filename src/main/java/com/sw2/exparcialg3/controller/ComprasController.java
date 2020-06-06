@@ -5,6 +5,7 @@ import com.sw2.exparcialg3.constantes.PedProdId;
 import com.sw2.exparcialg3.entity.Pedido;
 import com.sw2.exparcialg3.entity.PedidoHasProducto;
 import com.sw2.exparcialg3.entity.Producto;
+import com.sw2.exparcialg3.entity.Usuario;
 import com.sw2.exparcialg3.repository.PedidoHasProductoRepository;
 import com.sw2.exparcialg3.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.constraints.Null;
 import java.lang.reflect.Array;
 import java.time.LocalDate;
@@ -20,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/compras")
+@RequestMapping("/u")
 public class ComprasController {
 
     @Autowired
@@ -29,8 +31,11 @@ public class ComprasController {
     PedidoHasProductoRepository pedidoHasProductoRepository;
 
     @GetMapping("/carrito")
-    public String Carrito(Model model){
-        model.addAttribute("carrito", pedidoHasProductoRepository.findAll());
+    public String Carrito(Model model, HttpSession session){
+
+        Usuario u = (Usuario) session.getAttribute("usuario");
+        Pedido ped = new Pedido("carrito_" + Integer.toString(u.getDni()));
+        model.addAttribute("carrito", ped.getListPedidoHasProductos());
         return "pedido/carrito";
     }
 
@@ -102,9 +107,10 @@ public class ComprasController {
 
 
     @GetMapping("/pedidos")
-    public String Pedidos(Model model){
+    public String Pedidos(Model model,HttpSession session){
 
-        model.addAttribute("pedidos", pedidoRepository.findAll());
-        return "";
+        Usuario u = (Usuario) session.getAttribute("usuario");
+        model.addAttribute("pedidos", pedidoRepository.findByUsuario(u.getDni()));
+        return "pedido/listaPedidos";
     }
 }
