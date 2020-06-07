@@ -106,10 +106,13 @@
 
                             </div>
                             <div class="container">
-                                <a th:href="@{/u/checkout}" class="mx-auto text-center pr-0 pb-1 py-1 d-none d-sm-inline-block p-2 badge-sm badge-success text-white shadow-sm">
+                                <form th:action="@{/u/checkout}" method="post">
+                                <button type="submit"  class="mx-auto text-center pr-0 pb-1 py-1 d-none d-sm-inline-block p-2 badge-sm badge-success text-white shadow-sm">
+                                    <input hidden name="t" th:value="${total}">
                                     <span> Proceder a pagar</span>
                                     <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
-                                </a>
+                                </button>
+                                </form>
                             </div>
                     </div>
                 </div>

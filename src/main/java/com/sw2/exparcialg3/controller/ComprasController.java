@@ -111,10 +111,10 @@ public class ComprasController {
     }
 
 
-    @GetMapping("/checkout")
-    public String Comprar(@ModelAttribute("pedido") Pedido pedido,Model model){
+    @PostMapping("/checkout")
+    public String Comprar(@RequestParam("t") float total, @ModelAttribute("pedido") Pedido pedido,Model model){
      //   ped.getListPedidoHasProductos();
-        model.addAttribute("total", pedido.getTotal());
+        model.addAttribute("total", total);
         return "pedido/checkout";
     }
 
@@ -133,7 +133,6 @@ public class ComprasController {
         for (int i = 0; i < 15; i=i+2){
             intArray[i] = intArray[i] * 2;
         }
-
 
         for (int i = 0; i < 15; i++){
             if (intArray[i] > 9) {
