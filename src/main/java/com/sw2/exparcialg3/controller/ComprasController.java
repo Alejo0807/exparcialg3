@@ -80,18 +80,6 @@ public class ComprasController {
         }
     }
 
-    public PedidoHasProducto llenarPHP(PedidoHasProducto php){
-        php.setCant(php.getCant() + 1);
-        php.setSubtotal(php.getSubtotal() + php.getId().getProducto().getPrecio());
-        return php;
-    }
-
-    public PedidoHasProducto crearPHP(PedidoHasProducto php){
-        float a = 0;
-        php.setSubtotal(a);
-        php.setCant(0);
-        return  php;
-    }
 
 
     @GetMapping("/carrito")
@@ -215,8 +203,7 @@ public class ComprasController {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         List<Pedido> list = pedidoRepository.findByUsuarioAndComprado(usuario,1);
 
-        list.forEach(Pedido::getListPedidoHasProductos);
-
+      //  list.forEach(Pedido::getListPedidoHasProductos);
         model.addAttribute("pedidos", list );
         return "pedido/listaPedidos";
     }
