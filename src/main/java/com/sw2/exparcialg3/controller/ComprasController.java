@@ -129,12 +129,30 @@ public class ComprasController {
                                 RedirectAttributes attr,Model model){
 
         String[] arrOfStr = pedido.getCreditCard().split("(?<=[0-9])");
-        System.out.println(arrOfStr[1]);
+        //System.out.println(arrOfStr[1]);
+
         int[] intArray = new int[16];
+
+        if(arrOfStr != null){
+            for (int i = 0; i < 16; i++) {
+                if(arrOfStr[i].equals(null)){
+                    attr.addFlashAttribute("msg", "La tarjeta debe ser de 16 digitos");
+                    return "redirect:/u/checkout";
+                }
+            }
+        }else{
+            attr.addFlashAttribute("msg", "Inserte una tarjeta");
+            return "redirect:/u/checkout";
+        }
+
+
+
         //4556628646488641
         for (int i = 0; i < 16; i++) {
             intArray[i] = Integer.parseInt(arrOfStr[i]);
         }
+
+
 
         for (int i = 0; i < 15; i=i+2){
             intArray[i] = intArray[i] * 2;
