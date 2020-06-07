@@ -46,25 +46,30 @@ public class ComprasController {
         if(producto!=null && producto.getStock()>0){
             if(carritoPedido!=null){
                 AtomicBoolean flag = new AtomicBoolean(false); // indica si el producto ya está en el carrito
-                AtomicBoolean flag2 = new AtomicBoolean(false); // indica si el producto ya está en el carrito
+                AtomicBoolean flag2 = new AtomicBoolean(false); // indica si ya hay 4 prod en el carrito
 
                 carritoPedido.getListPedidoHasProductos().forEach((php)->
                 {   System.out.println("La cantidad es "+php.getCant());
-                    if(producto.getCodigo().equals(php.getId().getProducto().getCodigo()) && (php.getCant() < 4)){
-                        flag.set(true);
-                        php.setCant(php.getCant()+1);
-                        pedidoHasProductoRepository.save(php);
-                        attr.addFlashAttribute("msg","Producto agregado al carrito");
-                }else{attr.addFlashAttribute("msg2","Se alcanzo el limite de unidades por producto(4)");
-                        flag2.set(true);
-                } });
-                if (!flag.get() && !flag2.get()){
-                    pedidoHasProductoRepository.save(new PedidoHasProducto(
-                            new PedProdId(carritoPedido, producto), 1
-                    ));
+                    if(producto.getCodigo().equals(php.getId().getProducto().getCodigo()) && !flag.get()){
+                        flag.set(true); // si está en el carrito
+                        if((php.getCant() >= 4)){
+                            // pero ya hay 4
+                            attr.addFlashAttribute("msg2","Se alcanzo el limite de unidades por producto(4)");
+                            flag2.set(true);
+                        }else {
+                            php.setCant(php.getCant() + 1);
+                            pedidoHasProductoRepository.save(php);
+                            pedidoRepository.udpate_carrito(carritoPedido.getCodigo(),carritoPedido.getTotal() + producto.getPrecio());
+                            attr.addFlashAttribute("msg","Producto agregado al carrito");
+                        }
+                    }
+                });
+                if (!flag.get() ){ // Se guarda nuevo producto en pedido
+                    pedidoHasProductoRepository.save(new PedidoHasProducto(new PedProdId(carritoPedido, producto), 1));
+                    pedidoRepository.udpate_carrito(carritoPedido.getCodigo(),carritoPedido.getTotal() + producto.getPrecio());
                     attr.addFlashAttribute("msg","Producto agregado al carrito");
                 }
-                pedidoRepository.udpate_carrito(carritoPedido.getCodigo(),carritoPedido.getTotal() + producto.getPrecio());
+
             }else{
                 attr.addFlashAttribute("msg","Ocurrio un problema");
             }

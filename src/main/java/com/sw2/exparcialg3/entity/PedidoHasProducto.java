@@ -21,10 +21,11 @@ public class PedidoHasProducto implements Serializable {
     }
 
     public PedidoHasProducto(PedProdId id, int cant){
-        this.setId(id);
-        this.setCant(cant);
-        this.getSubtotal();
+        this.id=id;
+        this.cant=cant;
+        this.subtotal = id.getProducto().getPrecio()*cant;
     }
+
 
     public PedProdId getId() {
         return id;
