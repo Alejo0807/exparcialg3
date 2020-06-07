@@ -60,6 +60,7 @@
                                             <div class="alert alert-danger" role="alert" th:if="${msg != null}" th:text="${msg}"></div>
                                             <div class="form-group">
                                                 <input type="text" class="form-control form-control-user" name="creditCard" id="creditCard" placeholder="4xxx-xxxx-xxxx-xxxx">
+                                                <div class="text-danger" th:if="${#fields.hasErrors('creditCard')}" th:errors="*{creditCard}"></div>
                                             </div>
                                         </div>
                                         <div class="container">

@@ -3,6 +3,8 @@ package com.sw2.exparcialg3.entity;
 import com.sw2.exparcialg3.constantes.PedProdId;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.PipedOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -32,6 +34,8 @@ public class Pedido implements Serializable {
     public Pedido(String cod){
         this.setCodigo(cod);
     }
+    @NotBlank(message = "Este campo no puede estar vacío")
+    @Size(min = 16, max = 16, message = "Debe ser de 16 digitos")
     @Transient
     private String creditCard;
     public String getCreditCard() {
