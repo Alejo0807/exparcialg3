@@ -21,6 +21,9 @@ public interface PedidoRepository extends JpaRepository<Pedido, String> {
     @Procedure(procedureName = "udpate_carrito")
     void udpate_carrito(String code, float total);
 
+    @Procedure(procedureName = "new_pedido")
+    void new_pedido(String codigo, int usuario, float total);
+
     List<Pedido> findByUsuarioAndComprado(Usuario usuario, int comprado);
 
 }

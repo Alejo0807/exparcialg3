@@ -25,7 +25,7 @@ public class Pedido implements Serializable {
     @ManyToOne
     @JoinColumn(name = "usuario")
     private Usuario usuario;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.pedido")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "id.pedido")
     private List<PedidoHasProducto> listPedidoHasProductos;
 
     public Pedido(){}
@@ -36,6 +36,14 @@ public class Pedido implements Serializable {
     private String creditCard;
     public String getCreditCard() {
         return creditCard;
+    }
+
+
+    public String getCodeForPedido(int num){
+        LocalDate lt = LocalDate.now();
+        return "PE" + ((lt.getDayOfMonth()>9)?lt.getDayOfMonth():"0"+lt.getDayOfMonth())+
+                ((lt.getMonthValue()>9)?lt.getMonthValue():"0"+lt.getMonthValue()) + lt.getYear() +num;
+
     }
 
     public void setCreditCard(String creditCard) {
@@ -50,29 +58,7 @@ public class Pedido implements Serializable {
         this.listPedidoHasProductos = listPedidoHasProductos;
     }
 
-    public Pedido CrearPedido(Pedido oldPedido, int autoincremental){
-        Pedido newPedido = new Pedido();
-        LocalDate lt = LocalDate.now();
-        String dia= "", mes = "";
-        if(lt.getDayOfMonth() < 10){dia = '0'+ Integer.toString(lt.getDayOfMonth());}
-        if(lt.getMonthValue() < 10){mes = '0'+ Integer.toString(lt.getMonthValue());}
-        newPedido.setCodigo("PE" + dia + mes + lt.getYear() + (autoincremental+1));
-        newPedido.setFecha_compra(lt);
-        newPedido.setComprado(1);
-        newPedido.setUsuario(oldPedido.getUsuario());
-        newPedido.setListPedidoHasProductos(new ArrayList<PedidoHasProducto>(){
-            {
-                oldPedido.getListPedidoHasProductos().forEach((php)->
-                {
-                    add(new PedidoHasProducto(new PedProdId(newPedido,php.getId().getProducto()), php.getCant()));
-                    remove(php);
-                });
-            }
-        });
-        oldPedido.setTotal((float)0);
-        oldPedido.setComprado(0);
-        return newPedido;
-    }
+
 
     public String getCodigo() {
         return codigo;

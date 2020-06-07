@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -110,10 +111,10 @@ public class ComprasController {
     }
 
 
-    @GetMapping("/checkout")
-    public String Comprar(@ModelAttribute("pedido") Pedido pedido,Model model){
+    @PostMapping("/checkout")
+    public String Comprar(@RequestParam("t") float total, @ModelAttribute("pedido") Pedido pedido,Model model){
      //   ped.getListPedidoHasProductos();
-        model.addAttribute("total", pedido.getTotal());
+        model.addAttribute("total", total);
         return "pedido/checkout";
     }
 
@@ -133,7 +134,6 @@ public class ComprasController {
             intArray[i] = intArray[i] * 2;
         }
 
-
         for (int i = 0; i < 15; i++){
             if (intArray[i] > 9) {
                 intArray[i] = intArray[i] - 9;
@@ -150,23 +150,22 @@ public class ComprasController {
         Pedido carritoPedido = pedidoRepository.findById("carrito_"+ usuario.getDni()).orElse(null);
 
         int verifier = (10 - (sum % 10)) % 10;
-        //System.out.println(verifier);
-        //System.out.println(sum);
         if (verifier == intArray[15] && (carritoPedido!=null)){
-            Pedido newPedido = carritoPedido.CrearPedido(carritoPedido,pedidoRepository.hallarAutoincrementalPedido());
+            //Borrar el pedido del carrito
             pedidoRepository.udpate_carrito(carritoPedido.getCodigo(), 0);
             pedidoHasProductoRepository.deleteInBatch(carritoPedido.getListPedidoHasProductos());
-            System.out.println(newPedido.getCodigo());
-            System.out.println(newPedido.getFecha_compra());
-            pedidoRepository.save(newPedido);
+            System.out.println(3);
+            //Generar el pedido
+            pedidoRepository.new_pedido(carritoPedido.getCodeForPedido(pedidoRepository.hallarAutoincrementalPedido()+1),
+                    usuario.getDni(), carritoPedido.getTotal());
+            pedidoHasProductoRepository.saveAll(carritoPedido.getListPedidoHasProductos());
 
-
-            List<PedidoHasProducto> listaPedProd = newPedido.getListPedidoHasProductos();
+            List<PedidoHasProducto> listaPedProd = carritoPedido.getListPedidoHasProductos();
             for (PedidoHasProducto pedidoHasProducto: listaPedProd){
                 Producto prdct = pedidoHasProducto.getId().getProducto();
                 prdct.setStock(prdct.getStock()-pedidoHasProducto.getCant());
             }
-            attr.addFlashAttribute("msg","¡Compra exitosa!");
+            attr.addFlashAttribute("msg","Compra exitosa");
             return "redirect:/productos";
         }else{
             attr.addFlashAttribute("msg","Tarjeta incorrecta");
