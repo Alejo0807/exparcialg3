@@ -50,13 +50,6 @@ public class Pedido implements Serializable {
         this.listPedidoHasProductos = listPedidoHasProductos;
     }
 
-    public Pedido(Pedido oldPedido, int autoincremental){
-        LocalDate lt = LocalDate.now();
-        this.setCodigo("PE" + lt.getDayOfMonth() + lt.getMonthValue() + lt.getYear() + (autoincremental+1));
-        this.setFecha_compra(lt);
-        this.setComprado(1);
-    }
-
     public String getCodigo() {
         return codigo;
     }

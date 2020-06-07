@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -150,21 +151,20 @@ public class ComprasController {
         Pedido carritoPedido = pedidoRepository.findById("carrito_"+ usuario.getDni()).orElse(null);
 
         int verifier = (10 - (sum % 10)) % 10;
-        //System.out.println(verifier);
-        //System.out.println(sum);
         if (verifier == intArray[15] && (carritoPedido!=null)){
-            Pedido newPedido = new Pedido(carritoPedido,pedidoRepository.hallarAutoincrementalPedido());
-            System.out.println(1);
+            //Borrar el pedido del carrito
             pedidoRepository.udpate_carrito(carritoPedido.getCodigo(), 0);
-            System.out.println(2);
             pedidoHasProductoRepository.deleteInBatch(carritoPedido.getListPedidoHasProductos());
             System.out.println(3);
-            pedidoRepository.new_pedido(newPedido.getCodigo(), usuario.getDni(), newPedido.getTotal());
+            //Generar el pedido
+            LocalDate lt = LocalDate.now();
+            pedidoRepository.new_pedido("PE" + lt.getDayOfMonth() + lt.getMonthValue() + lt.getYear() + (pedidoRepository.hallarAutoincrementalPedido()+1),
+                    usuario.getDni(), carritoPedido.getTotal());
             System.out.println(4);
             pedidoHasProductoRepository.saveAll(carritoPedido.getListPedidoHasProductos());
             System.out.println(5);
 
-            List<PedidoHasProducto> listaPedProd = newPedido.getListPedidoHasProductos();
+            List<PedidoHasProducto> listaPedProd = carritoPedido.getListPedidoHasProductos();
             for (PedidoHasProducto pedidoHasProducto: listaPedProd){
                 Producto prdct = pedidoHasProducto.getId().getProducto();
                 System.out.println(6);
