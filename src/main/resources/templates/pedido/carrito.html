@@ -100,21 +100,14 @@
 
                 <div class="row" >
                     <!-- Area Chart -->
-                    <div class="col-5 mx-auto">
+                    <div class="col-5 my-4 mr-1" style="position: absolute;right: 0">
                         <div class="container-fluid ">
-                            <div class="card shadow col-7 mb-4 mx-auto">
-                                <!-- Card body-->
-                                <div class="card-body container">
-
-                                            <div class="container d-flex flex-row mx-0" style="position: absolute; right: 0; bottom: 0;">
-                                                <a th:href="@{/u/checkout}" class="mx-auto text-center pr-0 pb-1 py-2 d-none d-sm-inline-block p-2 badge-sm badge-success text-white shadow-sm">
-                                                    <span> Total</span>
-                                                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
-                                                    <span class="mr-2" th:text="${total} + ' soles'">subtotal soles</span>
-                                                </a>
-                                            </div>
-
-                                </div>
+                            <div class="container d-flex flex-row mx-auto" style="position: absolute; right: 0; bottom: 0;">
+                                <span><strong>Total:</strong> <span class="mr-2" th:text="${total} + ' soles'">subtotal soles</span></span>
+                                <a th:href="@{/u/checkout}" class="mx-auto text-center pr-0 pb-1 py-2 d-none d-sm-inline-block p-2 badge-sm badge-success text-white shadow-sm">
+                                    <span> Proceder a pagar</span>
+                                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
