@@ -232,7 +232,7 @@ public class ComprasController {
     public String Pedidos(Model model,HttpSession session){
 
         Usuario usuario = (Usuario) session.getAttribute("usuario");
-        model.addAttribute("pedidos", pedidoRepository.findByUsuario(usuario));
+        model.addAttribute("pedidos", pedidoRepository.findByUsuarioAndComprado(usuario,0));
 
 
 
