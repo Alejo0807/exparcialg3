@@ -38,7 +38,7 @@ public class ComprasController {
         //System.out.println("hola");
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         Producto producto = productoRepository.findById(cod).orElse(null);
-        Pedido carritoPedido = (Pedido) session.getAttribute("carrito");
+        Pedido carritoPedido = pedidoRepository.findById("carrito"+usuario.getDni()).orElse(null);
 
         if(producto!=null){
             PedidoHasProducto phpfinal = null;
