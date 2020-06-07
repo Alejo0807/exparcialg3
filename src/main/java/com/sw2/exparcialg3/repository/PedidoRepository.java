@@ -1,6 +1,7 @@
 package com.sw2.exparcialg3.repository;
 
 import com.sw2.exparcialg3.entity.Pedido;
+import com.sw2.exparcialg3.entity.Producto;
 import com.sw2.exparcialg3.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -25,5 +26,8 @@ public interface PedidoRepository extends JpaRepository<Pedido, String> {
     void new_pedido(String codigo, int usuario, float total);
 
     List<Pedido> findByUsuarioAndComprado(Usuario usuario, int comprado);
+
+    @Query(value = "select * from pedido where codigo like concat(\"%\",?1,\"%\");" , nativeQuery = true)
+    List<Pedido> buscarPedidos(String param);
 
 }
