@@ -212,10 +212,9 @@ public class ComprasController {
             pedidoRepository.save(ped);
             pedidoRepository.save(pedidoFinal);
 
-            List<PedidoHasProducto> listaPedProd = pedido.getListPedidoHasProductos();
+            List<PedidoHasProducto> listaPedProd = pedidoFinal.getListPedidoHasProductos();
             for (PedidoHasProducto pedidoHasProducto: listaPedProd){
-                PedProdId id = pedidoHasProducto.getId();
-                Producto prdct = id.getProducto();
+                Producto prdct = pedidoHasProducto.getId().getProducto();
                 prdct.setStock(prdct.getStock()-pedidoHasProducto.getCant());
             }
 
