@@ -32,10 +32,11 @@ public class Pedido implements Serializable {
 
     public Pedido(){
     }
-    public Pedido(String cod){
+    public Pedido(String cod, Usuario usuario){
         this.setCodigo(cod);
         this.total =(float)0;
         this.comprado=0;
+        this.usuario=usuario;
     }
     @NotBlank(message = "Este campo no puede estar vacío")
     @Size(min = 16, max = 16, message = "Debe ser de 16 digitos")

@@ -62,8 +62,6 @@ public class LoginController {
 
         switch (rol) {
             case "registrado":
-                session.setAttribute("carrito",
-                        new Pedido("carrito_"+usuarioLogueado.getDni()));
                 return "redirect:/productos";
             case "gestor":
                 return "redirect:/gestor";
@@ -132,12 +130,8 @@ public class LoginController {
         }else{
             attr.addFlashAttribute("msg", "Usuario creado exitosamente");
             usuarioRepository.save_usuario(u.getDni(), u.getNombre(), u.getApellido(), u.getCorreo(), u.getPassword());
-            Pedido p = new Pedido("carrito_"+Integer.toString(u.getDni()));
-            p.setComprado(0);
-            p.setUsuario(u);
-            pedidoRepository.save(p);
+            pedidoRepository.save(new Pedido("carrito_"+u.getDni(),u));
             return "redirect:/loginForm";
         }
-
     }
 }
