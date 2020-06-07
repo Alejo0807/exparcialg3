@@ -159,7 +159,7 @@ public class ComprasController {
             System.out.println(2);
             pedidoHasProductoRepository.deleteInBatch(carritoPedido.getListPedidoHasProductos());
             System.out.println(3);
-            pedidoRepository.new_pedido(newPedido.getCodigo(), newPedido.getUsuario().getDni(), newPedido.getTotal());
+            pedidoRepository.new_pedido(newPedido.getCodigo(), usuario.getDni(), newPedido.getTotal());
             System.out.println(4);
             pedidoHasProductoRepository.saveAll(carritoPedido.getListPedidoHasProductos());
             System.out.println(5);
