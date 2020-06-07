@@ -40,8 +40,7 @@ public class ComprasController {
         Producto producto = productoRepository.findById(cod).orElse(null);
         Pedido carritoPedido = pedidoRepository.findById("carrito_"+usuario.getDni()).orElse(null);
 
-        if(producto!=null){
-            PedidoHasProducto phpfinal = null;
+        if(producto!=null && producto.getStock()>0){
             if(carritoPedido!=null){
                 AtomicBoolean flag = new AtomicBoolean(false); // indica si el producto ya está en el carrito
                 carritoPedido.getListPedidoHasProductos().forEach((php)->
@@ -57,7 +56,6 @@ public class ComprasController {
                 }
                 pedidoRepository.udpate_carrito(carritoPedido.getCodigo(),carritoPedido.getTotal() + producto.getPrecio());
                 attr.addFlashAttribute("msg","Producto agregado al carrito");
-                //guardar de otra manera
             }else{
                 attr.addFlashAttribute("msg","Ocurrio un problema");
             }
@@ -66,7 +64,6 @@ public class ComprasController {
             attr.addFlashAttribute("msg","Stock agotado");
             return "redirect:/productos";
         }
-
     }
 
     public PedidoHasProducto llenarPHP(PedidoHasProducto php){
@@ -81,9 +78,6 @@ public class ComprasController {
         php.setCant(0);
         return  php;
     }
-
-
-
 
 
     @GetMapping("/carrito")
@@ -130,7 +124,7 @@ public class ComprasController {
         String[] arrOfStr = pedido.getCreditCard().split("(?<=[0-9])");
         System.out.println(arrOfStr[1]);
         int[] intArray = new int[16];
-//4556628646488641
+        //4556628646488641
         for (int i = 0; i < 16; i++) {
             intArray[i] = Integer.parseInt(arrOfStr[i]);
         }
@@ -153,46 +147,17 @@ public class ComprasController {
         }
 
         Usuario usuario = (Usuario) session.getAttribute("usuario");
-        //System.out.println(usuario.getDni());
-        Optional<Pedido> optPed = pedidoRepository.findById("carrito_"+ Integer.toString(usuario.getDni()));
-        //Pedido pedidoFinal = optPed.get();
-        //Pedido ped = optPed.get();
+        Pedido carritoPedido = pedidoRepository.findById("carrito_"+ usuario.getDni()).orElse(null);
 
         int verifier = (10 - (sum % 10)) % 10;
         //System.out.println(verifier);
         //System.out.println(sum);
-        if (verifier == intArray[15] && optPed.isPresent()){
-            Pedido newPedido = new Pedido(optPed.get(),pedidoRepository.hallarAutoincrementalPedido());
-            pedidoRepository.save(optPed.get());
+        if (verifier == intArray[15] && (carritoPedido!=null)){
+            Pedido newPedido = new Pedido(carritoPedido,pedidoRepository.hallarAutoincrementalPedido());
+            pedidoRepository.udpate_carrito(carritoPedido.getCodigo(), 0);
+            pedidoHasProductoRepository.deleteInBatch(carritoPedido.getListPedidoHasProductos());
             pedidoRepository.save(newPedido);
-            /*
-            List<PedidoHasProducto> phpList = pedidoFinal.getListPedidoHasProductos();
-            attr.addFlashAttribute("msg","Compra exitosa");
-            int autoincremental = pedidoRepository.hallarAutoincrementalPedido();
-            //System.out.println(autoincremental);
-            LocalDate lt = LocalDate.now();
-            String codigo = "PE" + lt.getDayOfMonth() + lt.getMonthValue() + lt.getYear() + (autoincremental+1);
-            //System.out.println(codigo);
-            pedidoFinal.setCodigo(codigo);//
-            pedidoFinal.setFecha_compra(lt);//
-            pedidoFinal.setComprado(1);//
-            pedidoFinal.setUsuario(usuario);//
-            for (PedidoHasProducto php : phpList){
-                php.setId(new PedProdId(pedidoFinal, php.getId().getProducto()));
-                php.setSubtotal(php.getSubtotal());
-                php.setCant(php.getCant());
-                pedidoHasProductoRepository.save(php);
-                pedidoHasProductoRepository.delete(php);
-            }
-            ped.setUsuario(usuario);
-            ped.setCodigo("carrito_"+ Integer.toString(usuario.getDni()));
-            ped.setComprado(0);
-            ped.setFecha_compra(lt);
-            float a = 0;
-            ped.setTotal(a);
-            pedidoRepository.save(ped);
-            pedidoRepository.save(pedidoFinal);
-            */
+
 
             List<PedidoHasProducto> listaPedProd = newPedido.getListPedidoHasProductos();
             for (PedidoHasProducto pedidoHasProducto: listaPedProd){
