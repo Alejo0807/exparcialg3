@@ -35,17 +35,17 @@ public class EstadisticasController {
         UsuarioQueMasGasto umg = productoRepository.getUsuarioQueMasGasto();
 
 
-        model.addAttribute("gcc", gcc.getCantidad());
-        model.addAttribute("tf", tf.getTotal());
-        model.addAttribute("cpv", cpv.getCantidad());
+        model.addAttribute("gcc", (gcc.getCantidad()==null?0:gcc.getCantidad()));
+        model.addAttribute("tf", (tf.getTotal()==null?0:tf.getTotal()));
+        model.addAttribute("cpv", (cpv.getCantidad()==null?0:cpv.getCantidad()));
 
         model.addAttribute("productomasvendido", productoRepository.findById(pmasv.getProducto()).orElse(null));
         model.addAttribute("productomenosvendido", productoRepository.findById(pmenosv.getProducto()).orElse(null));
         model.addAttribute("productomascaro", productoRepository.findById(pmc.getProducto()).orElse(null));
         model.addAttribute("usuariomas", usuarioRepository.findById(umg.getUsuario()).orElse(null));
 
-        model.addAttribute("cmasv",pmasv.getCantidad());
-        model.addAttribute("cmenosv",pmenosv.getCantidad());
+        model.addAttribute("cmasv",(pmasv.getCantidad()==null?0:pmasv.getCantidad()));
+        model.addAttribute("cmenosv",(pmenosv.getCantidad()==null?0:pmenosv.getCantidad()));
 
         return "gestor/estad";
     }
