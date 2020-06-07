@@ -198,12 +198,18 @@ public class ComprasController {
             System.out.println(autoincremental);
             LocalDate lt = LocalDate.now();
             String codigo = "PE" + lt.getDayOfMonth() + lt.getMonthValue() + lt.getYear() + (autoincremental+1);
+            System.out.println(codigo);
             pedidoFinal.setCodigo(codigo);
             pedidoFinal.setFecha_compra(lt);
             pedidoFinal.setComprado(1);
             pedidoFinal.setUsuario(usuario);
             ped.setUsuario(usuario);
             ped.setCodigo("carrito_"+ Integer.toString(usuario.getDni()));
+            ped.setComprado(0);
+            ped.setFecha_compra(lt);
+            float a = 0;
+            ped.setTotal(a);
+            pedidoRepository.save(ped);
             pedidoRepository.save(pedidoFinal);
 
             List<PedidoHasProducto> listaPedProd = pedido.getListPedidoHasProductos();
