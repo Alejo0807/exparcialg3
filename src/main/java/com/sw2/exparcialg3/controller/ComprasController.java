@@ -157,7 +157,7 @@ public class ComprasController {
             pedidoRepository.udpate_carrito(carritoPedido.getCodigo(), 0);
             pedidoHasProductoRepository.deleteInBatch(carritoPedido.getListPedidoHasProductos());
             pedidoRepository.new_pedido(newPedido.getCodigo(), newPedido.getUsuario().getDni(), newPedido.getTotal());
-            pedidoHasProductoRepository.saveAll(newPedido.getListPedidoHasProductos());
+            pedidoHasProductoRepository.saveAll(carritoPedido.getListPedidoHasProductos());
 
             List<PedidoHasProducto> listaPedProd = newPedido.getListPedidoHasProductos();
             for (PedidoHasProducto pedidoHasProducto: listaPedProd){

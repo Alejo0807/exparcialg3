@@ -57,17 +57,6 @@ public class Pedido implements Serializable {
         newPedido.setFecha_compra(lt);
         newPedido.setComprado(1);
         newPedido.setUsuario(oldPedido.getUsuario());
-        newPedido.setListPedidoHasProductos(new ArrayList<PedidoHasProducto>(){
-            {
-                oldPedido.getListPedidoHasProductos().forEach((php)->
-                {
-                    add(new PedidoHasProducto(new PedProdId(newPedido,php.getId().getProducto()), php.getCant()));
-                    remove(php);
-                });
-            }
-        });
-        oldPedido.setTotal((float)0);
-        oldPedido.setComprado(0);
     }
 
     public String getCodigo() {
