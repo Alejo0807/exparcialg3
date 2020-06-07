@@ -120,7 +120,6 @@ public class ComprasController {
         model.addAttribute("listaPedido", pedido.getListPedidoHasProductos());
 
         float a = 0;
-        pedido.setTotal(a);
         for(PedidoHasProducto php : pedido.getListPedidoHasProductos() ){
             a = a + php.getSubtotal();
         }
@@ -133,11 +132,7 @@ public class ComprasController {
         }
 
         int cantidad = 0;
-        if (optPed.isPresent()){
-            cantidad = productosTotalesEnCarrito(optPed.get());
-        }else{
-            cantidad = 0;
-        }
+        cantidad = optPed.map(this::productosTotalesEnCarrito).orElse(0);
 
 
         model.addAttribute("carrito", cantidad);
@@ -147,10 +142,8 @@ public class ComprasController {
 
     @GetMapping("/checkout")
     public String Comprar(@ModelAttribute("pedido") Pedido pedido,Model model){
-
-
      //   ped.getListPedidoHasProductos();
-
+        model.addAttribute("total", pedido.getTotal());
         return "pedido/checkout";
     }
 
@@ -184,32 +177,35 @@ public class ComprasController {
         }
 
         Usuario usuario = (Usuario) session.getAttribute("usuario");
-        System.out.println(usuario.getDni());
+        //System.out.println(usuario.getDni());
         Optional<Pedido> optPed = pedidoRepository.findById("carrito_"+ Integer.toString(usuario.getDni()));
-        Pedido pedidoFinal = optPed.get();
-        Pedido ped = optPed.get();
+        //Pedido pedidoFinal = optPed.get();
+        //Pedido ped = optPed.get();
 
         int verifier = (10 - (sum % 10)) % 10;
-        System.out.println(verifier);
-        System.out.println(sum);
-        if (verifier == intArray[15]){
+        //System.out.println(verifier);
+        //System.out.println(sum);
+        if (verifier == intArray[15] && optPed.isPresent()){
+            Pedido newPedido = new Pedido(optPed.get(),pedidoRepository.hallarAutoincrementalPedido());
+            pedidoRepository.save(optPed.get());
+            pedidoRepository.save(newPedido);
+            /*
             List<PedidoHasProducto> phpList = pedidoFinal.getListPedidoHasProductos();
             attr.addFlashAttribute("msg","Compra exitosa");
             int autoincremental = pedidoRepository.hallarAutoincrementalPedido();
-            System.out.println(autoincremental);
+            //System.out.println(autoincremental);
             LocalDate lt = LocalDate.now();
             String codigo = "PE" + lt.getDayOfMonth() + lt.getMonthValue() + lt.getYear() + (autoincremental+1);
-            System.out.println(codigo);
-            pedidoFinal.setCodigo(codigo);
-            pedidoFinal.setFecha_compra(lt);
-            pedidoFinal.setComprado(1);
-            pedidoFinal.setUsuario(usuario);
+            //System.out.println(codigo);
+            pedidoFinal.setCodigo(codigo);//
+            pedidoFinal.setFecha_compra(lt);//
+            pedidoFinal.setComprado(1);//
+            pedidoFinal.setUsuario(usuario);//
             for (PedidoHasProducto php : phpList){
-                PedidoHasProducto phpFinal = php;
-                phpFinal.setId(new PedProdId(pedidoFinal, php.getId().getProducto()));
-                phpFinal.setSubtotal(php.getSubtotal());
-                phpFinal.setCant(php.getCant());
-                pedidoHasProductoRepository.save(phpFinal);
+                php.setId(new PedProdId(pedidoFinal, php.getId().getProducto()));
+                php.setSubtotal(php.getSubtotal());
+                php.setCant(php.getCant());
+                pedidoHasProductoRepository.save(php);
                 pedidoHasProductoRepository.delete(php);
             }
             ped.setUsuario(usuario);
@@ -220,8 +216,9 @@ public class ComprasController {
             ped.setTotal(a);
             pedidoRepository.save(ped);
             pedidoRepository.save(pedidoFinal);
+            */
 
-            List<PedidoHasProducto> listaPedProd = pedidoFinal.getListPedidoHasProductos();
+            List<PedidoHasProducto> listaPedProd = newPedido.getListPedidoHasProductos();
             for (PedidoHasProducto pedidoHasProducto: listaPedProd){
                 Producto prdct = pedidoHasProducto.getId().getProducto();
                 prdct.setStock(prdct.getStock()-pedidoHasProducto.getCant());

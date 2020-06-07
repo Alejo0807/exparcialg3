@@ -1,9 +1,12 @@
 package com.sw2.exparcialg3.entity;
 
+import com.sw2.exparcialg3.constantes.PedProdId;
+
 import javax.persistence.*;
 import java.io.PipedOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -45,6 +48,26 @@ public class Pedido implements Serializable {
 
     public void setListPedidoHasProductos(List<PedidoHasProducto> listPedidoHasProductos) {
         this.listPedidoHasProductos = listPedidoHasProductos;
+    }
+
+    public Pedido(Pedido oldPedido, int autoincremental){
+        Pedido newPedido = new Pedido();
+        LocalDate lt = LocalDate.now();
+        newPedido.setCodigo("PE" + lt.getDayOfMonth() + lt.getMonthValue() + lt.getYear() + (autoincremental+1));
+        newPedido.setFecha_compra(lt);
+        newPedido.setComprado(1);
+        newPedido.setUsuario(oldPedido.usuario);
+        newPedido.setListPedidoHasProductos(new ArrayList<PedidoHasProducto>(){
+            {
+                oldPedido.getListPedidoHasProductos().forEach((php)->
+                {
+                    add(new PedidoHasProducto(new PedProdId(newPedido,php.getId().getProducto()), php.getCant()));
+                    remove(php);
+                });
+            }
+        });
+        oldPedido.setTotal((float)0);
+        oldPedido.setComprado(0);
     }
 
     public String getCodigo() {
