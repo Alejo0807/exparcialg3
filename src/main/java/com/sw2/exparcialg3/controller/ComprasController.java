@@ -180,7 +180,11 @@ public class ComprasController {
     public String Pedidos(Model model,HttpSession session){
 
         Usuario usuario = (Usuario) session.getAttribute("usuario");
-        model.addAttribute("pedidos", pedidoRepository.findByUsuarioAndComprado(usuario,1));
+        List<Pedido> list = pedidoRepository.findByUsuarioAndComprado(usuario,1);
+
+        list.forEach(Pedido::getListPedidoHasProductos);
+
+        model.addAttribute("pedidos", list );
         return "pedido/listaPedidos";
     }
 
