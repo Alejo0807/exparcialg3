@@ -18,6 +18,6 @@ public interface PedidoRepository extends JpaRepository<Pedido, String> {
     @Procedure(procedureName = "hallar_autoincremental_pedido")
     int hallarAutoincrementalPedido();
 
-    List<Pedido> findByUsuario(Usuario usuario);
+    List<Pedido> findByUsuarioAndComprado(Usuario usuario, int comprado);
 
 }
