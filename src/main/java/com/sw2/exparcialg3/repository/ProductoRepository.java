@@ -39,8 +39,7 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
     @Query(value = "select precio,codigo as producto from producto order by precio desc limit 1", nativeQuery = true)
     ProductoMasCaro getProductoMasCaro();
 
-    @Query(value = "select count(*) as cantidad  from pedido p inner join pedido_has_producto php on (php.pedido=p.codigo)\n" +
-            " where comprado =1", nativeQuery = true)
+    @Query(value = "select sum(cant) as cantidad   from pedido p inner join pedido_has_producto php on (php.pedido=p.codigo) where comprado =1", nativeQuery = true)
     CantidadProductosVendidos getCantidadProductosVendidos();
 
     @Query(value = "select count(*) as cantidad from pedido where comprado =1", nativeQuery = true)
