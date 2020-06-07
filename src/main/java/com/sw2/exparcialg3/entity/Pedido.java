@@ -50,10 +50,13 @@ public class Pedido implements Serializable {
         this.listPedidoHasProductos = listPedidoHasProductos;
     }
 
-    public Pedido(Pedido oldPedido, int autoincremental){
+    public Pedido CrearPedido(Pedido oldPedido, int autoincremental){
         Pedido newPedido = new Pedido();
         LocalDate lt = LocalDate.now();
-        newPedido.setCodigo("PE" + lt.getDayOfMonth() + lt.getMonthValue() + lt.getYear() + (autoincremental+1));
+        String dia= "", mes = "";
+        if(lt.getDayOfMonth() < 10){dia = '0'+ Integer.toString(lt.getDayOfMonth());}
+        if(lt.getMonthValue() < 10){mes = '0'+ Integer.toString(lt.getMonthValue());}
+        newPedido.setCodigo("PE" + dia + mes + lt.getYear() + (autoincremental+1));
         newPedido.setFecha_compra(lt);
         newPedido.setComprado(1);
         newPedido.setUsuario(oldPedido.getUsuario());
@@ -68,6 +71,7 @@ public class Pedido implements Serializable {
         });
         oldPedido.setTotal((float)0);
         oldPedido.setComprado(0);
+        return newPedido;
     }
 
     public String getCodigo() {

@@ -153,9 +153,11 @@ public class ComprasController {
         //System.out.println(verifier);
         //System.out.println(sum);
         if (verifier == intArray[15] && (carritoPedido!=null)){
-            Pedido newPedido = new Pedido(carritoPedido,pedidoRepository.hallarAutoincrementalPedido());
+            Pedido newPedido = carritoPedido.CrearPedido(carritoPedido,pedidoRepository.hallarAutoincrementalPedido());
             pedidoRepository.udpate_carrito(carritoPedido.getCodigo(), 0);
             pedidoHasProductoRepository.deleteInBatch(carritoPedido.getListPedidoHasProductos());
+            System.out.println(newPedido.getCodigo());
+            System.out.println(newPedido.getFecha_compra());
             pedidoRepository.save(newPedido);
 
 
@@ -164,7 +166,7 @@ public class ComprasController {
                 Producto prdct = pedidoHasProducto.getId().getProducto();
                 prdct.setStock(prdct.getStock()-pedidoHasProducto.getCant());
             }
-
+            attr.addFlashAttribute("msg","¡Compra exitosa!");
             return "redirect:/productos";
         }else{
             attr.addFlashAttribute("msg","Tarjeta incorrecta");
