@@ -31,10 +31,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/gestor", "/gestor/**").hasAnyAuthority("gestor")
                 .antMatchers("/u", "/u/**").hasAnyAuthority("registrado")
                 .antMatchers("/loginForm", "/loginForm/**","/signup").anonymous()
-                .anyRequest().permitAll()
-                .and()
-                .rememberMe().key("uniqueAndSecret")
-                .tokenValiditySeconds(172800);
+                .anyRequest().permitAll();
+
+        http.rememberMe()
+                .key("uniqueAndSecret")
+                .tokenValiditySeconds(172800)
                 ;
 
         http.logout()
