@@ -54,22 +54,14 @@ public class ComprasController {
                     pedidoHasProductoRepository.save(new PedidoHasProducto(
                             new PedProdId(carritoPedido, producto), 1
                     ));
-                    PedidoHasProducto php = new PedidoHasProducto(new PedProdId(carritoPedido, producto), 1);
                 }
-                carritoPedido.setTotal(carritoPedido.getTotal() + producto.getPrecio());
-                pedidoRepository.save(carritoPedido);
+                pedidoRepository.udpate_carrito(carritoPedido.getCodigo(),carritoPedido.getTotal() + producto.getPrecio());
                 attr.addFlashAttribute("msg","Producto agregado al carrito");
                 //guardar de otra manera
             }else{
-                Pedido ped = new Pedido();
-                ped.setCodigo("carrito_"+ Integer.toString(usuario.getDni()));
-                PedidoHasProducto php = new PedidoHasProducto();
-                php.setId(new PedProdId(ped, producto));
-                phpfinal = crearPHP(php);
-                attr.addFlashAttribute("msg","Nuevo carrito creado y producto agregado");
-                pedidoRepository.save(ped);
 
-                pedidoHasProductoRepository.save(phpfinal);
+                attr.addFlashAttribute("msg","Ocurrio un problema");
+
             }
 
             return "redirect:/productos";

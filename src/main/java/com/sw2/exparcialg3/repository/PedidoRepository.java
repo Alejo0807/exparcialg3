@@ -18,6 +18,9 @@ public interface PedidoRepository extends JpaRepository<Pedido, String> {
     @Procedure(procedureName = "hallar_autoincremental_pedido")
     int hallarAutoincrementalPedido();
 
+    @Procedure(procedureName = "udpate_carrito")
+    void udpate_carrito(String code, float total);
+
     List<Pedido> findByUsuarioAndComprado(Usuario usuario, int comprado);
 
 }
