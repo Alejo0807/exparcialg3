@@ -129,17 +129,15 @@
                                         </div>
                                         <div class="col-8">
                                             <ul class="list-view text-dark font-weight-normal">
-                                                <li th:text="*{codigo}">Código del producto 0</li>
-                                                <li th:text="*{nombre}">Nombre del producto</li>
-                                                <li th:text="*{precio}">Precio</li>
-                                                <li th:text="*{stock}">Stock</li>
-                                                <li th:text="*{descripcion}">Descripcion</li>
+                                                <li><strong>Código del producto:</strong> <span th:text="*{codigo}"></span></li>
+                                                <li><strong>Nombre del producto:</strong> <span th:text="*{nombre}"></span></li>
+                                                <li><strong>Precio:</strong> <span th:text="'S/.' + *{precio}"></span></li>
+                                                <li><strong>Descripcion:</strong> <span th:text="*{descripcion}"></span></li>
                                             </ul>
 
                                             <div class="container" >
                                                 <div class="row mr-0 pr-0 pb-1" style="position: absolute; right: 0; bottom: 0;">
-                                                    <a th:href="@{'/productos'}" class="mx-3 d-none d-sm-inline-block btn btn-sm btn-dark text-white shadow-sm"> Regresar</a>
-                                                    <a th:href="@{'/u/agregarAlCarrito?id=' + *{codigo}}" class="mx-1 d-none d-sm-inline-block btn btn-sm btn-success text-white shadow-sm"> Agregar al carrito <i class="fas fa-plus-circle fa-sm text-white"></i></a>
+                                                    <a class="mx-1 d-none d-sm-inline-block btn btn-sm btn-success text-white shadow-sm"> Cantidad Vendida: <span th:text="${cmasv}" ></span> <i class="fas fa-plus-circle fa-sm text-white"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -156,7 +154,7 @@
                         <div class="container-fluid ">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Producto menos vendido</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Producto más vendido</h6>
                                 </div>
                                 <!-- Card body-->
                                 <div class="card-body">
@@ -169,17 +167,15 @@
                                         </div>
                                         <div class="col-8">
                                             <ul class="list-view text-dark font-weight-normal">
-                                                <li th:text="*{codigo}">Código del producto 0</li>
-                                                <li th:text="*{nombre}">Nombre del producto</li>
-                                                <li th:text="*{precio}">Precio</li>
-                                                <li th:text="*{stock}">Stock</li>
-                                                <li th:text="*{descripcion}">Descripcion</li>
+                                                <li><strong>Código del producto:</strong> <span th:text="*{codigo}"></span></li>
+                                                <li><strong>Nombre del producto:</strong> <span th:text="*{nombre}"></span></li>
+                                                <li><strong>Precio:</strong> <span th:text="'S/.' + *{precio}"></span></li>
+                                                <li><strong>Descripcion:</strong> <span th:text="*{descripcion}"></span></li>
                                             </ul>
 
                                             <div class="container" >
                                                 <div class="row mr-0 pr-0 pb-1" style="position: absolute; right: 0; bottom: 0;">
-                                                    <a th:href="@{'/productos'}" class="mx-3 d-none d-sm-inline-block btn btn-sm btn-dark text-white shadow-sm"> Regresar</a>
-                                                    <a th:href="@{'/u/agregarAlCarrito?id=' + *{codigo}}" class="mx-1 d-none d-sm-inline-block btn btn-sm btn-success text-white shadow-sm"> Agregar al carrito <i class="fas fa-plus-circle fa-sm text-white"></i></a>
+                                                    <a class="mx-1 d-none d-sm-inline-block btn btn-sm btn-success text-white shadow-sm"> Cantidad Vendida: <span th:text="${cmenosv}"></span> <i class="fas fa-plus-circle fa-sm text-white"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -209,18 +205,14 @@
                                         </div>
                                         <div class="col-8">
                                             <ul class="list-view text-dark font-weight-normal">
-                                                <li th:text="*{codigo}">Código del producto 0</li>
-                                                <li th:text="*{nombre}">Nombre del producto</li>
-                                                <li th:text="*{precio}">Precio</li>
-                                                <li th:text="*{stock}">Stock</li>
-                                                <li th:text="*{descripcion}">Descripcion</li>
+                                                <li><strong>Código del producto:</strong> <span th:text="*{codigo}"></span></li>
+                                                <li><strong>Nombre del producto:</strong> <span th:text="*{nombre}"></span></li>
+                                                <li><strong>Precio:</strong> <span th:text="'S/.' + *{precio}"></span></li>
+                                                <li><strong>Descripcion:</strong> <span th:text="*{descripcion}"></span></li>
                                             </ul>
 
                                             <div class="container" >
-                                                <div class="row mr-0 pr-0 pb-1" style="position: absolute; right: 0; bottom: 0;">
-                                                    <a th:href="@{'/productos'}" class="mx-3 d-none d-sm-inline-block btn btn-sm btn-dark text-white shadow-sm"> Regresar</a>
-                                                    <a th:href="@{'/u/agregarAlCarrito?id=' + *{codigo}}" class="mx-1 d-none d-sm-inline-block btn btn-sm btn-success text-white shadow-sm"> Agregar al carrito <i class="fas fa-plus-circle fa-sm text-white"></i></a>
-                                                </div>
+
                                             </div>
                                         </div>
                                     </div>

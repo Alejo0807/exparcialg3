@@ -44,6 +44,9 @@ public class EstadisticasController {
         model.addAttribute("productomascaro", productoRepository.findById(pmc.getProducto()).orElse(null));
         model.addAttribute("usuariomas", usuarioRepository.findById(umg.getUsuario()).orElse(null));
 
+        model.addAttribute("cmasv",pmasv.getCantidad());
+        model.addAttribute("cmenosv",pmenosv.getCantidad());
+
         return "gestor/estad";
     }
 
