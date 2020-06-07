@@ -16,11 +16,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.constraints.Null;
-import java.lang.reflect.Array;
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Controller
 @RequestMapping("/u")
@@ -38,46 +37,34 @@ public class ComprasController {
 
         //System.out.println("hola");
         Usuario usuario = (Usuario) session.getAttribute("usuario");
-        Optional<Producto> optProd = productoRepository.findById(cod);
-        System.out.println(usuario.getDni());
-        Optional<Pedido> optPed = pedidoRepository.findById("carrito_"+ Integer.toString(usuario.getDni()));
+        Producto producto = productoRepository.findById(cod).orElse(null);
+        Pedido carritoPedido = (Pedido) session.getAttribute("carrito");
 
-        Pedido pedido = optPed.get();
-        System.out.println(pedido.getUsuario().getDni());
-
-        if(optProd.isPresent()){
-            Producto prod = optProd.get();
-            System.out.println("Stock de producto:"+ prod.getStock());
+        if(producto!=null){
             PedidoHasProducto phpfinal = null;
-            if(optPed.isPresent()){
-                Pedido ped = optPed.get();
-                     System.out.println("Codigo de pedido:"+ ped.getCodigo());
-                List<PedidoHasProducto> listaPHP = ped.getListPedidoHasProductos();
-
-                String phpActualizado = "";
-                for(PedidoHasProducto php : listaPHP ){
-                    if(prod.getCodigo() == php.getId().getProducto().getCodigo()){
-                        phpActualizado = "orden actualizada";
-                        phpfinal = php;
-                    }
-                    ped.setTotal(ped.getTotal() + php.getSubtotal());
+            if(carritoPedido!=null){
+                AtomicBoolean flag = new AtomicBoolean(false); // indica si el producto ya está en el carrito
+                carritoPedido.getListPedidoHasProductos().forEach((php)->
+                { if(producto.getCodigo().equals(php.getId().getProducto().getCodigo())){
+                        flag.set(true);
+                        php.setCant(php.getCant()+1);
+                        pedidoHasProductoRepository.save(php);
+                    } });
+                if (!flag.get()){
+                    pedidoHasProductoRepository.save(new PedidoHasProducto(
+                            new PedProdId(carritoPedido, producto), 1
+                    ));
+                    PedidoHasProducto php = new PedidoHasProducto(new PedProdId(carritoPedido, producto), 1);
                 }
-                if (phpActualizado != "orden actualizada" ){
-                    PedidoHasProducto php = new PedidoHasProducto(new PedProdId(ped, prod), 1);
-                    php = crearPHP(php);
-                    phpfinal = php;
-                }
-                phpfinal = llenarPHP(phpfinal);
-                pedidoRepository.save(ped);
-
-                pedidoHasProductoRepository.save(phpfinal);
+                carritoPedido.setTotal(carritoPedido.getTotal() + producto.getPrecio());
+                pedidoRepository.save(carritoPedido);
                 attr.addFlashAttribute("msg","Producto agregado al carrito");
                 //guardar de otra manera
             }else{
                 Pedido ped = new Pedido();
                 ped.setCodigo("carrito_"+ Integer.toString(usuario.getDni()));
                 PedidoHasProducto php = new PedidoHasProducto();
-                php.setId(new PedProdId(ped, prod));
+                php.setId(new PedProdId(ped, producto));
                 phpfinal = crearPHP(php);
                 attr.addFlashAttribute("msg","Nuevo carrito creado y producto agregado");
                 pedidoRepository.save(ped);

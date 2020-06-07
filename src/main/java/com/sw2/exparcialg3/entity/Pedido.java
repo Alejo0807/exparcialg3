@@ -56,7 +56,7 @@ public class Pedido implements Serializable {
         newPedido.setCodigo("PE" + lt.getDayOfMonth() + lt.getMonthValue() + lt.getYear() + (autoincremental+1));
         newPedido.setFecha_compra(lt);
         newPedido.setComprado(1);
-        newPedido.setUsuario(oldPedido.usuario);
+        newPedido.setUsuario(oldPedido.getUsuario());
         newPedido.setListPedidoHasProductos(new ArrayList<PedidoHasProducto>(){
             {
                 oldPedido.getListPedidoHasProductos().forEach((php)->

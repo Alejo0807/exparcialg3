@@ -16,7 +16,9 @@ public class PedidoHasProducto implements Serializable {
     @Column(name = "subtotal")
     private Float subtotal;
 
-    public PedidoHasProducto(){}
+    public PedidoHasProducto(){
+        cant=0;
+    }
 
     public PedidoHasProducto(PedProdId id, int cant){
         this.setId(id);
@@ -41,7 +43,7 @@ public class PedidoHasProducto implements Serializable {
     }
 
     public Float getSubtotal() {
-        return subtotal;
+        return  cant*id.getProducto().getPrecio();
     }
 
     public void setSubtotal(Float subtotal) {

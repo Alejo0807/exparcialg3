@@ -62,6 +62,7 @@ public class LoginController {
 
         switch (rol) {
             case "registrado":
+                session.setAttribute("carrito", pedidoRepository.findById("carrito_"+ usuarioLogueado.getDni()).orElse(null));
                 return "redirect:/productos";
             case "gestor":
                 return "redirect:/gestor";
