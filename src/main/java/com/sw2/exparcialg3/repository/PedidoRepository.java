@@ -27,7 +27,7 @@ public interface PedidoRepository extends JpaRepository<Pedido, String> {
 
     List<Pedido> findByUsuarioAndComprado(Usuario usuario, int comprado);
 
-    @Query(value = "select * from pedido where codigo like concat(\"%\",?1,\"%\");" , nativeQuery = true)
-    List<Pedido> buscarPedidos(String param);
+    @Query(value = "select * from pedido where (codigo like concat(\"%\",?1,\"%\")) and (usuario like ?2) and (comprado like 1);" , nativeQuery = true)
+    List<Pedido> buscarPedidos(String param, int dni);
 
 }

@@ -200,20 +200,26 @@ public class ComprasController {
     @GetMapping("/pedidos")
     public String Pedidos(Model model,HttpSession session, @RequestParam(value = "srch", required = false) String param){
 
-        param=(String)session.getAttribute("lastSearch");
+      //  param=(String)session.getAttribute("lastSearch");
 
-        model.addAttribute("search",param);
         if (param==null) {
             param="";
         }
 
+        model.addAttribute("srch", param);
 
+        List<Pedido> lista;
         Usuario usuario = (Usuario) session.getAttribute("usuario");
+        System.out.println(param);
+        if(param == "" || param.isEmpty()){
+            lista = pedidoRepository.findByUsuarioAndComprado(usuario,1);
+        }
+        else{
+            System.out.println("entro: "+param);
+            lista = pedidoRepository.buscarPedidos(param, usuario.getDni());
+        }
 
-        List<Pedido> lista = pedidoRepository.buscarPedidos(param);
 
-
-        session.setAttribute("lastSearch", param);
         model.addAttribute("pedidos", lista );
 
         return "pedido/listaPedidos";
