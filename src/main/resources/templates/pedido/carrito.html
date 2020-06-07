@@ -63,10 +63,10 @@
                                         </div>
                                         <div class="col-5">
                                             <ul class="list-view text-dark font-weight-normal">
-                                                <li th:text="${p.id.producto.codigo}">Código del producto 0</li>
-                                                <li th:text="${p.id.producto.nombre}">Nombre del producto</li>
-                                                <li th:text="${p.id.producto.precio}">Precio unitario</li>
-                                                <li th:text="${p.cant}">Cantidad pedida</li>
+                                                <li><strong>Código del producto: </strong><span th:text="${p.id.producto.codigo}" ></span></li>
+                                                <li><strong>Nombre del producto: </strong><span th:text="${p.id.producto.nombre}"></span></li>
+                                                <li><strong>Precio unitario: </strong><span th:text="${p.id.producto.precio}"></span></li>
+                                                <li><strong>Cantidad pedida: </strong><span th:text="${p.cant}""></span></li>
                                             </ul>
                                         </div>
 
