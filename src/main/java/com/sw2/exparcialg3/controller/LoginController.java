@@ -130,7 +130,7 @@ public class LoginController {
         }else{
             attr.addFlashAttribute("msg", "Usuario creado exitosamente");
             usuarioRepository.save_usuario(u.getDni(), u.getNombre(), u.getApellido(), u.getCorreo(), u.getPassword());
-            pedidoRepository.save(new Pedido("carrito_"+u.getDni(),u));
+            pedidoRepository.new_carrito("carrito_"+u.getDni(),u.getDni());
             return "redirect:/loginForm";
         }
     }

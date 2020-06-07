@@ -25,6 +25,9 @@ public interface PedidoRepository extends JpaRepository<Pedido, String> {
     @Procedure(procedureName = "new_pedido")
     void new_pedido(String codigo, int usuario, float total);
 
+    @Procedure(procedureName = "new_carrito")
+    void new_carrito(String cod, int usuario);
+
     List<Pedido> findByUsuarioAndComprado(Usuario usuario, int comprado);
 
     @Query(value = "select * from pedido where (codigo like concat(\"%\",?1,\"%\")) and (usuario like ?2) and (comprado like 1);" , nativeQuery = true)
