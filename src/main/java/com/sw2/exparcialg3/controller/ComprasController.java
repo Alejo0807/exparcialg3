@@ -120,7 +120,6 @@ public class ComprasController {
         model.addAttribute("listaPedido", pedido.getListPedidoHasProductos());
 
         float a = 0;
-        pedido.setTotal(a);
         for(PedidoHasProducto php : pedido.getListPedidoHasProductos() ){
             a = a + php.getSubtotal();
         }
@@ -133,11 +132,7 @@ public class ComprasController {
         }
 
         int cantidad = 0;
-        if (optPed.isPresent()){
-            cantidad = productosTotalesEnCarrito(optPed.get());
-        }else{
-            cantidad = 0;
-        }
+        cantidad = optPed.map(this::productosTotalesEnCarrito).orElse(0);
 
 
         model.addAttribute("carrito", cantidad);
@@ -147,10 +142,8 @@ public class ComprasController {
 
     @GetMapping("/checkout")
     public String Comprar(@ModelAttribute("pedido") Pedido pedido,Model model){
-
-
      //   ped.getListPedidoHasProductos();
-
+        model.addAttribute("total", pedido.getTotal());
         return "pedido/checkout";
     }
 
