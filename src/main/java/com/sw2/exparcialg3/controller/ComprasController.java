@@ -180,20 +180,7 @@ public class ComprasController {
     public String Pedidos(Model model,HttpSession session){
 
         Usuario usuario = (Usuario) session.getAttribute("usuario");
-        model.addAttribute("pedidos", pedidoRepository.findByUsuarioAndComprado(usuario,0));
-
-
-
-        int cantidad = 0;
-        Optional<Pedido> optPed = pedidoRepository.findById("carrito_"+ Integer.toString(usuario.getDni()));
-        if (optPed.isPresent()){
-            cantidad = productosTotalesEnCarrito(optPed.get());
-        }else{
-            cantidad = 0;
-        }
-
-        model.addAttribute("carrito", cantidad);
-
+        model.addAttribute("pedidos", pedidoRepository.findByUsuarioAndComprado(usuario,1));
         return "pedido/listaPedidos";
     }
 

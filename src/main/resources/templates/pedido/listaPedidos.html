@@ -66,39 +66,37 @@
                 </div>
 
 
-                <!-- Listado de productos -->
+                <!-- Listado de pedidos -->
+
                 <div class="row" th:each="p : ${pedidos}">
-                    <!-- Area Chart -->
-                    <div class="col-lg-10 col-sm-12 mx-auto">
-                    <div class="container-fluid ">
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3 d-flex flex-row align-items-center bg-white justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-primary" th:text="${p.codigo}">Pedido #PE12039u10239u10923</h6>
-                                <h6 class="m-0 border-1 font-weight-bold text-danger" th:text="${p.fecha_compra}">Fecha: <span> Hola</span></h6>
-                            </div>
-                            <!-- Card body-->
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-5">
-                                        <ul class="list-view text-dark font-weight-normal" th:each="php : ${p.listPedidoHasProductos}">
-                                            <li th:text="'Producto: ' + ${php.id.producto.nombre} +'('+${php.cant}+')'">Producto: gaseosa (2)</li>
-                                        </ul>
-
-
-
-                                        <div class="pl-4">
-                                            <h5 class="text-danger"><i class="fas fa-arrow-right"></i> Total <span>36</span> soles</h5>
+                        <div class="col-lg-10 col-sm-12 mx-auto">
+                            <div class="container-fluid ">
+                                <div class="card shadow mb-4">
+                                    <!-- Card body-->
+                                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h5 class="m-0 font-weight-bold text-primary">Pedido: <span th:text="${p.codigo}"></span></h5>
+                                        <h5 class="m-0 font-weight-bold text-danger">Fecha: <span th:text="${p.fecha_compra.toString()}"></span></h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <ul class="list-view text-dark font-weight-normal" >
+                                                    <li th:each="prod : ${p.listPedidoHasProductos}"><strong>Producto: </strong><span th:text="${prod.id.producto.nombre}"></span>  (<span th:text="${prod.cant}"></span>)</li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="container" style="position: absolute; right: 0; bottom: 0;">
+                                                    <div class="mr-0 pr-0 pb-1">
+                                                        <a  class="mx-1 d-none d-sm-inline-block btn btn-sm btn-info text-white shadow-sm"><i class="fas fa-arrow-alt-circle-right bg-white fa-sm text-white"></i> Total:  <span th:text="${p.total}"></span> Soles</a>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
                     </div>
-                    </div>
-                </div>
-
 
 
 
