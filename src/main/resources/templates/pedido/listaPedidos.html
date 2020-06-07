@@ -55,7 +55,7 @@
                         <div class="container-fluid">
                             <form th:action="@{/u/pedidos}" method="get">
                                 <div class="input-group">
-                                    <input type="text" class="form-control bg-white border-2 " name="search" th:value="${srch!=null}? ${srch}" placeholder="Buscar pedidos" aria-label="Search" aria-describedby="basic-addon2">
+                                    <input type="text" class="form-control bg-white border-2 " name="srch" th:value="${srch!=null}? ${srch}" placeholder="Buscar pedidos" aria-label="Search" aria-describedby="basic-addon2">
                                     <div class="input-group-append">
                                         <button class="btn btn-dark" type="submit">
                                             <i class="fas fa-search fa-sm"></i>
