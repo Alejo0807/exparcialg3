@@ -120,9 +120,16 @@ public class ComprasController {
     }
 
     @PostMapping("/pagarYguardarCompra")
-    public String GuardarCompra(@ModelAttribute("pedido") @Valid  Pedido pedido, BindingResult bindingResult,
+    public String GuardarCompra(@ModelAttribute("pedido")  Pedido pedido, BindingResult bindingResult,
                                 HttpSession session,
                                 RedirectAttributes attr, Model model){
+
+        if(pedido.getCreditCard()==null){
+            bindingResult.rejectValue("creditCard", "error.user", "Este campo no puede estar vacío");
+        }
+        else if(pedido.getCreditCard().length()!=16){
+            bindingResult.rejectValue("creditCard", "error.user", "Debe tener 16 dígitos");
+        }
 
         if(bindingResult.hasErrors()){
             return "pedido/checkout";
@@ -132,9 +139,7 @@ public class ComprasController {
         String[] arrOfStr = pedido.getCreditCard().split("(?<=[0-9])");
         //System.out.println(arrOfStr[1]);
 
-
         int[] intArray = new int[16];
-
 
         //4556628646488641
         for (int i = 0; i < 16; i++) {

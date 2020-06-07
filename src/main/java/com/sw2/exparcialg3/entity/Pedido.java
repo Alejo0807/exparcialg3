@@ -29,8 +29,8 @@ public class Pedido implements Serializable {
     private Usuario usuario;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "id.pedido")
     private List<PedidoHasProducto> listPedidoHasProductos;
-    @NotBlank(message = "Este campo no puede estar vacío")
-    @Size(min = 16, max = 16, message = "Debe ser de 16 digitos")
+    //@NotBlank(message = "Este campo no puede estar vacío")
+    //@Size(min = 16, max = 16, message = "Debe ser de 16 digitos")
     @Transient
     private String creditCard;
     public String getCreditCard() {
