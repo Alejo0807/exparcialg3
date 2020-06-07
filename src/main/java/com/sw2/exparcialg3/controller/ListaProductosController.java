@@ -53,7 +53,7 @@ public class ListaProductosController {
         List<Producto> list = productoRepository.buscarProductos(param, (page-1)*PAGES, PAGES );
         ArrayList<Integer> pages = new ArrayList<>();
         int productsSize = productoRepository.contar(param).getCantidad();
-        for (int jj = 0 ; jj < (productsSize)/7+1; jj++){
+        for (int jj = 0 ; jj < (productsSize)/PAGES+1; jj++){
             pages.add(jj+1);
         }
         model.addAttribute("pages",pages);

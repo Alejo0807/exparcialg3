@@ -19,7 +19,7 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
     void update_producto(String codigo, String nombre, String descripcion, int stock);
 
 
-    @Query(value = "select * from producto where nombre like concat(\"%\",?1,\"%\") or codigo like concat(\"%\",?1,\"%\") and stock>0 limit ?2,?3" , nativeQuery = true)
+    @Query(value = "select * from producto where ((nombre like concat(\"%\",?1,\"%\")) or (codigo like concat(\"%\",?1,\"%\"))) and (stock>0) limit ?2,?3" , nativeQuery = true)
     List<Producto> buscarProductos(String param,int limit1, int limit2);
 
 
@@ -28,11 +28,11 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
 
     //Para las estadísticas:
 
-    @Query(value = "select count(*) as cantidad, producto  from pedido p inner join pedido_has_producto php on (php.pedido=p.codigo)\n" +
+    @Query(value = "select sum(cant) as cantidad, producto  from pedido p inner join pedido_has_producto php on (php.pedido=p.codigo)\n" +
             " where comprado =1 group by producto order by cantidad desc limit 1", nativeQuery = true)
     ProductoMasVendidoDto getProdcutoMasVendidoDto();
 
-    @Query(value = "select count(*) as cantidad, prod.codigo as producto  from pedido p right join pedido_has_producto php on (php.pedido=p.codigo)\n" +
+    @Query(value = "select sum(cant) as cantidad, prod.codigo as producto  from pedido p right join pedido_has_producto php on (php.pedido=p.codigo)\n" +
             " right join producto prod on (prod.codigo = php.producto)  group by producto order by cantidad asc limit 1", nativeQuery = true)
     ProductoMasVendidoDto getProdcutoMenosVendidoDto();
 
