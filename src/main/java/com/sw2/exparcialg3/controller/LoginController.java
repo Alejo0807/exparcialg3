@@ -63,7 +63,7 @@ public class LoginController {
         switch (rol) {
             case "registrado":
                 session.setAttribute("carrito",
-                        new Pedido());
+                        new Pedido("carrito_"+usuarioLogueado.getDni()));
                 return "redirect:/productos";
             case "gestor":
                 return "redirect:/gestor";
