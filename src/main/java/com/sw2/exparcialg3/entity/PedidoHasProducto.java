@@ -23,7 +23,7 @@ public class PedidoHasProducto implements Serializable {
     public PedidoHasProducto(PedProdId id, int cant){
         this.setId(id);
         this.setCant(cant);
-
+        this.getSubtotal();
     }
 
     public PedProdId getId() {

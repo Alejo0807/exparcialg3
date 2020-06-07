@@ -157,14 +157,22 @@ public class ComprasController {
 
         int verifier = (10 - (sum % 10)) % 10;
         if (verifier == intArray[15] && (carritoPedido!=null)){
+            //Generar el pedido
+            Integer numPed = pedidoRepository.hallarAutoincrementalPedido();
+            String codigoDePedido = carritoPedido.getCodeForPedido((numPed==null?0:numPed) + 1);
+            pedidoRepository.new_pedido(codigoDePedido,
+                    usuario.getDni(), carritoPedido.getTotal());
+            pedidoHasProductoRepository.saveAll(new ArrayList<PedidoHasProducto>(){
+                {
+                    carritoPedido.getListPedidoHasProductos().forEach((i)->{
+                        add(new PedidoHasProducto(new PedProdId(new Pedido(codigoDePedido), i.getId().getProducto()), i.getCant()));
+                    });
+                }
+            });
             //Borrar el pedido del carrito
             pedidoRepository.udpate_carrito(carritoPedido.getCodigo(), 0);
             pedidoHasProductoRepository.deleteInBatch(carritoPedido.getListPedidoHasProductos());
             System.out.println(3);
-            //Generar el pedido
-            pedidoRepository.new_pedido(carritoPedido.getCodeForPedido(pedidoRepository.hallarAutoincrementalPedido()+1),
-                    usuario.getDni(), carritoPedido.getTotal());
-            pedidoHasProductoRepository.saveAll(carritoPedido.getListPedidoHasProductos());
 
             List<PedidoHasProducto> listaPedProd = carritoPedido.getListPedidoHasProductos();
             for (PedidoHasProducto pedidoHasProducto: listaPedProd){
@@ -186,20 +194,11 @@ public class ComprasController {
     public String Pedidos(Model model,HttpSession session){
 
         Usuario usuario = (Usuario) session.getAttribute("usuario");
-        model.addAttribute("pedidos", pedidoRepository.findByUsuarioAndComprado(usuario,0));
+        List<Pedido> list = pedidoRepository.findByUsuarioAndComprado(usuario,1);
 
+        list.forEach(Pedido::getListPedidoHasProductos);
 
-
-        int cantidad = 0;
-        Optional<Pedido> optPed = pedidoRepository.findById("carrito_"+ Integer.toString(usuario.getDni()));
-        if (optPed.isPresent()){
-            cantidad = productosTotalesEnCarrito(optPed.get());
-        }else{
-            cantidad = 0;
-        }
-
-        model.addAttribute("carrito", cantidad);
-
+        model.addAttribute("pedidos", list );
         return "pedido/listaPedidos";
     }
 
