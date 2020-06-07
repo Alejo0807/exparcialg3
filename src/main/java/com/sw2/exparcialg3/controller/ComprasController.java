@@ -156,9 +156,16 @@ public class ComprasController {
             pedidoHasProductoRepository.deleteInBatch(carritoPedido.getListPedidoHasProductos());
             System.out.println(3);
             //Generar el pedido
-            pedidoRepository.new_pedido(carritoPedido.getCodeForPedido(pedidoRepository.hallarAutoincrementalPedido()+1),
+            String codigoDePedido = carritoPedido.getCodeForPedido(pedidoRepository.hallarAutoincrementalPedido()+1);
+            pedidoRepository.new_pedido(codigoDePedido,
                     usuario.getDni(), carritoPedido.getTotal());
-            pedidoHasProductoRepository.saveAll(carritoPedido.getListPedidoHasProductos());
+            pedidoHasProductoRepository.saveAll(new ArrayList<PedidoHasProducto>(){
+                {
+                    carritoPedido.getListPedidoHasProductos().forEach((i)->{
+                        add(new PedidoHasProducto(new PedProdId(new Pedido(codigoDePedido), i.getId().getProducto()), i.getCant()));
+                    });
+                }
+            });
 
             List<PedidoHasProducto> listaPedProd = carritoPedido.getListPedidoHasProductos();
             for (PedidoHasProducto pedidoHasProducto: listaPedProd){
