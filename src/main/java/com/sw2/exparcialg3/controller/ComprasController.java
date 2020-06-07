@@ -50,7 +50,7 @@ public class ComprasController {
                 {   System.out.println("La cantidad es "+php.getCant());
                     if(producto.getCodigo().equals(php.getId().getProducto().getCodigo()) && !flag.get()){
                         flag.set(true); // si está en el carrito
-                        if((php.getCant() < 4)){
+                        if((php.getCant() >= 4)){
                             // pero ya hay 4
                             attr.addFlashAttribute("msg2","Se alcanzo el limite de unidades por producto(4)");
                             flag2.set(true);
