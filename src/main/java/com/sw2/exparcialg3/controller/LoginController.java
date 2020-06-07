@@ -62,7 +62,8 @@ public class LoginController {
 
         switch (rol) {
             case "registrado":
-                session.setAttribute("carrito", pedidoRepository.findById("carrito_"+ usuarioLogueado.getDni()).orElse(null));
+                session.setAttribute("carrito",
+                        new Pedido());
                 return "redirect:/productos";
             case "gestor":
                 return "redirect:/gestor";
@@ -92,7 +93,8 @@ public class LoginController {
 
     @GetMapping("/signup")
     public String nuevoUsuario(@ModelAttribute("usuario") Usuario u) {
-        return "/register";
+
+        return "register";
     }
 
     @PostMapping("/guardar")

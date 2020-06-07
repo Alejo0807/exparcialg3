@@ -30,9 +30,12 @@ public class Pedido implements Serializable {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "id.pedido")
     private List<PedidoHasProducto> listPedidoHasProductos;
 
-    public Pedido(){}
+    public Pedido(){
+    }
     public Pedido(String cod){
         this.setCodigo(cod);
+        this.total =(float)0;
+        this.comprado=0;
     }
     @NotBlank(message = "Este campo no puede estar vacío")
     @Size(min = 16, max = 16, message = "Debe ser de 16 digitos")
