@@ -45,7 +45,7 @@
                         </div>
                     </div>
                 </div>
-
+                <div th:if="${msg != null}" th:text="${msg}" class="alert alert-danger py-1 col-9 mx-auto" role="alert"></div>
                 <!-- Listado de productos -->
                 <div class="row" th:each="p : ${listaPedido}">
                     <!-- Area Chart -->

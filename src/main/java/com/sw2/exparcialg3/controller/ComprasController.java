@@ -131,6 +131,7 @@ public class ComprasController {
             bindingResult.rejectValue("creditCard", "error.user", "Debe tener 16 dígitos");
         }
 
+
         if(bindingResult.hasErrors()){
             return "pedido/checkout";
         }
@@ -168,7 +169,9 @@ public class ComprasController {
         Pedido carritoPedido = pedidoRepository.findById("carrito_"+ usuario.getDni()).orElse(null);
 
         int verifier = (10 - (sum % 10)) % 10;
+
         if (verifier == intArray[15] && (carritoPedido!=null)){
+
             //Generar el pedido
             Integer numPed = pedidoRepository.hallarAutoincrementalPedido();
             String codigoDePedido = carritoPedido.getCodeForPedido((numPed==null?0:numPed) + 1);
@@ -195,7 +198,7 @@ public class ComprasController {
             return "redirect:/productos";
         }else{
             attr.addFlashAttribute("msg","Tarjeta incorrecta");
-            return "redirect:/u/checkout";
+            return "redirect:/u/carrito";
         }
     }
 
