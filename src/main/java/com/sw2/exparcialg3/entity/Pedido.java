@@ -51,11 +51,10 @@ public class Pedido implements Serializable {
     }
 
     public Pedido(Pedido oldPedido, int autoincremental){
-        Pedido newPedido = new Pedido();
         LocalDate lt = LocalDate.now();
-        newPedido.setCodigo("PE" + lt.getDayOfMonth() + lt.getMonthValue() + lt.getYear() + (autoincremental+1));
-        newPedido.setFecha_compra(lt);
-        newPedido.setComprado(1);
+        this.setCodigo("PE" + lt.getDayOfMonth() + lt.getMonthValue() + lt.getYear() + (autoincremental+1));
+        this.setFecha_compra(lt);
+        this.setComprado(1);
     }
 
     public String getCodigo() {
