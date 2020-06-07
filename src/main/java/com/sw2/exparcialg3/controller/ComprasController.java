@@ -12,10 +12,12 @@ import com.sw2.exparcialg3.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -130,16 +132,28 @@ public class ComprasController {
     }
 
     @PostMapping("/pagarYguardarCompra")
-    public String GuardarCompra(@ModelAttribute("pedido") Pedido pedido, HttpSession session,
-                                RedirectAttributes attr,Model model){
+    public String GuardarCompra(@ModelAttribute("pedido") @Valid  Pedido pedido, BindingResult bindingResult,
+                                HttpSession session,
+                                RedirectAttributes attr, Model model){
+
+        if(bindingResult.hasErrors()){
+            return "pedido/checkout";
+        }
+
 
         String[] arrOfStr = pedido.getCreditCard().split("(?<=[0-9])");
-        System.out.println(arrOfStr[1]);
+        //System.out.println(arrOfStr[1]);
+
+
         int[] intArray = new int[16];
+
+
         //4556628646488641
         for (int i = 0; i < 16; i++) {
             intArray[i] = Integer.parseInt(arrOfStr[i]);
         }
+
+
 
         for (int i = 0; i < 15; i=i+2){
             intArray[i] = intArray[i] * 2;
