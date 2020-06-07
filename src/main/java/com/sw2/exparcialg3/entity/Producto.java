@@ -6,10 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 
 @Entity
@@ -32,7 +29,7 @@ public class Producto implements Serializable {
     private Float precio;
     @Column(name = "foto")
     private byte[] foto;
-    @Positive
+    @PositiveOrZero
     @Column(name = "stock",nullable = false)
     private int stock;
     private String fotocontenttype;
