@@ -193,6 +193,7 @@ public class ComprasController {
         System.out.println(verifier);
         System.out.println(sum);
         if (verifier == intArray[15]){
+            List<PedidoHasProducto> phpList = pedidoFinal.getListPedidoHasProductos();
             attr.addFlashAttribute("msg","Compra exitosa");
             int autoincremental = pedidoRepository.hallarAutoincrementalPedido();
             System.out.println(autoincremental);
@@ -203,6 +204,14 @@ public class ComprasController {
             pedidoFinal.setFecha_compra(lt);
             pedidoFinal.setComprado(1);
             pedidoFinal.setUsuario(usuario);
+            for (PedidoHasProducto php : phpList){
+                PedidoHasProducto phpFinal = php;
+                phpFinal.setId(new PedProdId(pedidoFinal, php.getId().getProducto()));
+                phpFinal.setSubtotal(php.getSubtotal());
+                phpFinal.setCant(php.getCant());
+                pedidoHasProductoRepository.save(phpFinal);
+                pedidoHasProductoRepository.delete(php);
+            }
             ped.setUsuario(usuario);
             ped.setCodigo("carrito_"+ Integer.toString(usuario.getDni()));
             ped.setComprado(0);
