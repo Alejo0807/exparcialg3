@@ -60,7 +60,8 @@ public class ComprasController {
                             pedidoRepository.udpate_carrito(carritoPedido.getCodigo(),carritoPedido.getTotal() + producto.getPrecio());
                             attr.addFlashAttribute("msg","Producto agregado al carrito");
                         }
-                }});
+                    }
+                });
                 if (!flag.get() ){ // Se guarda nuevo producto en pedido
                     pedidoHasProductoRepository.save(new PedidoHasProducto(new PedProdId(carritoPedido, producto), 1));
                     pedidoRepository.udpate_carrito(carritoPedido.getCodigo(),carritoPedido.getTotal() + producto.getPrecio());
