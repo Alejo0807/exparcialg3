@@ -38,7 +38,7 @@ public class ComprasController {
         //System.out.println("hola");
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         Producto producto = productoRepository.findById(cod).orElse(null);
-        Pedido carritoPedido = pedidoRepository.findById("carrito"+usuario.getDni()).orElse(null);
+        Pedido carritoPedido = pedidoRepository.findById("carrito_"+usuario.getDni()).orElse(null);
 
         if(producto!=null){
             PedidoHasProducto phpfinal = null;
@@ -59,11 +59,8 @@ public class ComprasController {
                 attr.addFlashAttribute("msg","Producto agregado al carrito");
                 //guardar de otra manera
             }else{
-
                 attr.addFlashAttribute("msg","Ocurrio un problema");
-
             }
-
             return "redirect:/productos";
         }else{
             attr.addFlashAttribute("msg","Stock agotado");
