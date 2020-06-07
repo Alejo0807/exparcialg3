@@ -25,7 +25,7 @@ public class Pedido implements Serializable {
     @ManyToOne
     @JoinColumn(name = "usuario")
     private Usuario usuario;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.pedido")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "id.pedido")
     private List<PedidoHasProducto> listPedidoHasProductos;
 
     public Pedido(){}
@@ -56,7 +56,6 @@ public class Pedido implements Serializable {
         newPedido.setCodigo("PE" + lt.getDayOfMonth() + lt.getMonthValue() + lt.getYear() + (autoincremental+1));
         newPedido.setFecha_compra(lt);
         newPedido.setComprado(1);
-        newPedido.setUsuario(oldPedido.getUsuario());
     }
 
     public String getCodigo() {

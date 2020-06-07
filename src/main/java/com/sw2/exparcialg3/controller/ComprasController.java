@@ -154,15 +154,22 @@ public class ComprasController {
         //System.out.println(sum);
         if (verifier == intArray[15] && (carritoPedido!=null)){
             Pedido newPedido = new Pedido(carritoPedido,pedidoRepository.hallarAutoincrementalPedido());
+            System.out.println(1);
             pedidoRepository.udpate_carrito(carritoPedido.getCodigo(), 0);
+            System.out.println(2);
             pedidoHasProductoRepository.deleteInBatch(carritoPedido.getListPedidoHasProductos());
+            System.out.println(3);
             pedidoRepository.new_pedido(newPedido.getCodigo(), newPedido.getUsuario().getDni(), newPedido.getTotal());
+            System.out.println(4);
             pedidoHasProductoRepository.saveAll(carritoPedido.getListPedidoHasProductos());
+            System.out.println(5);
 
             List<PedidoHasProducto> listaPedProd = newPedido.getListPedidoHasProductos();
             for (PedidoHasProducto pedidoHasProducto: listaPedProd){
                 Producto prdct = pedidoHasProducto.getId().getProducto();
+                System.out.println(6);
                 prdct.setStock(prdct.getStock()-pedidoHasProducto.getCant());
+                System.out.println(7);
             }
 
             return "redirect:/productos";
