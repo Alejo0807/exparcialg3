@@ -151,13 +151,9 @@ public class ComprasController {
 
         int verifier = (10 - (sum % 10)) % 10;
         if (verifier == intArray[15] && (carritoPedido!=null)){
-            //Borrar el pedido del carrito
-            pedidoRepository.udpate_carrito(carritoPedido.getCodigo(), 0);
-            pedidoHasProductoRepository.deleteInBatch(carritoPedido.getListPedidoHasProductos());
-            System.out.println(3);
             //Generar el pedido
             Integer numPed = pedidoRepository.hallarAutoincrementalPedido();
-            String codigoDePedido = carritoPedido.getCodeForPedido(numPed + 1);
+            String codigoDePedido = carritoPedido.getCodeForPedido((numPed==null?0:numPed) + 1);
             pedidoRepository.new_pedido(codigoDePedido,
                     usuario.getDni(), carritoPedido.getTotal());
             pedidoHasProductoRepository.saveAll(new ArrayList<PedidoHasProducto>(){
@@ -167,6 +163,10 @@ public class ComprasController {
                     });
                 }
             });
+            //Borrar el pedido del carrito
+            pedidoRepository.udpate_carrito(carritoPedido.getCodigo(), 0);
+            pedidoHasProductoRepository.deleteInBatch(carritoPedido.getListPedidoHasProductos());
+            System.out.println(3);
 
             List<PedidoHasProducto> listaPedProd = carritoPedido.getListPedidoHasProductos();
             for (PedidoHasProducto pedidoHasProducto: listaPedProd){
