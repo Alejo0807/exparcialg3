@@ -205,8 +205,7 @@ public class ComprasController {
             pedidoFinal.setComprado(1);
             pedidoFinal.setUsuario(usuario);
             for (PedidoHasProducto php : phpList){
-                PedidoHasProducto phpFinal = null;
-                assert phpFinal != null;
+                PedidoHasProducto phpFinal = php;
                 phpFinal.setId(new PedProdId(pedidoFinal, php.getId().getProducto()));
                 phpFinal.setSubtotal(php.getSubtotal());
                 phpFinal.setCant(php.getCant());
