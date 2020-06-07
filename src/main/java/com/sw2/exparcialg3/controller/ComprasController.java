@@ -157,21 +157,16 @@ public class ComprasController {
             pedidoHasProductoRepository.deleteInBatch(carritoPedido.getListPedidoHasProductos());
             System.out.println(3);
             //Generar el pedido
-            LocalDate lt = LocalDate.now();
-            pedidoRepository.new_pedido("PE" + lt.getDayOfMonth() + lt.getMonthValue() + lt.getYear() + (pedidoRepository.hallarAutoincrementalPedido()+1),
+            pedidoRepository.new_pedido(carritoPedido.getCodeForPedido(pedidoRepository.hallarAutoincrementalPedido()+1),
                     usuario.getDni(), carritoPedido.getTotal());
-            System.out.println(4);
             pedidoHasProductoRepository.saveAll(carritoPedido.getListPedidoHasProductos());
-            System.out.println(5);
 
             List<PedidoHasProducto> listaPedProd = carritoPedido.getListPedidoHasProductos();
             for (PedidoHasProducto pedidoHasProducto: listaPedProd){
                 Producto prdct = pedidoHasProducto.getId().getProducto();
-                System.out.println(6);
                 prdct.setStock(prdct.getStock()-pedidoHasProducto.getCant());
-                System.out.println(7);
             }
-
+            attr.addFlashAttribute("msg","Compra exitosa");
             return "redirect:/productos";
         }else{
             attr.addFlashAttribute("msg","Tarjeta incorrecta");

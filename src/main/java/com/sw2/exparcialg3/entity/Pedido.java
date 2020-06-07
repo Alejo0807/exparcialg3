@@ -38,6 +38,14 @@ public class Pedido implements Serializable {
         return creditCard;
     }
 
+
+    public String getCodeForPedido(int num){
+        LocalDate lt = LocalDate.now();
+        return "PE" + ((lt.getDayOfMonth()>9)?lt.getDayOfMonth():"0"+lt.getDayOfMonth())+
+                ((lt.getMonthValue()>9)?lt.getMonthValue():"0"+lt.getMonthValue()) + lt.getYear() +num;
+
+    }
+
     public void setCreditCard(String creditCard) {
         this.creditCard = creditCard;
     }
