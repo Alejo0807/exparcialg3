@@ -155,7 +155,7 @@ public class ComprasController {
     }
 
     @PostMapping("/pagarYguardarCompra")
-    public String GuardarCompra(@ModelAttribute("pedido") Pedido pedido,
+    public String GuardarCompra(@ModelAttribute("pedido") Pedido pedido, HttpSession session,
                                 RedirectAttributes attr,Model model){
 
         String[] arrOfStr = pedido.getCreditCard().split("(?<=[0-9])");
@@ -183,19 +183,28 @@ public class ComprasController {
             sum = sum + intArray[i];
         }
 
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        System.out.println(usuario.getDni());
+        Optional<Pedido> optPed = pedidoRepository.findById("carrito_"+ Integer.toString(usuario.getDni()));
+        Pedido pedidoFinal = optPed.get();
+        Pedido ped = optPed.get();
+
         int verifier = (10 - (sum % 10)) % 10;
         System.out.println(verifier);
         System.out.println(sum);
         if (verifier == intArray[15]){
             attr.addFlashAttribute("msg","Compra exitosa");
-            Optional<Integer> opt = pedidoRepository.hallarAutoincrementalPedido();
-            int autoincremental = opt.get();
+            int autoincremental = pedidoRepository.hallarAutoincrementalPedido();
+            System.out.println(autoincremental);
             LocalDate lt = LocalDate.now();
             String codigo = "PE" + lt.getDayOfMonth() + lt.getMonthValue() + lt.getYear() + (autoincremental+1);
-            pedido.setCodigo(codigo);
-            pedido.setFecha_compra(lt);
-            pedido.setComprado(1);
-            pedidoRepository.save(pedido);
+            pedidoFinal.setCodigo(codigo);
+            pedidoFinal.setFecha_compra(lt);
+            pedidoFinal.setComprado(1);
+            pedidoFinal.setUsuario(usuario);
+            ped.setUsuario(usuario);
+            ped.setCodigo("carrito_"+ Integer.toString(usuario.getDni()));
+            pedidoRepository.save(pedidoFinal);
 
             List<PedidoHasProducto> listaPedProd = pedido.getListPedidoHasProductos();
             for (PedidoHasProducto pedidoHasProducto: listaPedProd){
